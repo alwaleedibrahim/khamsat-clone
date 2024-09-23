@@ -11,6 +11,10 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        naskh: ['var(--font-noto-naskh)'],
+        kufi: ['var(--font-noto-kufi)']
+      }
     },
   },
   plugins: [],
