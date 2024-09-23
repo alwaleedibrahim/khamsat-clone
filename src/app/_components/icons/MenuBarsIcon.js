@@ -2,7 +2,7 @@ import React from "react";
 
 export default function MenuBarsIcon() {
   return (
-    <div className="w-10 h-10">
+    <div className="w-8 h-8">
       <svg
         className=" text-gray-800 dark:text-white"
         aria-hidden="true"
