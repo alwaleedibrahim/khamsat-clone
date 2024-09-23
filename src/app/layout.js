@@ -1,4 +1,4 @@
-import Navbar from "./_components/navbar/navbar";
+// import Navbar from "./_components/navbar/navbar";
 import "./globals.css";
 import {Noto_Kufi_Arabic, Noto_Naskh_Arabic} from 'next/font/google'
 
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl">
       <body className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}>
-        <Navbar/>
+        {/* <Navbar/> */}
         {children}
       </body>
     </html>
