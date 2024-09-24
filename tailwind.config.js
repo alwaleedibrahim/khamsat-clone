@@ -9,7 +9,10 @@ module.exports = {
     extend: {
       colors: {
         background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        style1: "var(--text-color-1)",
+        style2: "var(--text-color-2)",
       },
       fontFamily: {
         naskh: ['var(--font-noto-naskh)'],
