@@ -1,13 +1,14 @@
 import Image from "next/image";
 import NavItem from "./navitem";
-import { FaFolderOpen, FaBell, FaCubes, FaEnvelope, FaPlus, FaSearch, FaShoppingCart, FaTruck, FaBars } from "react-icons/fa";
+import { FaFolderOpen, FaBell, FaCubes, FaEnvelope, FaPlus, FaSearch, FaShoppingCart, FaTruck, FaBars, FaHome, FaUser } from "react-icons/fa";
 
 
 export default function Navbar() {
   return (
-    <header className="bg-[#444] font-kufi sm:hidden lg:flex lg:justify-around">
-      <nav className="flex w-full justify-between h-16 text-white px-8 max-w-[1440px]">
-        <div className="flex">
+    <>
+    <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full">
+      <div className="flex w-full justify-between h-16 text-white max-w-[1440px]">
+        <div className="flex min-w-fit overflow-hidden">
           <NavItem>
             <FaBars className="text-2xl"/>
           </NavItem>
@@ -17,39 +18,39 @@ export default function Navbar() {
               height={36}
               alt="logo"
               src="/images/khamsat-logo.png"
-              className="w-[144px] h-[36px] "
+              className="w-[144px] h-[36px] min-w-fit"
             />
           </div>
 
-          <ul className="flex">
+          <ul className="flex  min-w-fit text-sm">
             <li>
               <NavItem>
-                <FaPlus className="mx-2"/>
+                <FaPlus className="me-2"/>
                 <span>أضف خدمة</span>
               </NavItem>
             </li>
             <li>
               <NavItem>
                 <span></span>
-                <FaCubes className="mx-2"/>
+                <FaCubes className="me-2"/>
                 <span>التصنيفات</span>
               </NavItem>
             </li>
             <li>
               <NavItem>
-                <FaFolderOpen className="mx-2"/>
+                <FaFolderOpen className="me-2"/>
                 <span>المشتريات</span>
               </NavItem>
             </li>
             <li>
               <NavItem>
-                <FaTruck className="mx-2" style={{transform: 'scaleX(-1)'}}/>
+                <FaTruck className="me-2 scale-x-[-1]" />
                 <span>الطلبات الواردة</span>
               </NavItem>
             </li>
           </ul>
         </div>
-        <div className="flex">
+        <div className="flex min-w-fit">
           <ul className="flex">
             <li>
               <NavItem>
@@ -78,13 +79,38 @@ export default function Navbar() {
               height={40}
               alt="logo"
               src="/images/avatar.png"
-              className="w-[40] h-[40] rounded-full"
+              className="w-[40] h-[40] rounded-full min-w-fit"
             />
               </NavItem>
             </li>
           </ul>
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+    <nav className="font-kufi font-light sm:flex lg:hidden fixed bottom-0 w-full py-3 bg-white">
+      <ul className="flex justify-evenly w-full">
+          <li className="flex flex-col items-center justify-around">
+            <FaHome />
+            <span>الرئيسية</span>
+          </li>
+          <li className="flex flex-col items-center justify-around">
+            <FaUser />
+            <span>حسابي</span>
+          </li>
+          <li className="flex flex-col items-center justify-around">
+            <FaSearch />
+            <span>بحث</span>
+          </li>
+          <li className="flex flex-col items-center justify-around">
+            <FaShoppingCart />
+            <span>السلة</span>
+          </li>
+          <li className="flex flex-col items-center justify-around">
+            <FaBars />
+            <span>القائمة</span>
+          </li>
+      </ul>
+    </nav>
+    </>
   );
 }
