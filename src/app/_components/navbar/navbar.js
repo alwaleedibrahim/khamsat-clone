@@ -1,56 +1,49 @@
 import Image from "next/image";
-import MenuBarsIcon from "../icons/MenuBarsIcon";
 import NavItem from "./navitem";
-import PlusIcon from "../icons/PlusIcon";
-import CubesIcon from "../icons/CubesIcon";
-import SearchIcon from "../icons/SearchIcon";
-import ShoppingCartIcon from "../icons/ShoppingCartIcon";
-import EnvelopeIcon from "../icons/EnvelopeIcon";
-import BellIcon from "../icons/BellIcon";
-import FolderIcon from "../icons/FolderIcon";
-import TruckIcon from "../icons/TruckIcon";
+import { FaFolderOpen, FaBell, FaCubes, FaEnvelope, FaPlus, FaSearch, FaShoppingCart, FaTruck, FaBars } from "react-icons/fa";
+
 
 export default function Navbar() {
   return (
-    <header className="bg-[#444] font-kufi">
-      <nav className="flex w-full justify-between h-16 text-white px-8">
+    <header className="bg-[#444] font-kufi sm:hidden lg:flex lg:justify-around">
+      <nav className="flex w-full justify-between h-16 text-white px-8 max-w-[1440px]">
         <div className="flex">
           <NavItem>
-            <MenuBarsIcon className="self-start" />
+            <FaBars className="text-2xl"/>
           </NavItem>
-          <NavItem>
+          <div className="flex items-center px-5">
             <Image
               width={144}
               height={36}
               alt="logo"
               src="/images/khamsat-logo.png"
-              className="w-[  ] h-[36]"
+              className="w-[144px] h-[36px] "
             />
-          </NavItem>
+          </div>
 
           <ul className="flex">
             <li>
               <NavItem>
-                <PlusIcon />
+                <FaPlus className="mx-2"/>
                 <span>أضف خدمة</span>
               </NavItem>
             </li>
             <li>
               <NavItem>
                 <span></span>
-                <CubesIcon />
+                <FaCubes className="mx-2"/>
                 <span>التصنيفات</span>
               </NavItem>
             </li>
             <li>
               <NavItem>
-                <FolderIcon />
+                <FaFolderOpen className="mx-2"/>
                 <span>المشتريات</span>
               </NavItem>
             </li>
             <li>
               <NavItem>
-                <TruckIcon className="mx-2"/>
+                <FaTruck className="mx-2" style={{transform: 'scaleX(-1)'}}/>
                 <span>الطلبات الواردة</span>
               </NavItem>
             </li>
@@ -60,22 +53,22 @@ export default function Navbar() {
           <ul className="flex">
             <li>
               <NavItem>
-                <SearchIcon />
+                <FaSearch className="text-lg"/>
               </NavItem>
             </li>
             <li>
               <NavItem>
-              <ShoppingCartIcon />
+              <FaShoppingCart className="text-lg"/>
               </NavItem>
             </li>
             <li>
               <NavItem>
-              <EnvelopeIcon />
+              <FaEnvelope className="text-lg"/>
               </NavItem>
             </li>
             <li>
               <NavItem>
-              <BellIcon />
+              <FaBell className="text-lg"/>
               </NavItem>
             </li>
             <li>
