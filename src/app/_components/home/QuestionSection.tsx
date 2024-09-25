@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const accordionItems = [
+const questionListItems = [
   {
     title: "ما هو خمسات؟",
     content:
@@ -11,7 +11,7 @@ const accordionItems = [
     title: "كيف يمكن أن أستفيد من خمسات؟",
     content: [
       "قد يتوقف إطلاق شركتك على تصميم شعار، أو يتوقف عملك بسبب الحاجة لمحتوى متجدد لموقعك، ربما تملك فكرة رائعة لبرنامج أو تطبيق ولكن ليست لديك أدنى فكرة عن البرمجة والتطوير، لديك بحث دراسي أو ترجمة مطلوبة في وقت معين وتحتاج لمن يساعدك فيها.",
-      <p className="block h-5"> </p>,
+      <span className="block h-5"> </span>,
       "يوفّر خمسات كل الخدمات الإبداعية والاحترافية التي تحتاجها لتنمية وتطوير أعمالك، والتي يمكن طلبها من أشخاص موهوبين مستعدين لخدمتك في إنجاز مهامك بسهولة عبر الإنترنت وبأسعار اقتصادية تتناسب مع الأفراد ورواد الأعمال من أصحاب المشاريع الناشئة.",
     ],
   },
@@ -49,7 +49,7 @@ export default function Accordion() {
         className="accordion max-w-screen-lg  sm:px-0 md:px-10"
         id="accordionExample"
       >
-        {accordionItems.map((item, index) => (
+        {questionListItems.map((item, index) => (
           <div
             key={index}
             className="border-neutral-200 bg-white  border-b dark:border-neutral-600 dark:bg-body-dark"

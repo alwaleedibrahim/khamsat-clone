@@ -1,3 +1,4 @@
+import QuestionSection from "./_components/home/QuestionSection";
 import RecommendServices from "./_components/home/RecommendServices";
 import SnippetSection from "./_components/home/SnippetSection";
 import ButtonB from "./_components/reusable/buttons/ButtonB";
@@ -16,6 +17,7 @@ export default function Home() {
       <ButtonB text="خدمات مميزة" />
       <TagButton text="اول hover" extraStyle="hover:bg-primary" />
       <TagButton text="تانى hover" extraStyle="hover:bg-bColor" />
+      <QuestionSection/>
     </div>
   );
 }
