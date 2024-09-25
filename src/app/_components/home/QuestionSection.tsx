@@ -46,17 +46,17 @@ export default function Accordion() {
       <h2 className="text-3xl pb-10">الأسئلة الشائعة</h2>
 
       <div
-        className="accordion max-w-screen-lg  sm:px-0 md:px-10"
+        className="accordion max-w-screen-lg sm:px-0 md:px-10"
         id="accordionExample"
       >
         {questionListItems.map((item, index) => (
           <div
             key={index}
-            className="border-neutral-200 bg-white  border-b dark:border-neutral-600 dark:bg-body-dark"
+            className="border-neutral-200 bg-white border-b dark:border-neutral-600 dark:bg-body-dark"
           >
             <h2 className="mb-0" id={`heading${index}`}>
               <button
-                className="group relative flex w-full items-center rounded-t-lg border-0 bg-white px-5 py-4   text-neutral-800 transition hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
+                className="group relative flex w-full items-center border-0 bg-white px-5 py-4 text-neutral-800 transition hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
                 type="button"
                 onClick={() => handleToggle(index)}
                 aria-expanded={openIndexes.includes(index)}
@@ -95,7 +95,7 @@ export default function Accordion() {
             </h2>
             <div
               id={`collapse${index}`}
-              className={`overflow-hidden  divide-x transition-[max-height] duration-500 ease-in-out ${
+              className={`overflow-hidden divide-x transition-[max-height] duration-500 ease-in-out ${
                 openIndexes.includes(index) ? "max-h-screen" : "max-h-0"
               }`}
               aria-labelledby={`heading${index}`}
