@@ -13,12 +13,16 @@ module.exports = {
         secondary: "var(--secondary)",
         style1: "var(--text-color-1)",
         style2: "var(--text-color-2)",
+        bColor: "var(--border-color)"
       },
       fontFamily: {
         naskh: ['var(--font-noto-naskh)'],
         kufi: ['var(--font-noto-kufi)']
+      },
+      padding:{
+        'section': "100px 0"
       }
-    },
+    }
   },
   plugins: [],
 };

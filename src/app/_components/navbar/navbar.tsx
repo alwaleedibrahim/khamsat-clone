@@ -6,7 +6,7 @@ import { FaFolderOpen, FaBell, FaCubes, FaEnvelope, FaPlus, FaSearch, FaShopping
 export default function Navbar() {
   return (
     <>
-    <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full">
+    <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full z-[100]">
       <div className="flex w-full justify-between h-16 text-white max-w-[1440px]">
         <div className="flex min-w-fit overflow-hidden">
           <NavItem>
