@@ -8,6 +8,7 @@ export default function Services() {
         <h1 className="text-center text-3xl mb-8 mb-20">خدمات شائعة</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          
           {/* First row */}
           <div className="flex items-center bg-white p-4 shadow-sm">
             <div className="flex-shrink-0 mr-4">
