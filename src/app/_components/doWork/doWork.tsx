@@ -9,7 +9,7 @@ export default function DoWork() {
         <h2 className="text-3xl font-kufi mb-4 pb-12">نفذ أعمالك بسهولة وأمان</h2> 
       </div>
 
-      {/* Main Content: Text and Video */}
+      {/* Main Content: Text & Video */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 pr-8">
         {/* Text Section */}
         <div className="w-full md:w-1/2 text-right">
