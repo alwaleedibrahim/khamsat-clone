@@ -45,14 +45,14 @@ export default function Navbar() {
               className="overflow-scroll fixed top-16 right-0 px-4 py-6 h-full w-64 transition-all duration-500 transform translate-x-full bg-white shadow-lg peer-checked:translate-x-0"
               style={{ scrollbarWidth: "none" }}
             >
-              <form accept-charset="UTF-8" className="text-[#888] h-10">
-                <input name="utf8" type="hidden" value="✓" />
+              <form acceptCharset="UTF-8" className="text-[#888] h-10">
+                <input name="utf8" type="hidden" defaultValue="✓" />
                 <input
                   className="w-full h-full"
                   type="search"
                   name="q"
                   placeholder="ابحث عن ..."
-                  value=""
+                  defaultValue=""
                 />
               </form>
               <hr className="my-3" />
@@ -404,10 +404,10 @@ export default function Navbar() {
               className="fixed invisible top-0 right-0 w-full h-full peer-checked:visible overflow-scroll px-4 py-6 bg-white -z-10"
               style={{ scrollbarWidth: "none" }}
             >
+              <ul>
               <li className="flex items-center py-3 ">
                 <h2 className="font-semibold text-2xl">حسابي</h2>
               </li>
-              <ul>
                 <li className="flex items-center py-3">
                   <FaUser className="me-3" />
                   user_name
@@ -465,14 +465,14 @@ export default function Navbar() {
                   <h2 className="font-semibold text-2xl">بحث</h2>
                 </li>
                 <li className="flex items-center py-3 ">
-                  <form accept-charset="UTF-8" className="text-[#888] h-10">
-                    <input name="utf8" type="hidden" value="✓" />
+                  <form acceptCharset="UTF-8" className="text-[#888] h-10">
+                    <input name="utf8" type="hidden" defaultValue="✓" />
                     <input
                       className="w-full h-full"
                       type="search"
                       name="q"
                       placeholder="ابحث عن ..."
-                      value=""
+                      defaultValue=""
                     />
                   </form>
                 </li>
