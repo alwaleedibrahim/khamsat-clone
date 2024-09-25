@@ -5,8 +5,8 @@ import ServiceCard from '../reusable/service-card/ServiceCard'
 const RecommendServices = () => {
     return (
         <div className="mx-auto p-section bg-white">
-            <div className="flex justify-between items-center mb-4 px-4">
-                <div className="text-2xl text-style1 font-kufi ">
+            <div className="flex justify-between items-center px-4  mb-[30px]">
+                <div className="text-2xl text-style1 font-kufi">
                     <a href="/recommendations">خدمات نرشحها لك</a>
                 </div>
                 <ButtonB text='عرض المزيد' extraStyle='text-[14px] px-[8px] py-[4px]' />
