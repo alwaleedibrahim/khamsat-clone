@@ -1,5 +1,6 @@
-import Navbar from "./_components/navbar/navbar";
-import Footer from "./_components/footer/footer";
+// import Navbar from "./_components/navbar/navbar";
+// import Footer from "./_components/footer/footer";
+import Services from "./_components/popularServices/services";
 
 
 import "./globals.css";
@@ -24,9 +25,10 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-        <Navbar/>
+        <Services/>
+        {/* <Navbar/> */}
         {children}
-      <Footer/>
+      {/* <Footer/> */}
       </body>
     </html>
   );
