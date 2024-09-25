@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --background:#F1F1F1;
+    --primary: #52b035;
+    --secondary: #444;
+
+    --text-color-1: #222222;
+    --text-color-2: #555555;
+
+    --border-color: #cccccc;
+}
+
+body{
+    background-color: var(--background);
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
