@@ -1,3 +1,4 @@
+import HeroSection from "./_components/home/HeroSection";
 import QuestionSection from "./_components/home/QuestionSection";
 import RecommendServices from "./_components/home/RecommendServices";
 import SnippetSection from "./_components/home/SnippetSection";
@@ -18,6 +19,7 @@ export default function Home() {
       <TagButton text="اول hover" extraStyle="hover:bg-primary" />
       <TagButton text="تانى hover" extraStyle="hover:bg-bColor" />
       <QuestionSection/>
+      <HeroSection/>
     </div>
   );
 }

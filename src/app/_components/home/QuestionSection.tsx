@@ -44,10 +44,8 @@ export default function Accordion() {
   return (
     <div className="accordion bg-white py-20 flex flex-col justify-center items-center">
       <h2 className="text-3xl pb-10">الأسئلة الشائعة</h2>
-
       <div
         className="accordion max-w-screen-lg sm:px-0 md:px-10"
-        id="accordionExample"
       >
         {questionListItems.map((item, index) => (
           <div
