@@ -1,0 +1,60 @@
+.hr_text {
+    border: 0;
+    color: #000;
+    height: 1.5em;
+    line-height: 1em;
+    opacity: .8;
+    outline: 0;
+    position: relative;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.hr_text:before {
+    background: linear-gradient(90deg, transparent, #000, transparent);
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+
+.hr_text:after {
+    background-color: #fff;
+    color: #000;
+    content: attr(data-content);
+    display: inline-block;
+    line-height: 1.5em;
+    padding: 0 .5em;
+    position: relative;
+}
+
+.form-control {
+    background-image: none;
+    box-shadow: none;
+    padding: 9px 10px;
+    border-radius: none;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    background-color: #fcfdfd;
+}
+
+.copy_right {
+    padding: 30px 0;
+}
+
+.custom_container {
+    margin-right: 18px;
+    margin-left: 18px;
+}
+
+@media (min-width: 1024px) {
+    .custom_container {
+        max-width: 768px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
