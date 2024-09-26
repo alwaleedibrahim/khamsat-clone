@@ -5,6 +5,7 @@ import RecommendServices from "./_components/home/RecommendServices";
 import SnippetSection from "./_components/home/SnippetSection";
 import ButtonB from "./_components/reusable/buttons/ButtonB";
 import TagButton from "./_components/reusable/buttons/TagButton";
+import AllCategoriesSection from "./_components/home/category-card/AllCategoriesSection";
 import SearchForm from "./_components/reusable/search-form/SearchForm";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
       <TagButton text="تانى hover" extraStyle="hover:bg-bColor" />
       <QuestionSection/>
       <HeroSection/>
+      <AllCategoriesSection />
     </div>
   );
 }
