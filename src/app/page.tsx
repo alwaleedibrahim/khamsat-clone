@@ -1,3 +1,4 @@
+import DoWork from "./_components/doWork/doWork";
 import RecommendServices from "./_components/home/RecommendServices";
 import SnippetSection from "./_components/home/SnippetSection";
 import ButtonB from "./_components/reusable/buttons/ButtonB";
@@ -12,7 +13,7 @@ export default function Home() {
       <div className=" h-[100] p-section">
         <SearchForm />
       </div>
-      
+      <DoWork />
       <ButtonB text="خدمات مميزة" />
       <TagButton text="اول hover" extraStyle="hover:bg-primary" />
       <TagButton text="تانى hover" extraStyle="hover:bg-bColor" />

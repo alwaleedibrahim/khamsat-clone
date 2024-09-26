@@ -1,6 +1,5 @@
-
-import DoWork from "./_components/doWork/doWork";
-
+import Navbar from "./_components/navbar/navbar";
+import Footer from "./_components/footer/footer";
 
 
 import "./globals.css";
@@ -25,12 +24,9 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-     
-        
+        <Navbar/>
         {children}
-        <DoWork/>
-       
-
+      <Footer/>
       </body>
     </html>
   );
