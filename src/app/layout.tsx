@@ -1,6 +1,10 @@
 import Navbar from "./_components/navbar/navbar";
 import "./globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
 import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google";
+
+config.autoAddCss = false; 
 
 const NotoKufiArabic = Noto_Kufi_Arabic({
   subsets: ["arabic"],
