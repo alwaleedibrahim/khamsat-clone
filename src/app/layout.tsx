@@ -1,4 +1,8 @@
-import Navbar from "./_components/navbar/navbar";
+
+import Footer from "./_components/footer/footer";
+import WhyUs from "./_components/whyUs/whyUs";
+
+
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -15,6 +19,8 @@ const NotoNaskhArabic = Noto_Naskh_Arabic({
   variable: "--font-noto-naskh",
 });
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -23,8 +29,11 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-        <Navbar/>
+       
+        <WhyUs/>
+
         {children}
+      <Footer/>
       </body>
     </html>
   );
