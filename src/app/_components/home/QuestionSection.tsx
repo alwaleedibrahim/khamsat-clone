@@ -45,7 +45,7 @@ export default function Accordion() {
 
   return (
     <div className="accordion bg-white py-20 flex flex-col justify-center items-center">
-      <h2 className="text-3xl pb-10">الأسئلة الشائعة</h2>
+      <h2 className="text-3xl font-kufi pb-10">الأسئلة الشائعة</h2>
       <div
         className="accordion max-w-screen-lg sm:px-0 md:px-10"
       >
@@ -63,7 +63,7 @@ export default function Accordion() {
                 aria-controls={`collapse${index}`}
               >
                 <span
-                  className={`text-lg font-medium ${
+                  className={`text-lg font-kufi font-medium ${
                     openIndexes.includes(index)
                       ? "text-primary"
                       : "text-secondary"
@@ -100,7 +100,7 @@ export default function Accordion() {
               }`}
               aria-labelledby={`heading${index}`}
             >
-              <div className="px-5 py-4 text-start text-sm ">
+              <div className="px-5 py-4 text-start font-naskh">
                 <p>{item.content}</p>
               </div>
             </div>
