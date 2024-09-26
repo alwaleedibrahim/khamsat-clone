@@ -59,7 +59,7 @@ const categories: ICategory[] = [
 
 export default function AllCategoriesSection() {
   return (
-    <div className="py-10 flex  flex-col items-center">
+    <div className="p-section flex  flex-col items-center">
       <h2 className="font-kufi text-3xl py-8">كافة الخدمات الاحترافية لتطوير أعمالك</h2>
       <div className="container py-5">
         <div className="flex flex-wrap gap-6 justify-center">
