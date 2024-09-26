@@ -7,6 +7,7 @@ import ButtonB from "./_components/reusable/buttons/ButtonB";
 import TagButton from "./_components/reusable/buttons/TagButton";
 import AllCategoriesSection from "./_components/home/category-card/AllCategoriesSection";
 import SearchForm from "./_components/reusable/search-form/SearchForm";
+import CallToActionSection from "./_components/home/CallToActionSection";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <QuestionSection/>
       <HeroSection/>
       <AllCategoriesSection />
+      <CallToActionSection />
     </div>
   );
 }
