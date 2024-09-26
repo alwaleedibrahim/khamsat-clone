@@ -1,7 +1,5 @@
-
 import Footer from "./_components/footer/footer";
-import WhyUs from "./_components/whyUs/whyUs";
-
+import Navbar from "./_components/navbar/navbar";
 
 import "./globals.css";
 import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google";
@@ -15,8 +13,6 @@ const NotoNaskhArabic = Noto_Naskh_Arabic({
   variable: "--font-noto-naskh",
 });
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -25,11 +21,9 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-       
-        <WhyUs/>
-
+        <Navbar />
         {children}
-      <Footer/>
+        <Footer />
       </body>
     </html>
   );

@@ -44,7 +44,7 @@ export default function Accordion() {
   };
 
   return (
-    <div className="accordion bg-white py-20 flex flex-col justify-center items-center">
+    <div className="accordion bg-white p-section flex flex-col justify-center items-center">
       <h2 className="text-3xl font-kufi pb-10">الأسئلة الشائعة</h2>
       <div
         className="accordion max-w-screen-lg sm:px-0 md:px-10"
@@ -52,11 +52,11 @@ export default function Accordion() {
         {questionListItems.map((item, index) => (
           <div
             key={index}
-            className="border-neutral-200 bg-white border-b dark:border-neutral-600 dark:bg-body-dark"
+            className="border-neutral-200 bg-white border-b dark:border-neutral-300 dark:bg-body-dark"
           >
             <h2 className="mb-0" id={`heading${index}`}>
               <button
-                className="group relative flex w-full items-center border-0 bg-white px-5 py-4 text-neutral-800 transition hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
+                className="group relative flex w-full items-center border-0 bg-white px-5 py-6 text-neutral-800 transition hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
                 type="button"
                 onClick={() => handleToggle(index)}
                 aria-expanded={openIndexes.includes(index)}

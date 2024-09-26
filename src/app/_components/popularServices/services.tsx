@@ -4,8 +4,8 @@ import Image from 'next/image';
 export default function Services() {
   return (
     <>
-      <div className="w-full bg-gray-200 font-kufi p-24">
-        <h1 className="text-center text-3xl mb-8 mb-20">خدمات شائعة</h1>
+      <div className="w-full bg-gray-200 font-kufi p-section flex flex-col items-center">
+        <h1 className="text-center text-3xl mb-20">خدمات شائعة</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           
