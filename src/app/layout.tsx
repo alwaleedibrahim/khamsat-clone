@@ -1,5 +1,6 @@
-import Navbar from "./_components/navbar/navbar";
+
 import Footer from "./_components/footer/footer";
+import WhyUs from "./_components/whyUs/whyUs";
 
 
 import "./globals.css";
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-        <Navbar/>
+       
+        <WhyUs/>
+
         {children}
       <Footer/>
       </body>
