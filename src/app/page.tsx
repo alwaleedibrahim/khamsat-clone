@@ -1,3 +1,4 @@
+import DoWork from "./_components/doWork/doWork";
 import HeroSection from "./_components/home/HeroSection";
 import QuestionSection from "./_components/home/QuestionSection";
 import RecommendServices from "./_components/home/RecommendServices";
@@ -14,7 +15,7 @@ export default function Home() {
       <div className=" h-[100] p-section">
         <SearchForm />
       </div>
-      
+      <DoWork />
       <ButtonB text="خدمات مميزة" />
       <TagButton text="اول hover" extraStyle="hover:bg-primary" />
       <TagButton text="تانى hover" extraStyle="hover:bg-bColor" />
