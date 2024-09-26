@@ -28,7 +28,7 @@ import { FaBookBookmark, FaFileLines, FaSliders } from "react-icons/fa6";
 export default function Navbar() {
   return (
     <>
-      <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full">
+      <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full z-[200]">
         <div className="flex w-full justify-between h-16 text-white max-w-[1440px]">
           <div className="flex min-w-fit overflow-hidden">
             <input
@@ -369,7 +369,7 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      <nav className="font-kufi font-light sm:flex lg:hidden fixed bottom-0 w-full text-[#444] ">
+      <nav className="font-kufi font-light sm:flex lg:hidden fixed bottom-0 w-full text-[#444] z-[200]">
         <ul className="flex justify-evenly w-full bg-white py-3">
           <li className="flex flex-col items-center justify-around">
             <label
