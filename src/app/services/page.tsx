@@ -6,7 +6,7 @@ import ServiceCard from "../_components/reusable/service-card/ServiceCard";
 export default function page() {
   return (
     <div className="pt-20 container">
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap p-section">
         <div className="hidden lg:flex lg:w-2/6">
           <Sidebar />
         </div>
