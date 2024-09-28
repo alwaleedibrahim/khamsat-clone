@@ -1,4 +1,5 @@
 "use client";
+
 import { FieldError, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faWindows } from '@fortawesome/free-brands-svg-icons';

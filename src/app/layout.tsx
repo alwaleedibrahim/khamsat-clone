@@ -1,5 +1,5 @@
-import Footer from "./_components/footer/footer";
-import Navbar from "./_components/navbar/navbar";
+
+
 
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -25,9 +25,11 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-        <Navbar />
+      
+      
         {children}
-        <Footer />
+   
+    
       </body>
     </html>
   );
