@@ -4,7 +4,6 @@ import ButtonA from '../reusable/buttons/ButtonA';
 
 const GetService = () => {
     const [quantity, setQuantity] = useState(1);
-    const basePrice = 5.00;
 
     const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setQuantity(Number(e.target.value)); 
