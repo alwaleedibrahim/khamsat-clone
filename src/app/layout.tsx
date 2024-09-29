@@ -25,10 +25,10 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-      
+     
       
         {children}
-   
+      
     
       </body>
     </html>
