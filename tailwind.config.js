@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,14 +13,20 @@ module.exports = {
         secondary: "var(--secondary)",
         style1: "var(--text-color-1)",
         style2: "var(--text-color-2)",
-        bColor: "var(--border-color)"
+        bColor: "var(--border-color)",
+        twitter: '#1DA1F2',
+        facebook: '#1877F2',
+        linkedin: '#0077B5',
+        telegram: '#0088CC',
       },
       fontFamily: {
-        naskh: ['var(--font-noto-naskh)'],
-        kufi: ['var(--font-noto-kufi)']
+        naskh: ["var(--font-noto-naskh)"],
+        kufi: ["var(--font-noto-kufi)"]
       },
       padding:{
-        'section': "100px 0"
+        "section": "100px 0",
+        "sm-screen":"0 12px",
+        "container-space":"20px"
       }
     }
   },

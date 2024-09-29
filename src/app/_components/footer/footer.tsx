@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <>
-   <footer className="bg-white text-foreground py-10 font-kufi">
+   <footer className="bg-background text-foreground py-10 font-kufi">
 
    <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
           {/* عمود "موقع خمسات" */}

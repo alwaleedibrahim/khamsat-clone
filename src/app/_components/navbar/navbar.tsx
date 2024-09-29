@@ -24,7 +24,6 @@ import {
 import DropDownBox, { DropDownBoxContent } from "./dropdownbox";
 import UserDropDownBox from "./userdropdown";
 import { FaBookBookmark, FaFileLines, FaSliders } from "react-icons/fa6";
-import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -62,7 +61,7 @@ export default function Navbar() {
                   <FaPlus className="me-2" />
                   <span>أضف خدمة</span>
                 </li>
-                <li className="flex items-center py-3">   
+                <li className="flex items-center py-3">
                   <FaFolderOpen className="me-2" />
                   <span>المشتريات</span>
                 </li>
@@ -254,7 +253,6 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center px-5">
-              <Link href='/'>
               <Image
                 width={144}
                 height={36}
@@ -262,7 +260,6 @@ export default function Navbar() {
                 src="/images/khamsat-logo.png"
                 className="w-[144px] h-[36px] min-w-fit"
               />
-              </Link>
             </div>
 
             <ul className="flex  min-w-fit text-sm">
@@ -273,28 +270,22 @@ export default function Navbar() {
                 </NavItem>
               </li>
               <li>
-                <Link href='/services' >
                 <NavItem>
                   <FaCubes className="me-2" />
                   <span>التصنيفات</span>
                 </NavItem>
-                </Link>
               </li>
               <li>
-              <Link href='/purchases' >
                 <NavItem>
                   <FaFolderOpen className="me-2" />
                   <span>المشتريات</span>
                 </NavItem>
-                </Link>
               </li>
               <li>
-              <Link href='/orders' >
                 <NavItem>
                   <FaTruck className="me-2 scale-x-[-1]" />
                   <span>الطلبات الواردة</span>
                 </NavItem>
-                </Link>
               </li>
             </ul>
           </div>

@@ -112,17 +112,17 @@ const Login: React.FC = () => {
                     <label className="block mb-[10px] text-style1 text-[14px] font-normal ">مساعدة</label>
                     <ul className="pr-[40px] mb-[10px]">
                         <li key="register" className="list-disc text-sm leading-9">
-                            <a href="/register" className="text-[#337ab7] text-naskh text-sm hover:text-[#14324d]">
+                            <a href="/register" className="text-[#337ab7] text-naskh text-sm hover:text-[#1e476c]">
                                 لا أملك حساب بعد
                             </a>
                         </li>
                         <li key="reset-password" className="list-disc text-sm leading-9">
-                            <a href="/reset_password" className="text-[#337ab7] text-naskh text-sm hover:text-[#14324d]">
+                            <a href="/reset_password" className="text-[#337ab7] text-naskh text-sm hover:text-[#1e476c]">
                                 فقدت كلمة المرور
                             </a>
                         </li>
                         <li key="resend-confirmation" className="list-disc text-sm leading-9">
-                            <a href="/resend_confirmation" className="text-[#337ab7] text-naskh text-sm hover:text-[#14324d]">
+                            <a href="/resend_confirmation" className="text-[#337ab7] text-naskh text-sm hover:text-[#1e476c]">
                                 لم يصلني رمز التفعيل
                             </a>
                         </li>

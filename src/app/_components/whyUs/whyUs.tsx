@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function WhyUs() {
   return (
-    <div className="bg-gray-100 p-section">
+    <div className="bg-gray-100 py-12">
       <div className="container mx-auto text-center pb-16"> 
         <h2 className="text-3xl mb-12 font-kufi">لماذا خمسات خيارك الأفضل لإنجاز أعمالك</h2>
 
