@@ -10,16 +10,16 @@ const Stars: React.FC<IStars> = ({ rating , extraStyle }) => {
 
   return (
     <div
-      className={`inline-block text-[30px] font-[Times] leading-none ${extraStyle}`}
+      className={`inline-block font-[Times] leading-none ${extraStyle}`}
       aria-label={`Rating of this product is ${rating} out of 5`}
     >
       <div
         className="relative"
         style={{
-          background: `linear-gradient(90deg, #fa9747 ${percent}%, #fff ${percent}%)`,
+          background: `linear-gradient(270deg, #fa9747 ${percent}%, #fff ${percent}%)`,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          filter: 'drop-shadow(0 0 1px #fa9747)', 
+          filter: 'drop-shadow(0.6px 0.6px 0.2px #fa9747)', 
         }}
       >
         ★★★★★
