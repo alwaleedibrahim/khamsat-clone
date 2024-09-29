@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import ButtonA from "../_components/reusable/buttons/ButtonA";
-import ButtonB from "../_components/reusable/buttons/ButtonB";
 import { FaPaypal, FaRegCreditCard, FaInfoCircle } from "react-icons/fa";
 
 const Payment = () => {
