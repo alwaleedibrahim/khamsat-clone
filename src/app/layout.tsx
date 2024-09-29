@@ -1,12 +1,9 @@
 
-import Footer from "./_components/footer/footer";
-import WhyUs from "./_components/whyUs/whyUs";
-
-
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google";
+import 'font-awesome/css/font-awesome.min.css';
 
 config.autoAddCss = false; 
 
@@ -29,11 +26,7 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-       
-        <WhyUs/>
-
         {children}
-      <Footer/>
       </body>
     </html>
   );

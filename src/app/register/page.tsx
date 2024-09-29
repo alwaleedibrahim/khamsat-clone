@@ -1,9 +1,10 @@
 "use client";
 import { FieldError, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faWindows } from '@fortawesome/free-brands-svg-icons';
+import { faGoogle, faWindows} from '@fortawesome/free-brands-svg-icons';
 import React, { useState } from "react";
 import styles from "./register.module.css";
+import Image from "next/image";
 
 // interface RegisterFormData {
 //     email: string;
@@ -13,15 +14,15 @@ import styles from "./register.module.css";
 
 const Register: React.FC = () => {
     const mediaItems = [
-        { id: 1, title: 'أنا', sub: 'ركز على أهدافك وتابع ما يهمك حقاً', brand: 'brand--ana' },
-        { id: 2, title: 'مستقل', sub: 'منصّة العمل الحر العربية', brand: 'brand--mostaql' },
-        { id: 3, title: 'خمسات', sub: 'سوق بيع وشراء الخدمات المصغّرة', brand: 'brand--khamsat' },
-        { id: 4, title: 'بيكاليكا', sub: 'أفضل المنتجات الرقمية الجاهزة', brand: 'brand--picalica' },
-        { id: 5, title: 'بعيد', sub: 'وظّف عن بعد', brand: 'brand--baaeed' },
-        { id: 6, title: 'زيتون', sub: 'برنامج خدمة العملاء الأكثر بساطة', brand: 'brand--zaetoon' },
-        { id: 7, title: 'أكاديمية حسوب', sub: 'تعلّم وطوّر مهاراتك', brand: 'brand--academy' },
-        { id: 8, title: 'موسوعة حسوب', sub: 'مرجع المطورين العرب', brand: 'brand--wiki' },
-        { id: 9, title: 'حسوب I/O', sub: 'ناقش أشخاصًا بنفس اهتماماتك', brand: 'brand--io' },
+        { id: 1, title: 'أنا', sub: 'ركز على أهدافك وتابع ما يهمك حقاً', brand: '/images/brands/ana.jpeg' },
+        { id: 2, title: 'مستقل', sub: 'منصّة العمل الحر العربية', brand: '/images/brands/mostaql.jfif' },
+        { id: 3, title: 'خمسات', sub: 'سوق بيع وشراء الخدمات المصغّرة', brand: '/images/brands/khamsat.png' },
+        { id: 4, title: 'بيكاليكا', sub: 'أفضل المنتجات الرقمية الجاهزة', brand: '/images/brands/picalica.jfif' },
+        { id: 5, title: 'بعيد', sub: 'وظّف عن بعد', brand: '/images/brands/baaeed.jpg' },
+        { id: 6, title: 'زيتون', sub: 'برنامج خدمة العملاء الأكثر بساطة', brand: '/images/brands/zaetoon.jpg' },
+        { id: 7, title: 'أكاديمية حسوب', sub: 'تعلّم وطوّر مهاراتك', brand: '/images/brands/academy.png' },
+        { id: 8, title: 'موسوعة حسوب', sub: 'مرجع المطورين العرب', brand: '/images/brands/wiki.png' },
+        { id: 9, title: 'حسوب I/O', sub: 'ناقش أشخاصًا بنفس اهتماماتك', brand: '/images/brands/io.png' },
     ];
 
     const {
@@ -140,33 +141,25 @@ const Register: React.FC = () => {
                                     <input
                                         type="checkbox"
                                         name="terms"
-                                        value="false"
-                                        className="hidden peer"
+                                        className="absolute w-0 h-0 peer"
                                     />
-                                    <span className="c-checkbox__check w-4 h-4 border-2 border-gray-400 rounded flex items-center justify-center peer-checked:bg-blue-500 peer-checked:border-transparent">
-                                        <svg
-                                            className="hidden w-4 h-4 text-white peer-checked:block"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M5 13l4 4L19 7"
-                                            />
-                                        </svg>
-
+                                    <span className="relative w-[1.2rem] h-[1.1rem] border-[1.5px] border-[#aaa] flex items-center justify-center bg-white">
+                                        <Image
+                                            width={22}
+                                            height={24}
+                                            alt="checked"
+                                            src='/images/icons/checked.png'
+                                            className="hidden peer-checked:block w-[0.8rem] h-[0.8rem] p-0"
+                                        />
                                     </span>
-                                    <span className="checkbox-label text-gray-700">
+
+                                    <span className="text-[14px] text-style1">
                                         قرأت وأوافق على&nbsp;
-                                        <a target="_blank" href="/terms" className="text-blue-500 hover:underline">
+                                        <a target="_blank" href="/terms" className="text-[#337ab7] text-naskh text-sm hover:text-[#1e476c]">
                                             شروط الاستخدام
                                         </a>
                                         &nbsp;و&nbsp;
-                                        <a target="_blank" href="/privacy" className="text-blue-500 hover:underline">
+                                        <a target="_blank" href="/privacy" className="text-[#337ab7] text-naskh text-sm hover:text-[#1e476c]">
                                             بيان الخصوصية
                                         </a>
                                     </span>
@@ -186,14 +179,14 @@ const Register: React.FC = () => {
 
                 </div>
                 <div className={`${styles.custom_container} lg:w-[40%] w-[100%] bg-white px-[30px]`}>
-                    <h1 className="text-2xl text-style1 mb-[40px] font-naskh ">حساب واحد لجميع منتجاتنا</h1>
+                    <h1 className="text-xl text-style1 mb-[40px] font-kufi ">حساب واحد لجميع منتجاتنا</h1>
                     <div className="my-[30px]">
                         <ul>
                             {mediaItems.map((item) => (
                                 <li key={item.id}>
                                     <article className="mb-[40px] flex items-center gap-3">
                                         <div>
-                                            <div className={`brand ${item.brand} w-[48px] h-[48px] bg-gray-200`} />
+                                            <Image width={48} height={48} src={`${item.brand}`} alt='logo-brand' className={`w-[48px] h-[48px] bg-gray-200`} />
                                         </div>
                                         <div>
                                             <h3 className="font-kufi text-[18px] mb-[4px]">{item.title}</h3>
