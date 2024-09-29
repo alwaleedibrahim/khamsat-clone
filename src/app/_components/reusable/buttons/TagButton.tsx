@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 
 interface IButtonBProps{
@@ -17,7 +18,7 @@ const TagButton: React.FC<IButtonBProps> = ({
         <a
             href={href}
             onClick={onClick}
-            className={`bg-white font-kufi text-[14px] mb-[10px] border border-bColor text-style2 px-[8px] py-[4px] hover:text-white transition-all leading-[1.8] ${extraStyle}`}
+            className={`bg-white font-kufi mb-[10px] border border-bColor text-style2 px-[8px] py-[4px] transition-all leading-[1.8] ${extraStyle}`}
         >
             {text}
         </a>

@@ -10,13 +10,13 @@ const ButtonB: React.FC<IButtonBProps> = ({
     href = '/',
     text,
     onClick,
-    extraStyle = '',
+    extraStyle,
 }) => {
     return (
         <a
             href={href}
             onClick={onClick}
-            className={`text-[16px] font-kufi border border-primary text-primary px-[22px] py-[13px] hover:bg-primary hover:text-white transition-all ${extraStyle}`}
+            className={`font-kufi border border-primary text-primary hover:bg-primary hover:text-white transition-all ${extraStyle}`}
         >
             {text}
         </a>
