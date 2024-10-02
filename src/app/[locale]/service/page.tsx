@@ -113,7 +113,7 @@ const page = () => {
     ];
 
     return (
-        <div className="flex flex-col lg:bg-transparent bg-white">
+        <div className="flex flex-col lg:bg-transparent bg-white pt-[100px]">
             <div className="flex lg:flex-row flex-col w-full justify-center">
                 <div className="lg:w-[68%] w-[100%] lg:p-sm-screen">
                     <ServiceData images={serviceData.images} description={serviceData.description} />

@@ -1,0 +1,66 @@
+{
+    "Header": {
+        "sidebar": {
+            "menu": {
+                "addService": "Add Service",
+                "viewServices": "Purchases",
+                "incomingService": "Incoming Orders",
+                "categories": {
+                    "title": "Categories",
+                    "design": "Design",
+                    "writingTranslation": "Writing and Translation",
+                    "digitalMarketing": "Digital Marketing",
+                    "programmingDevelopment": "Programming and Development",
+                    "videoAnimation": "Video and Animation",
+                    "engineeringArchitecture": "Engineering and Architecture",
+                    "business": "Business",
+                    "audio": "Audio",
+                    "eLearning": "E-Learning",
+                    "data": "Data",
+                    "lifestyle": "Lifestyle"
+                },
+                "business": {
+                    "title": "Business Solutions",
+                    "turnYourBusinessDigital": "Turn Your Business Digital",
+                    "startYourBusinessProject": "Start Your Business Project",
+                    "createYourOnlineStore": "Create Your Online Store",
+                    "launchYourWebsite": "Launch Your Website",
+                    "digitalMarketingSolutions": "Digital Marketing Solutions",
+                    "createYourTrainingCourse": "Create Your Training Course",
+                    "publishYourBookOnline": "Publish Your Book Online"
+                },
+                "community": {
+                    "title": "Khamas Community",
+                    "samplesOfProjects": "Samples of Projects You've Done",
+                    "requestsForNonExistingServices": "Requests for Non-Existing Services",
+                    "userExperiencesStories": "User Experiences and Stories",
+                    "generalMatters": "General Matters About Khamas"
+                },
+                "khamsat": {
+                    "title": "Khamas",
+                    "aboutKhamas": "About Khamas",
+                    "howTheSiteWorks": "How the Site Works",
+                    "frequentlyAskedQuestions": "Frequently Asked Questions",
+                    "rightsGuarantee": "Rights Guarantee",
+                    "termsOfUse": "Terms of Use",
+                    "privacyStatement": "Privacy Statement",
+                    "levels": "Levels",
+                    "affiliateMarketing": "Affiliate Marketing",
+                    "sellingOnKhamas": "Selling on Khamas",
+                    "helpCenter": "Help Center"
+                },
+                "support": {
+                    "title": "Follow Us",
+                    "khamasCommunity": "Khamas Community",
+                    "khamasBlog": "Khamas Blog",
+                    "twitter": "Twitter",
+                    "design": "Design",
+                    "facebook": "Facebook"
+                }
+            }
+        }
+    },
+    "Footer": {
+        "copyright": "Copyright 2020"
+    }
+}

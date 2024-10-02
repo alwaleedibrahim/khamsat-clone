@@ -10,17 +10,17 @@ import Services from "./_components/popularServices/services";
 
 
 export default function Home() {
-  return (
-    <div className="text-center pt-[4rem]">
-      <HeroSection/>
-      <AllCategoriesSection />
-      <Services />
-      <DoWork />
-      <WhyUs />
-      <RecommendServices/>
-      <SnippetSection/>
-      <QuestionSection/>
-      <CallToActionSection />
-    </div>
-  );
+    return (
+        <div className="text-center pt-[4rem]">
+            <HeroSection />
+            <AllCategoriesSection />
+            <Services />
+            <DoWork />
+            <WhyUs />
+            <RecommendServices />
+            <SnippetSection />
+            <QuestionSection />
+            <CallToActionSection />
+        </div>
+    );
 }

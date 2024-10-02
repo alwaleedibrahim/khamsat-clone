@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import NavItem from "./navitem";
 import {
@@ -25,8 +26,23 @@ import DropDownBox, { DropDownBoxContent } from "./dropdownbox";
 import UserDropDownBox from "./userdropdown";
 import { FaBookBookmark, FaFileLines, FaSliders } from "react-icons/fa6";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter();
+  const localActive = useLocale();
+  const t = useTranslations("Header");
+  
+  const handleLang = (e:React.MouseEvent<HTMLLIElement>) => {
+    e.preventDefault();
+    const lang = e.currentTarget.getAttribute('data-lang');
+
+    const newLang = lang === "ar" ? "en" : "ar"; 
+    router.replace(`/${newLang}`);
+  };
+  
+
   return (
     <>
       <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full z-[200]">
@@ -43,7 +59,7 @@ export default function Navbar() {
               </NavItem>
             </label>
             <div
-              className="overflow-scroll fixed top-16 right-0 px-4 py-6 h-full w-64 transition-all duration-500 transform translate-x-full bg-white shadow-lg peer-checked:translate-x-0"
+              className={`overflow-scroll fixed top-16 ${localActive === "ar" ? "right-0 translate-x-full": "left-0 -translate-x-full"} peer-checked:translate-x-0 px-4 py-6 h-full w-64 transition-all duration-500 transform bg-white shadow-lg `}
               style={{ scrollbarWidth: "none" }}
             >
               <form acceptCharset="UTF-8" className="text-[#888] h-10">
@@ -57,61 +73,63 @@ export default function Navbar() {
                 />
               </form>
               <hr className="my-3" />
+
+              {/* ********************************** Start Sidebar ****************************************** */}
               <ul className="text-[#444]">
                 <li className="flex items-center py-3">
                   <FaPlus className="me-2" />
-                  <span>أضف خدمة</span>
+                  <span>{t('sidebar.menu.addService')}</span>
                 </li>
                 <li className="flex items-center py-3">   
                   <FaFolderOpen className="me-2" />
-                  <span>المشتريات</span>
+                  <span>{t('sidebar.menu.viewServices')}</span>
                 </li>
                 <li className="flex items-center py-3">
                   <FaTruck className="me-2 scale-x-[-1]" />
-                  <span>الطلبات الواردة</span>
+                  <span>{t('sidebar.menu.incomingService')} </span>
                 </li>
                 <li className="flex items-center py-3 ">
                   <details className="group w-full">
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaCubes className="me-2" />
-                        <span>التصنيفات</span>
+                        <span>{t('sidebar.menu.categories.title')}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تصميم</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.design')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">كتابة وترجمة</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.writingTranslation')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تسويق رقمي</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.digitalMarketing')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">برمجة وتطوير</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.programmingDevelopment')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">فيديو وأنيميشن</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.videoAnimation')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">هندسة وعمارة</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.engineeringArchitecture')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أعمال</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.business')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">صوتيات</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.audio')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تعليم عن بعد</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.eLearning')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">بيانات</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.data')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أسلوب حياة</span>
+                        <span className="ms-6">{t('sidebar.menu.categories.lifestyle')}</span>
                       </li>
                     </ul>
                   </details>
@@ -121,32 +139,32 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaBriefcase className="me-2" />
-                        <span>حلول الأعمال</span>
+                        <span>{t('sidebar.menu.business.title')}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">حوّل أعمالك للعالم الرقمي</span>
+                        <span className="ms-6">{t('sidebar.menu.business.turnYourBusinessDigital')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">ابدأ مشروعك التجاري</span>
+                        <span className="ms-6">{t('sidebar.menu.business.startYourBusinessProject')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أنشئ متجرك الإلكتروني</span>
+                        <span className="ms-6">{t('sidebar.menu.business.createYourOnlineStore')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أطلق موقعك الإلكتروني</span>
+                        <span className="ms-6">{t('sidebar.menu.business.launchYourWebsite')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">حلول التسويق الرقمي</span>
+                        <span className="ms-6">{t('sidebar.menu.business.digitalMarketingSolutions')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أنشئ دورتك التدريبية</span>
+                        <span className="ms-6">{t('sidebar.menu.business.createYourTrainingCourse')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">انشر كتابك عبر الإنترنت</span>
+                        <span className="ms-6">{t('sidebar.menu.business.publishYourBookOnline')}</span>
                       </li>
                     </ul>
                   </details>
@@ -251,6 +269,7 @@ export default function Navbar() {
                   </details>
                 </li>
               </ul>
+              {/* ********************************** End Sidebar ****************************************** */}
             </div>
 
             <div className="flex items-center px-5">
@@ -269,22 +288,22 @@ export default function Navbar() {
               <li>
                 <NavItem>
                   <FaPlus className="me-2" />
-                  <span>أضف خدمة</span>
+                  <span>{t('sidebar.menu.addService')}</span>
                 </NavItem>
               </li>
               <li>
                 <Link href='/services' >
                 <NavItem>
                   <FaCubes className="me-2" />
-                  <span>التصنيفات</span>
-                </NavItem>
+                  <span>{t('sidebar.menu.categories.title')}</span>
+                  </NavItem>
                 </Link>
               </li>
               <li>
               <Link href='/purchases' >
                 <NavItem>
                   <FaFolderOpen className="me-2" />
-                  <span>المشتريات</span>
+                  <span>{t('sidebar.menu.viewServices')}</span>
                 </NavItem>
                 </Link>
               </li>
@@ -292,7 +311,7 @@ export default function Navbar() {
               <Link href='/orders' >
                 <NavItem>
                   <FaTruck className="me-2 scale-x-[-1]" />
-                  <span>الطلبات الواردة</span>
+                  <span>{t('sidebar.menu.incomingService')} </span>
                 </NavItem>
                 </Link>
               </li>
@@ -352,6 +371,13 @@ export default function Navbar() {
                     </div>
                   </NavItem>
                 </button>
+              </li>
+              {/* change language */}
+              <li onClick={handleLang} data-lang={localActive} className="flex items-centergit check">
+                <NavItem>
+                  <FaGlobe className="text-lg" />
+                </NavItem>
+                {localActive}
               </li>
               <li>
                 <button className="group p-0 m-0 h-full">
