@@ -1,4 +1,5 @@
 "use client";
+
 import { FieldError, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faWindows} from '@fortawesome/free-brands-svg-icons';
@@ -6,13 +7,21 @@ import React, { useState } from "react";
 import styles from "./register.module.css";
 import Image from "next/image";
 
-// interface RegisterFormData {
-//     email: string;
-//     password: string;
-// }
+import { useDispatch} from "react-redux";
+import {login} from "../redux/slice/authSlice";
+
+
+interface RegisterFormData {
+    email: string;
+    password: string;
+    name: string;
+    familyName:string
+}
 
 
 const Register: React.FC = () => {
+
+
     const mediaItems = [
         { id: 1, title: 'أنا', sub: 'ركز على أهدافك وتابع ما يهمك حقاً', brand: '/images/brands/ana.jpeg' },
         { id: 2, title: 'مستقل', sub: 'منصّة العمل الحر العربية', brand: '/images/brands/mostaql.jfif' },
@@ -25,14 +34,41 @@ const Register: React.FC = () => {
         { id: 9, title: 'حسوب I/O', sub: 'ناقش أشخاصًا بنفس اهتماماتك', brand: '/images/brands/io.png' },
     ];
 
-    const {
-        // handleSubmit,
-        formState: { errors },
-    } = useForm();
+    const { register, handleSubmit,formState: { errors },} = useForm<RegisterFormData>();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const dispatch = useDispatch();
+    
+    const onSubmit = async (data: RegisterFormData) => {
+        setIsSubmitting(true);
+        try {
+            const response = await fetch(`http://localhost:3000/api/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+
+            const result = await response.json();
+            dispatch(login(result.token)); // Use the token received backend
+
+        } catch (error) {
+            console.log("Registration failed", error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+
+
 
     // const [formData, setFormData] = useState({});
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  
 
     return (
         <div className="min-h-screen flex flex-col bg-[#eceff4]">
@@ -67,14 +103,20 @@ const Register: React.FC = () => {
                     </div>
 
                     <hr className={`${styles.hr_text}`} data-content="أو" />
+                             
 
-                    <form className="space-y-4 bg-[#f7f9fc] py-[40px] px-[30px]">
+                         {/* registeration form */}
+
+
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-[#f7f9fc] py-[40px] px-[30px]">
                         <div className={`${styles.form_group}  grid lg:grid-cols-2 gap-[30px]`}>
                             <div>
+
                                 <label htmlFor="name" className="text-[14px] text-style1 mb-[10px] block">
                                     الاسم
                                 </label>
                                 <input
+                                  {...register("name", { required: "الاسم مطلوب" })}
                                     type="text"
                                     id="name"
                                     placeholder="اكتب اسمك باللغة العربية"
@@ -91,6 +133,7 @@ const Register: React.FC = () => {
                                     اسم العائلة
                                 </label>
                                 <input
+                                        {...register("familyName", { required: "اسم العائلة مطلوب" })}
                                     type="text"
                                     id="name"
                                     placeholder="اكتب اسم العائلة هنا باللغة العربية"
@@ -108,6 +151,7 @@ const Register: React.FC = () => {
                                 البريد الالكتروني
                             </label>
                             <input
+                             {...register("email", { required: "البريد الالكتروني مطلوب" })}
                                 type="email"
                                 id="email"
                                 placeholder="أدخل البريد الإلكتروني الخاص بك"
@@ -124,6 +168,7 @@ const Register: React.FC = () => {
                                 كلمة المرور
                             </label>
                             <input
+                                    {...register("password", { required: "كلمة المرور مطلوبة" })}
                                 type="password"
                                 id="password"
                                 placeholder="أدخل كلمة المرور الخاصة بك"

@@ -6,7 +6,10 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google";
 
-config.autoAddCss = false; 
+import { Provider } from "react-redux";
+import { store } from "../app/redux/store";
+
+config.autoAddCss = false;
 
 const NotoKufiArabic = Noto_Kufi_Arabic({
   subsets: ["arabic"],
@@ -25,9 +28,12 @@ export default function RootLayout({
       <body
         className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <Provider store={store}>
+          <Navbar />
+          {children}
+
+          <Footer />
+        </Provider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 "use client";
+
 import { FieldError, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faWindows } from '@fortawesome/free-brands-svg-icons';
@@ -6,22 +7,47 @@ import React, { useState } from "react";
 import styles from "./login.module.css";
 import Image from "next/image";
 
-// interface LoginFormData {
-//     email: string;
-//     password: string;
-// }
+import { useDispatch} from "react-redux";
+import {login} from "../redux/slice/authSlice";
 
+
+interface LoginFormData {
+    email: string;
+    password: string;
+}
 
 const Login: React.FC = () => {
-    const {
-        register,
-        // handleSubmit,
-        formState: { errors },
-    } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const dispatch = useDispatch();
 
+    const onSubmit = async (data: LoginFormData) => {
+    setIsSubmitting(true);
+    try {
+        const response = await fetch(`http://localhost:3000/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+
+        const result = await response.json();
+        dispatch(login(result.token)); // Use the token received from backend
+
+    } catch (error) {
+        console.log("Login failed", error);
+    } finally {
+        setIsSubmitting(false);
+    }
+};
     // const [formData, setFormData] = useState({});
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [isSubmitting, setIsSubmitting] = useState(false);
+   
 
     return (
         <div className="min-h-screen flex flex-col bg-[#eceff4]">
@@ -63,13 +89,15 @@ const Login: React.FC = () => {
                 </div>
 
                 <hr className={`${styles.hr_text}`} data-content="أو" />
-
-                <form className="space-y-4">
+                        
+                        {/* login form here */}
+                <form onSubmit={handleSubmit(onSubmit)} className = "space-y-4">
                     <div className={`${styles.form_group}`}>
                         <label htmlFor="email" className="text-[14px] text-style1 mb-[10px] block">
                             البريد الالكتروني
                         </label>
                         <input
+                        {...register("email", { required: "البريد الالكتروني مطلوب" })}
                             type="email"
                             id="email"
                             placeholder="أدخل البريد الإلكتروني الخاص بك"
@@ -86,6 +114,7 @@ const Login: React.FC = () => {
                             كلمة المرور
                         </label>
                         <input
+                         {...register("password", { required: "كلمة المرور مطلوبة" })}
                             type="password"
                             id="password"
                             placeholder="أدخل كلمة المرور الخاصة بك"
