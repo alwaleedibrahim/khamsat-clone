@@ -10,9 +10,9 @@ export default function DoWork() {
       </div>
 
       {/* Main Content: Text & Video */}
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 pr-8">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:pr-8">
         {/* Text Section */}
-        <div className="w-full md:w-1/2 text-right">
+        <div className="w-full md:w-1/2 text-right p-container-space">
           <ul className="space-y-6 text-lg"> 
             <li>
               <div className="flex items-center gap-2">

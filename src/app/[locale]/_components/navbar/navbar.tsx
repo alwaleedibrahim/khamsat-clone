@@ -373,7 +373,7 @@ export default function Navbar() {
                 </button>
               </li>
               {/* change language */}
-              <li onClick={handleLang} data-lang={localActive} className="flex items-centergit check">
+              <li onClick={handleLang} data-lang={localActive} className="flex items-center">
                 <NavItem>
                   <FaGlobe className="text-lg" />
                 </NavItem>

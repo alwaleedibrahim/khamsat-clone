@@ -11,7 +11,7 @@ import Services from "./_components/popularServices/services";
 
 export default function Home() {
     return (
-        <div className="text-center pt-[4rem]">
+        <div className="text-center lg:pt-[4rem]">
             <HeroSection />
             <AllCategoriesSection />
             <Services />

@@ -6,7 +6,7 @@ export default function Footer() {
     <>
    <footer className="bg-white text-foreground py-10 font-kufi">
 
-   <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+   <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-sm p-container-space">
           {/* عمود "موقع خمسات" */}
           <div className="md:pr-4 md:mr-8">
             <h3 className="mb-4 text-lg font-light">موقع خمسات</h3>

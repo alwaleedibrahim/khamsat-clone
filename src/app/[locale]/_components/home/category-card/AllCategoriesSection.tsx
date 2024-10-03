@@ -62,9 +62,9 @@ export default function AllCategoriesSection() {
     <div className="p-section flex  flex-col items-center">
       <h2 className="font-kufi text-3xl py-8">كافة الخدمات الاحترافية لتطوير أعمالك</h2>
       <div className="container py-5">
-        <div className="flex flex-wrap gap-6 justify-center">
+        <div className="flex flex-wrap lg:gap-6 justify-center">
           {categories.map((category, index) => (
-            <div key={index} className="w-1/3 lg:w-1/5">
+            <div key={index} className="w-1/2 p-2 lg:p-0 lg:w-1/5">
               <CategoryCard img={`/images/categories/${category.img}`}>
                 {category.name}
               </CategoryCard>
