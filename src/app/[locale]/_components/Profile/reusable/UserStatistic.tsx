@@ -1,6 +1,7 @@
 import React from 'react'
 import Stars from '../../reusable/stars/Stars';
 import TagButton from '../../reusable/buttons/TagButton';
+import { useTranslations } from 'next-intl';
 
 interface IUserStatisticProps {
     ratings: {
@@ -21,16 +22,17 @@ export interface IUserInfoProps {
 
 const UserStatistic: React.FC<IUserInfoProps> = ({ data }) => {
     const { ratings, orderCompleted, activeServices, clients, responseTime, JoinedDate, lastSeen } = data;
+    const t = useTranslations("ProfilePage.Profile")
 
     return (
         <div className="bg-white">
             <h5 className='py-[14px] px-[20px] font-kufi border-b-[1px] border-[#F1F1F1]'>
-                إحصائيات
+                {t('statistics.title')}
             </h5>
             <div className="grid grid-cols-2 gap-4 font-kufi text-[14px] p-container-space border-b-[1px] border-[#F1F1F1]">
                 {/* Ratings */}
                 <div className="col-span-1">
-                    <span> التقييمات </span>
+                    <span> {t('statistics.ratings')} </span>
                 </div>
                 <div className="col-span-1 flex items-center">
                     <Stars rating={ratings.average} extraStyle='text-[20px]' />
@@ -39,15 +41,15 @@ const UserStatistic: React.FC<IUserInfoProps> = ({ data }) => {
 
                 {/* orders completed */}
                 <div className="col-span-1">
-                    <span>معدل إكمال الطلبات</span>
+                    <span>{t('statistics.completion_rate')} </span>
                 </div>
                 <div className="col-span-1">
-                    <TagButton text={orderCompleted} extraStyle='bg-[#888] text-white text-[10px]'/>
+                    <TagButton text={orderCompleted} extraStyle='bg-[#888888] text-white text-[10px]'/>
                 </div>
 
                 {/* services published */}
                 <div className="col-span-1">
-                    <span>الخدمات المنشورة </span>
+                    <span>{t('statistics.published_services')}</span>
                 </div>
                 <div className="col-span-1">
                     <span>{activeServices}</span>
@@ -55,7 +57,7 @@ const UserStatistic: React.FC<IUserInfoProps> = ({ data }) => {
 
                 {/* Active Orders */}
                 <div className="col-span-1">
-                    <span>عدد العملاء </span>
+                    <span>{t('statistics.number_of_clients')}</span>
                 </div>
                 <div className="col-span-1">
                     <span>{clients}</span>
@@ -63,7 +65,7 @@ const UserStatistic: React.FC<IUserInfoProps> = ({ data }) => {
 
                 {/* Response Time */}
                 <div className="col-span-1">
-                    <span>متوسط سرعة الرد </span>
+                    <span>{t('statistics.average_response_time')}</span>
                 </div>
                 <div className="col-span-1">
                     <span>{responseTime}</span>
@@ -73,14 +75,14 @@ const UserStatistic: React.FC<IUserInfoProps> = ({ data }) => {
 
                 {/* Joined Date */}
                 <div className="col-span-1">
-                    <span>تاريخ التسجيل</span>
+                    <span>{t('statistics.registration_date')}</span>
                 </div>
                 <div className="col-span-1">
                     <span>{JoinedDate}</span>
                 </div>
                 {/* Last Seen */}
                 <div className="col-span-1">
-                    <span>آخر تواجد</span>
+                    <span>{t('statistics.last_seen')}</span>
                 </div>
                 <div className="col-span-1">
                     <span>{lastSeen}</span>

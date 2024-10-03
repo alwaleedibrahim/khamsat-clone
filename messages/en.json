@@ -62,5 +62,38 @@
     },
     "Footer": {
         "copyright": "Copyright 2020"
+    },
+    "ProfilePage": {
+        "Header": {
+            "servicesTab": "Services",
+            "profileTab": "Your Profile",
+            "EditTab": "Edit Profile Information"
+        },
+        "Profile":{
+            "aboutMe":{
+                "title":"Summary",
+                "description":"No Summary Yet, Tell us a little about yourself"
+            },
+            "myServices": {
+                "title":"Services",
+                "description":"No Services Yet"
+            },
+            "statistics": {
+                "title": "Statistics",
+                "ratings": "Ratings",
+                "completion_rate": "Order Completion Rate",
+                "published_services": "Published Services",
+                "number_of_clients": "Number of Clients",
+                "average_response_time": "Average Response Time",
+                "registration_date": "Registration Date",
+                "last_seen": "Last Seen"
+            },
+            "verifications": {
+                "title": "Verifications",
+                "email": "Email",
+                "phone_number": "Phone Number",
+                "personal_id": "Personal ID"
+            }
+        }
     }
 }

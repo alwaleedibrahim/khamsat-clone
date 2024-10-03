@@ -62,5 +62,38 @@
     },
     "Footer": {
         "copyright": "حقوق النشر 2020"
+    },
+    "ProfilePage":{
+        "Header":{
+            "servicesTab":"الخدمات",
+            "profileTab":"الملف الشخصي",
+            "EditTab":"تعديل الملف الشخصي"
+        },
+        "Profile":{
+            "aboutMe":{
+                "title":"نبذة عني",
+                "description":"لم يكتب نبذة شخصية"
+            },
+            "myServices": {
+                "title":"خدماتي",
+                "description":"لا يوجد خدمات"
+            },
+            "statistics": {
+                "title": "إحصائيات",
+                "ratings": "التقييمات",
+                "completion_rate": "معدل إكمال الطلبات",
+                "published_services": "الخدمات المنشورة",
+                "number_of_clients": "عدد العملاء",
+                "average_response_time": "متوسط سرعة الرد",
+                "registration_date": "تاريخ التسجيل",
+                "last_seen": "آخر تواجد"
+            },
+            "verifications":{
+                "title": "توثيقات",
+                "email": "البريد الإلكتروني",
+                "phone_number": "رقم الجوال",
+                "personal_id": "الهوية الشخصية"
+            }
+        }
     }
 }
