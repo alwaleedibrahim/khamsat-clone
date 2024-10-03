@@ -27,21 +27,23 @@ import UserDropDownBox from "./userdropdown";
 import { FaBookBookmark, FaFileLines, FaSliders } from "react-icons/fa6";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 export default function Navbar() {
   const router = useRouter();
   const localActive = useLocale();
   const t = useTranslations("Header");
-  
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const handleLang = (e:React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
     const lang = e.currentTarget.getAttribute('data-lang');
-
     const newLang = lang === "ar" ? "en" : "ar"; 
-    router.replace(`/${newLang}`);
+    const newPathname = `/${newLang}${pathname.substring(3)}`;
+    const newUrl = `${newPathname}${searchParams? `?${searchParams.toString()}` : ''}`;
+    router.replace(newUrl);
   };
-  
 
   return (
     <>
