@@ -1,0 +1,99 @@
+{
+    "Header": {
+        "sidebar": {
+            "menu": {
+                "addService": "أضف خدمة",
+                "viewServices": "المشتريات",
+                "incomingService": "الطلبات الواردة",
+                "categories": {
+                    "title": "التصنيفات",
+                    "design": "تصميم",
+                    "writingTranslation": "كتابة وترجمة",
+                    "digitalMarketing": "تسويق رقمي",
+                    "programmingDevelopment": "برمجة وتطوير",
+                    "videoAnimation": "فيديو وأنيميشن",
+                    "engineeringArchitecture": "هندسة وعمارة",
+                    "business": "أعمال",
+                    "audio": "صوتيات",
+                    "eLearning": "تعليم عن بعد",
+                    "data": "بيانات",
+                    "lifestyle": "أسلوب حياة"
+                },
+                "business": {
+                    "title": "حلول الأعمال",
+                    "turnYourBusinessDigital": "حوّل أعمالك للعالم الرقمي",
+                    "startYourBusinessProject": "ابدأ مشروعك التجاري",
+                    "createYourOnlineStore": "أنشئ متجرك الإلكتروني",
+                    "launchYourWebsite": "أطلق موقعك الإلكتروني",
+                    "digitalMarketingSolutions": "حلول التسويق الرقمي",
+                    "createYourTrainingCourse": "أنشئ دورتك التدريبية",
+                    "publishYourBookOnline": "انشر كتابك عبر الإنترنت"
+                },
+                "community": {
+                    "title": "مجتمع خمسات",
+                    "samplesOfProjects": "نماذج أعمال قمت بتنفيذها",
+                    "requestsForNonExistingServices": "طلبات الخدمات غير الموجودة",
+                    "userExperiencesStories": "تجارب وقصص المستخدمين",
+                    "generalMatters": "أمور عامة حول خمسات"
+                },
+                "khamsat": {
+                    "title": "خمسات",
+                    "aboutKhamas": "حول خمسات",
+                    "howTheSiteWorks": "كيف يعمل الموقع",
+                    "frequentlyAskedQuestions": "الأسئلة الشائعة",
+                    "rightsGuarantee": "ضمان الحقوق",
+                    "termsOfUse": "شروط الاستخدام",
+                    "privacyStatement": "بيان الخصوصية",
+                    "levels": "المستويات",
+                    "affiliateMarketing": "التسويق بالعمولة",
+                    "sellingOnKhamas": "البيع على خمسات",
+                    "helpCenter": "مركز المساعدة"
+                },
+                "support": {
+                    "title": "تابعنا",
+                    "khamasCommunity": "مجتمع خمسات",
+                    "khamasBlog": "مدونة خمسات",
+                    "twitter": "تويتر",
+                    "design": "تصميم",
+                    "facebook": "فيسبوك"
+                }
+            }
+        }
+    },
+    "Footer": {
+        "copyright": "حقوق النشر 2020"
+    },
+    "ProfilePage":{
+        "Header":{
+            "servicesTab":"الخدمات",
+            "profileTab":"الملف الشخصي",
+            "EditTab":"تعديل الملف الشخصي"
+        },
+        "Profile":{
+            "aboutMe":{
+                "title":"نبذة عني",
+                "description":"لم يكتب نبذة شخصية"
+            },
+            "myServices": {
+                "title":"خدماتي",
+                "description":"لا يوجد خدمات"
+            },
+            "statistics": {
+                "title": "إحصائيات",
+                "ratings": "التقييمات",
+                "completion_rate": "معدل إكمال الطلبات",
+                "published_services": "الخدمات المنشورة",
+                "number_of_clients": "عدد العملاء",
+                "average_response_time": "متوسط سرعة الرد",
+                "registration_date": "تاريخ التسجيل",
+                "last_seen": "آخر تواجد"
+            },
+            "verifications":{
+                "title": "توثيقات",
+                "email": "البريد الإلكتروني",
+                "phone_number": "رقم الجوال",
+                "personal_id": "الهوية الشخصية"
+            }
+        }
+    }
+}
