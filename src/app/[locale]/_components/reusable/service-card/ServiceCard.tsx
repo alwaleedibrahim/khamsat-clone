@@ -2,38 +2,53 @@ import React from 'react'
 import ImageSwiper from '../img-swiper/ImageSwiper'
 import Stars from '../stars/Stars'
 import Image from 'next/image'
+import { useLocale } from 'next-intl';
 
-interface ServiceCardProps {
-    title: string;
-    category: string;
-    subCategory: string;
+interface ServicesCard {
+    title: {
+        ar: string,
+        en: string
+    };
+    category: {
+        name: {
+            ar: string,
+            en: string
+        }
+    };
+    subCategory: {
+        title: {
+            ar: string,
+            en: string
+        }
+    };
     images: string[];
     authorImg: string;
-    rating: number;
-    price: string;
+    serviceCard: {
+        totalRated: number;
+        totalReviewers: number;
+    }
+    price: number;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ 
-    title, 
-    category, 
-    subCategory, 
-    images, 
-    authorImg, 
-    rating, 
-    price 
-}) => {
+interface ServicesCardProps {
+    serviceData: ServicesCard;
+}
+
+const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
+    const localActive = useLocale()
+
     return (
         <div>
             <div className="relative w-full h-auto">
                 <ImageSwiper
-                    images={images}
+                    images={serviceData.images}
                     extraStyle='h-[180px]'
                 />
 
                 <div className="absolute bottom-[10px] left-[15px] w-[36px] h-[36px] z-[100]">
                     <a href="">
                         <Image
-                            src={authorImg}
+                            src={serviceData.authorImg}
                             alt="Author's profile picture"
                             width={36}
                             height={36}
@@ -45,19 +60,23 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             </div>
             <div className="text-start">
                 <h4 className="font-kufi text-md my-2">
-                    <a href="/training/learn-engineering">{title}</a>
+                    <a href="/training/learn-engineering">{localActive === "ar" ? serviceData.title.ar : serviceData.title.en}</a>
                 </h4>
                 <div className="text-sm text-[#5c5e61]">
-                    <a href="/training" className="text-[#5c5e61]">{category}</a> / <a href="/training/learn-engineering" className="text-[#5c5e61]">{subCategory}</a>
+                    <a href="/training" className="text-[#5c5e61]">
+                        {localActive === "ar" ? serviceData.category.name.ar : serviceData.category.name.en}
+                    </a> / <a href="/training/learn-engineering" className="text-[#5c5e61]">
+                        {localActive === "ar" ? serviceData.subCategory.title.ar : serviceData.subCategory.title.en}
+                    </a>
                 </div>
-                {rating > 0 && (
+                {serviceData.serviceCard.totalRated > 0 && (
                     <div className='flex items-center gap-1 my-2'>
-                        <Stars rating={rating} extraStyle='text-[24px]' />
-                        <span className="text-[#777777] text-[14px]">({rating})</span>
+                        <Stars rating={serviceData.serviceCard.totalRated} extraStyle='text-[24px]' />
+                        <span className="text-[#777777] text-[14px]">({serviceData.serviceCard.totalRated})</span>
                     </div>
                 )}
                 <div className="text-style1">
-                    تبدأ من <span className="font-bold">{price}$</span>
+                    تبدأ من <span className="font-bold">{serviceData.price}$</span>
                 </div>
             </div>
         </div>
