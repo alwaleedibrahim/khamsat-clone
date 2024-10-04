@@ -1,6 +1,6 @@
 import React from 'react'
 import ButtonB from '../reusable/buttons/ButtonB'
-import ServiceCard from '../reusable/service-card/ServiceCard'
+// import ServiceCard from '../reusable/service-card/ServiceCard'
 
 const RecommendServices = () => {
     return (
@@ -14,7 +14,7 @@ const RecommendServices = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
-                <ServiceCard
+                {/* <ServiceCard
                     title="دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
                     category="تعليم عن بعد"
                     subCategory="شروحات هندسية"
@@ -68,7 +68,7 @@ const RecommendServices = () => {
                     authorImg="/images/R.jfif"
                     rating={4.5}
                     price="10.00"
-                />
+                /> */}
             </div>
             </div>
         </div>

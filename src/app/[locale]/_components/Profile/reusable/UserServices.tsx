@@ -1,5 +1,5 @@
 import React from 'react'
-import ServiceCard from '../../reusable/service-card/ServiceCard'
+// import ServiceCard from '../../reusable/service-card/ServiceCard'
 import { useTranslations } from 'next-intl'
 
 const UserServices = () => {
@@ -12,7 +12,7 @@ const UserServices = () => {
             </h5>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-container-space">
-                <ServiceCard
+                {/* <ServiceCard
                     title="دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
                     category="تعليم عن بعد"
                     subCategory="شروحات هندسية"
@@ -38,7 +38,7 @@ const UserServices = () => {
                     authorImg="/images/R.jfif"
                     rating={0}
                     price="10.00"
-                />
+                /> */}
             </div>
         </div>
     )

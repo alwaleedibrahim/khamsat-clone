@@ -1,5 +1,5 @@
 import React from 'react'
-import ServiceCard from '../reusable/service-card/ServiceCard'
+// import ServiceCard from '../reusable/service-card/ServiceCard'
 
 const ServicesRecommended = () => {
     return (
@@ -9,7 +9,7 @@ const ServicesRecommended = () => {
             </h5>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-container-space">
-                <ServiceCard
+                {/* <ServiceCard
                     title="دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
                     category="تعليم عن بعد"
                     subCategory="شروحات هندسية"
@@ -91,7 +91,7 @@ const ServicesRecommended = () => {
                     authorImg="/images/R.jfif"
                     rating={4.5}
                     price="10.00"
-                />
+                /> */}
             </div>
         </div>
     )
