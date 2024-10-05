@@ -3,8 +3,8 @@ import Image from "next/image";
 
 export default function DoWork() {
   return (
-    <div className="container mx-auto py-8 px-4 md:px-8 pb-32"> 
-     
+    <div className="xl:container mx-auto py-8 px-4 md:px-8 pb-32"> 
+
       <div className="text-center mb-8">
         <h2 className="text-3xl font-kufi mb-4 pb-12">نفذ أعمالك بسهولة وأمان</h2> 
       </div>

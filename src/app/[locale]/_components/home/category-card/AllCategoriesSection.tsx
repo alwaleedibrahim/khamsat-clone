@@ -61,7 +61,7 @@ export default function AllCategoriesSection() {
   return (
     <div className="p-section flex  flex-col items-center">
       <h2 className="font-kufi text-3xl py-8">كافة الخدمات الاحترافية لتطوير أعمالك</h2>
-      <div className="container py-5">
+      <div className="xl:container py-5">
         <div className="flex flex-wrap lg:gap-6 justify-center">
           {categories.map((category, index) => (
             <div key={index} className="w-1/2 p-2 lg:p-0 lg:w-1/5">

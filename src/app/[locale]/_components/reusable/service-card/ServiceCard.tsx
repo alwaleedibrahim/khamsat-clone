@@ -4,18 +4,18 @@ import Stars from '../stars/Stars'
 import Image from 'next/image'
 import { useLocale } from 'next-intl';
 
-interface ServicesCard {
+export interface ServicesCard {
     title: {
         ar: string,
         en: string
     };
-    category: {
+    category?: {
         name: {
             ar: string,
             en: string
         }
     };
-    subCategory: {
+    subcategory?: {
         title: {
             ar: string,
             en: string
@@ -30,7 +30,7 @@ interface ServicesCard {
     price: number;
 }
 
-interface ServicesCardProps {
+export interface ServicesCardProps {
     serviceData: ServicesCard;
 }
 
@@ -64,9 +64,9 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
                 </h4>
                 <div className="text-sm text-[#5c5e61]">
                     <a href="/training" className="text-[#5c5e61]">
-                        {localActive === "ar" ? serviceData.category.name.ar : serviceData.category.name.en}
+                        {localActive == "ar" ? serviceData.category?.name.ar : serviceData.category?.name.en}
                     </a> / <a href="/training/learn-engineering" className="text-[#5c5e61]">
-                        {localActive === "ar" ? serviceData.subCategory.title.ar : serviceData.subCategory.title.en}
+                        {localActive == "ar" ? serviceData.subcategory?.title.ar : serviceData.subcategory?.title.en}
                     </a>
                 </div>
                 {serviceData.serviceCard.totalRated > 0 && (
