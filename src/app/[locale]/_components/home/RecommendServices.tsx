@@ -9,7 +9,7 @@ const RecommendServices = async () => {
     try {
         const rawServices = await fetchAllServices();        
         servicesData = rawServices.services
-        
+
     } catch (error) {
         console.error('Failed to fetch services:', error);
     }

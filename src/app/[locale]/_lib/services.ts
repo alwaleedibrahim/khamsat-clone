@@ -25,9 +25,9 @@ export const fetchAllServices = async () => {
             throw new Error(`Error: ${response.statusText}`);
         }
 
-        const data = await response.json();    
+        const data = await response.json();   
         console.log(data);
-            
+
         return data; 
     } catch (error) {
         console.error('Fetch Services Error:', error);

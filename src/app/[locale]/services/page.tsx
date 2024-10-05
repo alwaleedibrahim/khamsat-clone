@@ -4,13 +4,12 @@ import ServiceCard, { ServicesCard } from "../_components/reusable/service-card/
 import { fetchAllServices } from "../_lib/services";
 import ServicesCollection from "../_components/home/ServicesCollection";
 
-const Page = async () => {
+const Page = async() => {
   let servicesData: ServicesCard[] = []; 
 
   try {
       const rawServices = await fetchAllServices();        
       servicesData = rawServices.services
-      console.log(servicesData);
       
   } catch (error) {
       console.error('Failed to fetch services:', error);
