@@ -1,3 +1,5 @@
+"use client";
+
 import Footer from "./_components/footer/footer";
 import Navbar from "./_components/navbar/navbar";
 
@@ -7,7 +9,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google";
 
 import { Provider } from "react-redux";
-import { store } from "../app/redux/store";
+import { store } from "./_lib/redux/store";
 
 config.autoAddCss = false;
 
