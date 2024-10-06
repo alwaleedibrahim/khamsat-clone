@@ -12,60 +12,36 @@ export default function page() {
         </div>
         <div className="w-full lg:w-4/6">
           <ServicesCollection>
-            <ServiceCard
-              title="دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
-              category="تعليم عن بعد"
-              subCategory="شروحات هندسية"
-              images={[
+            <ServiceCard serviceData={{
+                title: {
+                  ar: "دورة CFPS، النجاح في امتحان CFPS في متناول يدك",
+                  en: "دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
+              },
+              category: {
+                  name: {
+                      ar: "تعليم عن بعد",
+                      en: "تعليم عن بعد"
+                  }
+              },
+              subcategory: {
+                  title: {
+                      ar:"تعليم عن بعد",
+                      en: "تعليم عن بعد"
+                  }
+              },
+              images: [
                 "https://picsum.photos/200/300",
                 "https://picsum.photos/200/301",
                 "https://picsum.photos/200/302",
-              ]}
-              authorImg="/images/R.jfif"
-              rating={3.5}
-              price="10.00"
-            />
-
-            <ServiceCard
-              title="دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
-              category="تعليم عن بعد"
-              subCategory="شروحات هندسية"
-              images={[
-                "https://picsum.photos/200/301",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/302",
-              ]}
-              authorImg="/images/R.jfif"
-              rating={0}
-              price="10.00"
-            />
-            <ServiceCard
-              title="دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
-              category="تعليم عن بعد"
-              subCategory="شروحات هندسية"
-              images={[
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/301",
-                "https://picsum.photos/200/302",
-              ]}
-              authorImg="/images/R.jfif"
-              rating={3.5}
-              price="10.00"
-            />
-
-            <ServiceCard
-              title="دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
-              category="تعليم عن بعد"
-              subCategory="شروحات هندسية"
-              images={[
-                "https://picsum.photos/200/301",
-                "https://picsum.photos/200/300",
-                "https://picsum.photos/200/302",
-              ]}
-              authorImg="/images/R.jfif"
-              rating={0}
-              price="10.00"
-            />
+              ],
+              authorImg: "/images/R.jfif",
+              serviceCard: {
+                  totalRated: 5,
+                  totalReviewers: 10,
+              },
+              price: 231
+            }}
+              />
           </ServicesCollection>
         </div>
       </div>
