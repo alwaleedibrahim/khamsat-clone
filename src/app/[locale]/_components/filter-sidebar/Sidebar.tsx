@@ -11,6 +11,8 @@ import { FaTimes } from 'react-icons/fa'
 import CheckboxInput from './form-control/CheckBoxInput'
 import categoriesLoader from '../../_lib/axios/categoryLoader'
 import subcategoriesLoader from '../../_lib/axios/subCategoryLoader'
+import ICategory from '../../_models/category'
+import ISubCategory from '../../_models/subcategory'
 
 export default async function Sidebar() {
     const categories = await categoriesLoader()
@@ -26,21 +28,21 @@ export default async function Sidebar() {
             <CardHeader><span>الاقسام</span></CardHeader>
             <CardBody>
                 <List>
-                    {categories.map(async (c)=> {
-                        const subcat = await subcategoriesLoader(c._id)
+                    {categories.map(async (category: ICategory)=> {
+                        const subcategories = await subcategoriesLoader(category._id)
                         return (<>
-                        <ListItem key={c._id}>{c.name.ar}</ListItem>
+                        <ListItem key={category._id}>{category.name.ar}</ListItem>
                         <ListItem>
                             <SubList>
-                                {subcat?.map(sub=> {
+                                {subcategories?.map((subcategory: ISubCategory)=> {
                                     return (
                                         <>
-                                    <ListItem key={sub._id}>{sub.title.ar}</ListItem>
+                                    <ListItem key={subcategory._id}>{subcategory.title.ar}</ListItem>
                                     <ListItem>
                                         <SubList>
-                                        {sub.subcategories.map(subsub=> {
+                                        {subcategory.subcategories.map((nestedSubcategory: ISubCategory)=> {
                                         return (
-                                        <ListItem key={subsub._id}>{subsub.title.ar}</ListItem>
+                                        <ListItem key={nestedSubcategory._id}>{nestedSubcategory.title.ar}</ListItem>
                                         )
                                     }
                                         )}
