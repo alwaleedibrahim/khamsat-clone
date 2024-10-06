@@ -1,4 +1,4 @@
-const base_url = `${process.env.API_BASE_URL}/services`;
+const base_url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/services`;
 
 export const fetchServices = async (query:string) => {
     try {
