@@ -7,6 +7,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google";
 import Navbar from './_components/navbar/navbar';
 import Footer from './_components/footer/footer';
+import ReduxProvider from './_components/redux-provider/provider';
 
 config.autoAddCss = false; 
 
@@ -33,9 +34,11 @@ export default async function LocaleLayout({
         <html lang={locale} dir={locale === "ar"? "rtl": "ltr"}>
             <body  className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}>
                 <NextIntlClientProvider messages={messages}>
-                    <Navbar />
-                        {children}
-                    <Footer />
+                    <ReduxProvider>
+                        <Navbar />
+                            {children}
+                        <Footer />
+                    </ReduxProvider>
                 </NextIntlClientProvider>
             </body>
         </html>

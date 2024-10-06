@@ -1,4 +1,4 @@
-const base_url = 'http://localhost:4500/services';
+const base_url = `${process.env.API_BASE_URL}/services`;
 
 export const fetchServices = async (query:string) => {
     try {
