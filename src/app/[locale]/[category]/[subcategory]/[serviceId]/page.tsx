@@ -1,19 +1,30 @@
 import Link from "next/link";
-// import ServiceData from "../_components/single-service/ServiceData";
-// import ServiceInfo from "../_components/single-service/ServiceInfo";
-// import SellerCard from "../_components/single-service/SellerCard";
-import AdditionalServices from "../_components/single-service/AdditionalServices";
-import GetService from "../_components/single-service/GetService";
-import ServicesRecommended from "../_components/single-service/ServicesRecommended";
-import ServiceKeywords from "../_components/single-service/ServiceKeywords";
-import Reviews from "../_components/single-service/Reviews";
 import Image from "next/image";
-import ServiceSocialMedia from "../_components/single-service/ServiceSocialMedia";
+import AdditionalServices from "@/app/[locale]/_components/single-service/AdditionalServices";
+import GetService from "@/app/[locale]/_components/single-service/GetService";
+import ServicesRecommended from "@/app/[locale]/_components/single-service/ServicesRecommended";
+import ServiceKeywords from "@/app/[locale]/_components/single-service/ServiceKeywords";
+import Reviews from "@/app/[locale]/_components/single-service/Reviews";
+import ServiceSocialMedia from "@/app/[locale]/_components/single-service/ServiceSocialMedia";
+import { fetchServiceById } from "@/app/[locale]/_lib/services";
+import ServiceData from "@/app/[locale]/_components/single-service/ServiceData";
+import ServiceInfo from "@/app/[locale]/_components/single-service/ServiceInfo";
+import SellerCard from "@/app/[locale]/_components/single-service/SellerCard";
+import { GetServerSidePropsContext } from "next";
 
-const page = async() => {
+const page = async(context: GetServerSidePropsContext) => {
+    const { serviceId } = context.params! as {
+        serviceId: string
+    }
+    let serviceData;
     // ========================================== //
     // service data
-
+    try{
+        const response = await fetchServiceById(serviceId);
+        serviceData = response.service;
+    }catch(err){
+        console.log(err);
+    }
     // ========================================== //
     // upgardes
     const serviceUpgradesData = [
@@ -85,15 +96,15 @@ const page = async() => {
 
     return (
         <div className="flex flex-col lg:bg-transparent bg-white pt-[100px]">
-            {/* <div className="flex lg:flex-row flex-col w-full justify-center">
+            <div className="flex lg:flex-row flex-col w-full justify-center">
                 <div className="lg:w-[68%] w-[100%] lg:p-sm-screen">
                     <ServiceData images={serviceData.images} description={serviceData.description} />
                 </div>
                 <div className="lg:w-[32%] w-[100%] lg:p-sm-screen">
-                    <ServiceInfo data={serviceInfo} />
-                    <SellerCard />
+                    <ServiceInfo data={serviceData.serviceCard} deliveryTime={serviceData.deliveryTime} price={serviceData.price} />
+                    <SellerCard profilePicture={serviceData.userId.profilePicture} username={serviceData.userId.username}/>
                 </div>
-            </div> */}
+            </div>
 
             <div className="flex lg:flex-row flex-col w-full justify-center">
                 <div className="lg:w-[68%] w-[100%]">
@@ -125,7 +136,7 @@ const page = async() => {
                     </div>
                 </div>
 
-                <div className="lg:w-[32%] w-[100%] lg:-mt-[320px]">
+                <div className="lg:w-[32%] w-[100%] lg:-mt-[140px]">
                     <div className="w-full lg:p-sm-screen">
                         <Link href="/guarantee">
                             <Image

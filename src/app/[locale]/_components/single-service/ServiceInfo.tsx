@@ -2,23 +2,21 @@ import React from 'react'
 import Stars from '../reusable/stars/Stars';
 
 interface ServiceData {
-    ratings: {
-        stars: number;
-        count: number;
-    };
-    responseTime: string;
-    buyers: number;
+    totalRated: number;
+    totalReviewers: number;
+    averageResponseTime: string;
+    totalBuyer: number;
     activeOrders: number;
-    startingPrice: string;
-    deliveryTime: string;
 }
 
 export interface ServiceInfoProps {
     data: ServiceData;
+    deliveryTime: string;
+    price:number
 }
 
-const ServiceInfo: React.FC<ServiceInfoProps> = ({ data }) => {
-    const { ratings, responseTime, buyers, activeOrders, startingPrice, deliveryTime } = data;
+const ServiceInfo: React.FC<ServiceInfoProps> = ({ data, deliveryTime, price }) => {
+    const { totalRated, totalReviewers, averageResponseTime, totalBuyer, activeOrders } = data;
 
     return (
         <div className="bg-white">
@@ -31,8 +29,8 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ data }) => {
                     <span> التقييمات </span>
                 </div>
                     <div className="col-span-1 flex items-center">
-                        <Stars rating={ratings.stars} extraStyle='text-[20px]'/>    
-                        <span className="mx-[3px] text-[#777] leading-[1.7em]">({ratings.count})</span>
+                        <Stars rating={totalRated} extraStyle='text-[20px]'/>    
+                        <span className="mx-[3px] text-[#777] leading-[1.7em]">({totalReviewers})</span>
                     </div>
     
                 {/* Response Time */}
@@ -40,7 +38,7 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ data }) => {
                     <span>متوسط سرعة الرد</span>
                 </div>
                 <div className="col-span-1">
-                    <span>{responseTime}</span>
+                    <span>{averageResponseTime}</span>
                 </div>
 
 
@@ -49,7 +47,7 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ data }) => {
                     <span>المشترين</span>
                 </div>
                 <div className="col-span-1">
-                    <span>{buyers}</span>
+                    <span>{totalBuyer}</span>
                 </div>
 
                 {/* Active Orders */}
@@ -65,7 +63,7 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ data }) => {
                     <span>سعر الخدمة يبدأ من</span>
                 </div>
                 <div className="col-span-1">
-                    <span>{startingPrice}</span>
+                    <span>${price}</span>
                 </div>
 
                 {/* Delivery Time */}
