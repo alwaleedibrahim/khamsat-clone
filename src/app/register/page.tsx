@@ -102,6 +102,7 @@ const Register: React.FC = () => {
 
       const result = await response.json();
       dispatch(login(result.token)); // Use the token received backend
+      document.cookie = `token=${result.token}; path=/; max-age=2592000`;//token stored in cookie for 1 monnth age
       router.push("/") //make user redirected to home page
     } catch (error) {
       console.log("Registration failed", error);

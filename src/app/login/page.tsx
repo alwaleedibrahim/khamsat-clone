@@ -45,6 +45,7 @@ const Login: React.FC = () => {
 
       const result = await response.json();
       dispatch(login(result.token)); // Use the token received from backend
+      document.cookie = `token=${result.token}; path=/; max-age=2592000`;//token stored in cookie for 1 monnth age
       router.push("/")   //to redirect the user to home page
     } catch (error) {
       console.log("Login failed", error);
