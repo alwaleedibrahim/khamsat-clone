@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import FilterCard from './FilterCard'
 import CardHeader from './CardHeader'
 import CardBody from './CardBody'
@@ -9,13 +10,25 @@ import SubList from './SubList'
 import RatingInput from './form-control/RatingInput'
 import { FaTimes } from 'react-icons/fa'
 import CheckboxInput from './form-control/CheckBoxInput'
-import categoriesLoader from '../../_lib/axios/categoryLoader'
-import subcategoriesLoader from '../../_lib/axios/subCategoryLoader'
 import ICategory from '../../_models/category'
 import ISubCategory from '../../_models/subcategory'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCategory, getSubCategory, selectCategory } from '../../_lib/redux/slice/categorySlice'
+import Link from 'next/link'
 
-export default async function Sidebar() {
-    const categories = await categoriesLoader()
+export default function Sidebar({filters: {category, subcategory}}: Readonly<{filters:{category: string, subcategory: string}}>) {
+  const dispatch = useDispatch()
+    useEffect(()=> {
+    dispatch(selectCategory(category))
+    dispatch(getCategory())
+    dispatch(getSubCategory(category))
+  },[])
+    const categories =  useSelector((state)=> state.category.categories)
+    const subcategories =  useSelector((state)=> state.category.subcategories)
+    const selectedCategory =  useSelector((state)=> state.category.selectedCategory)
+  console.log(selectedCategory);
+  
+    
   return (
     <div className='mx-20'>
         <FilterCard>
@@ -28,10 +41,10 @@ export default async function Sidebar() {
             <CardHeader><span>الاقسام</span></CardHeader>
             <CardBody>
                 <List>
-                    {categories.map(async (category: ICategory)=> {
-                        const subcategories = await subcategoriesLoader(category._id)
+                    {categories.map( (cat: ICategory)=> {
                         return (<>
-                        <ListItem key={category._id}>{category.name.ar}</ListItem>
+                        {cat.name.en == selectedCategory? <>
+                        <Link href={`/ar/${cat.name.en}/subcat`} className='text-primary'><ListItem key={cat._id}>{cat.name.ar}</ListItem></Link>
                         <ListItem>
                             <SubList>
                                 {subcategories?.map((subcategory: ISubCategory)=> {
@@ -52,7 +65,9 @@ export default async function Sidebar() {
                                 )
                                 })}
                             </SubList>
-                        </ListItem>
+                        </ListItem> </> 
+                        :  <Link href={`/ar/${cat.name.en}/subcat`}><ListItem key={cat._id}>{cat.name.ar}</ListItem></Link>
+                        }
                         </>)
                     })}
                 </List>
