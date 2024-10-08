@@ -46,7 +46,7 @@ const Login: React.FC = () => {
       }
 
       const result = await response.json();
-      dispatch(login(result.token)); // Use the token received from backend
+      dispatch(login(result.data.token)); // Use the token received from backend
       router.push("/")   //to redirect the user to home page
     } catch (error) {
       console.log("Login failed", error);

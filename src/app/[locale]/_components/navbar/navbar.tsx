@@ -30,6 +30,12 @@ import { FaBookBookmark, FaFileLines, FaSliders } from "react-icons/fa6";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { TypedUseSelectorHook, useDispatch, useSelector as useReduxSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../_lib/redux/store";
+import { logout } from "../../_lib/redux/slice/authSlice";
+import { useEffect } from "react";
+import { getProfile } from "../../_lib/redux/slice/profileSlice";
+import IUserProfile from "../../_models/userProfile";
 
 export default function Navbar() {
   const router = useRouter();
@@ -46,8 +52,17 @@ export default function Navbar() {
     const newUrl = `${newPathname}${searchParams? `?${searchParams.toString()}` : ''}`;
     router.replace(newUrl);
   };
-
-  const isLogged : boolean = false; // remove this variable and use redux instead
+  const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+  const isAuthenticated : boolean = useSelector((state)=> state.auth.isAuthenticated)
+  const token : string | null = useSelector((state)=> state.auth.token)
+  const user : IUserProfile = useSelector((state)=> state.profile.user)
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(()=> {
+    dispatch(getProfile(token))    
+  }, [token])
+  const handleLogout = () => {
+      dispatch(logout())
+  }
   return (
     <>
       <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full z-[200]">
@@ -73,7 +88,7 @@ export default function Navbar() {
                   className="w-full h-full"
                   type="search"
                   name="q"
-                  placeholder="ابحث عن ..."
+                  placeholder={t('sidebar.menu.search')}
                   defaultValue=""
                 />
               </form>
@@ -81,23 +96,26 @@ export default function Navbar() {
 
               {/* ********************************** Start Sidebar ****************************************** */}
               <ul className="text-[#444]">
-                <li className={`${isLogged? `hidden` : `flex`} items-center py-3`}>
+                <li className={`${isAuthenticated? `hidden` : `flex`} items-center py-3`}>
+                  <Link href={`/${localActive}/login`} className="flex items-center">
                   <FaSignInAlt className="me-2" />
-                  <span>دخول</span>
+                  <span>{t('sidebar.menu.login')}</span></Link>
                 </li>
-                <li className={`${isLogged? `hidden` : `flex`} items-center py-3`}>
+                <li className={`${isAuthenticated? `hidden` : `flex`} items-center py-3`}>
+                  <Link href={`/${localActive}/register`} className="flex items-center">
                   <FaUserPlus className="me-2" />
-                  <span>حساب جديد</span>
+                  <span>{t('sidebar.menu.register')}</span>
+                  </Link>
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3`}>
                   <FaPlus className="me-2" />
                   <span>{t('sidebar.menu.addService')}</span>
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3`}>   
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3`}>   
                   <FaFolderOpen className="me-2" />
                   <span>{t('sidebar.menu.viewServices')}</span>
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3`}>
                   <FaTruck className="me-2 scale-x-[-1]" />
                   <span>{t('sidebar.menu.incomingService')} </span>
                 </li>
@@ -187,23 +205,23 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaComments className="me-2" />
-                        <span>مجتمع خمسات</span>
+                        <span>{t('sidebar.menu.community.title')}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">نماذج أعمال قمت بتنفيذها</span>
+                        <span className="ms-6">{t('sidebar.menu.community.samplesOfProjects')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">طلبات الخدمات غير الموجودة</span>
+                        <span className="ms-6">{t('sidebar.menu.community.requestsForNonExistingServices')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تجارب وقصص المستخدمين</span>
+                        <span className="ms-6">{t('sidebar.menu.community.userExperiencesStories')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أمور عامة حول خمسات</span>
+                        <span className="ms-6">{t('sidebar.menu.community.generalMatters')}</span>
                       </li>
                     </ul>
                   </details>
@@ -298,30 +316,30 @@ export default function Navbar() {
             </div>
 
             <ul className="flex  min-w-fit text-sm">
-              <li className={`${isLogged? `flex` : `hidden`}`}>
+              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
                 <NavItem>
                   <FaPlus className="me-2" />
                   <span>{t('sidebar.menu.addService')}</span>
                 </NavItem>
               </li>
               <li>
-                <Link href='/services' >
+                <Link href={`/${localActive}/services`} >
                 <NavItem>
                   <FaCubes className="me-2" />
                   <span>{t('sidebar.menu.categories.title')}</span>
                   </NavItem>
                 </Link>
               </li>
-              <li className={`${isLogged? `flex` : `hidden`}`}>
-              <Link href='/purchases' >
+              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
+              <Link href={`/${localActive}/purchases`} >
                 <NavItem>
                   <FaFolderOpen className="me-2" />
                   <span>{t('sidebar.menu.viewServices')}</span>
                 </NavItem>
                 </Link>
               </li>
-              <li className={`${isLogged? `flex` : `hidden`}`}>
-              <Link href='/orders' >
+              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
+              <Link href={`/${localActive}/oders`} >
                 <NavItem>
                   <FaTruck className="me-2 scale-x-[-1]" />
                   <span>{t('sidebar.menu.incomingService')} </span>
@@ -342,7 +360,7 @@ export default function Navbar() {
                   <FaShoppingCart className="text-lg" />
                 </NavItem>
               </li>
-              <li className={`${isLogged? `flex` : `hidden`}`}>
+              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
                 <label htmlFor="toggle-messages" className="p-0 m-0 h-full">
                   <NavItem>
                     <div className=" relative">
@@ -366,7 +384,7 @@ export default function Navbar() {
                   </DropDownBox>
                 </div>
               </li>
-              <li className={`${isLogged? `flex` : `hidden`}`}>
+              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
                 <button className="group p-0 m-0 h-full">
                   <NavItem>
                     <div className=" relative">
@@ -392,7 +410,7 @@ export default function Navbar() {
                 </NavItem>
                 {localActive}
               </li>
-              <li className={`${isLogged? `flex` : `hidden`}`}>
+              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
                 <button className="group p-0 m-0 h-full">
                   <NavItem>
                     <div className=" relative">
@@ -407,26 +425,30 @@ export default function Navbar() {
                         className="absolute invisible opacity-0 top-14 left-0 group-focus-within:visible group-focus-within:opacity-100 transition-all duration-300"
                         id="test"
                       >
-                        <UserDropDownBox />
+                        <UserDropDownBox userName={user.username}/>
                       </div>
                     </div>
                   </NavItem>
                 </button>
               </li>
-              <li className={`${isLogged? `hidden` : `flex`}`}>
+              <li className={`${isAuthenticated? `hidden` : `flex`}`}>
                   <button className="font-kufi border border-[#888] my-3 mx-2">
+                  <Link href={`/${localActive}/login`}>
                     <NavItem>
                       <FaSignInAlt className="me-2" />
-                      <span className="text-sm">دخول</span>
+                      <span className="text-sm">{t('sidebar.menu.login')}</span>
                     </NavItem>
+                  </Link>
                   </button>
               </li>
-              <li className={`${isLogged? `hidden` : `flex`}`}>
+              <li className={`${isAuthenticated? `hidden` : `flex`}`}>
                   <button className="font-kufi border border-[#888] my-3 mx-2">
+                  <Link href={`/${localActive}/register`}>
                     <NavItem>
                       <FaUserPlus className="me-2" />
-                      <span className="text-sm">حساب جديد</span>
+                      <span className="text-sm">{t('sidebar.menu.register')}</span>
                     </NavItem>
+                  </Link>
                   </button>
               </li>
             </ul>
@@ -472,61 +494,65 @@ export default function Navbar() {
               <li className="flex items-center py-3 ">
                 <h2 className="font-semibold text-2xl">حسابي</h2>
               </li>
-                <li className={`${isLogged? `hidden` : `flex`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `hidden` : `flex`} items-center py-3 border-b-[1px]`}>
+                <Link href={`/${localActive}/login`} className="flex items-center" >
                   <FaSignInAlt className="me-3" />
-                  دخول
+                  {t('sidebar.menu.login')}
+                </Link>
                 </li>
-                <li className={`${isLogged? `hidden` : `flex`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `hidden` : `flex`} items-center py-3 border-b-[1px]`}>
+                <Link href={`/${localActive}/login`} className="flex items-center" >
                   <FaUserPlus className="me-3" />
-                  حساب جديد
+                  {t('sidebar.menu.register')}
+                </Link>
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaUser className="me-3" />
                   user_name
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaPlus className="me-3" />
                   أضف خدمة
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaBell className="me-3" />
                   الإشعارات
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaEnvelope className="me-3" />
                   الرسائل
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaFolderOpen className="me-3" />
                   المشتريات
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaTruck className="me-3 scale-x-[-1]" />
                   الطلبات الواردة
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaBookBookmark className="me-3" />
                   مجموعاتي
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaDollarSign className="me-3" />
                   الرصيد
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaSliders className="me-3" />
                   الإعدادات
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaEdit className="me-3" />
                   تعديل الحساب
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaGlobe className="me-3" />
                   المساعدة
                 </li>
-                <li className={`${isLogged? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li onClick={()=> handleLogout()} className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
                   <FaSignOutAlt className="me-3" />
-                  خروج
+                  {t('sidebar.menu.logout')}
                 </li>
               </ul>
             </div>
@@ -561,7 +587,7 @@ export default function Navbar() {
                       className="w-full h-full"
                       type="search"
                       name="q"
-                      placeholder="ابحث عن ..."
+                      placeholder={t('sidebar.menu.search')}
                       defaultValue=""
                     />
                   </form>
