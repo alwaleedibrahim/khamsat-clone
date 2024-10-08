@@ -66,7 +66,7 @@ export default function Sidebar({
                   {cat.name.en == selectedCategory ? (
                     <>
                       <Link
-                        href={`/ar/${cat.name.en}/subcat`}
+                        href={`/ar/${cat.name.en}/${cat.name.en}`}
                         className="text-primary hover:text-primary"
                       >
                         <ListItem key={cat._id}>{cat.name.ar}</ListItem>
@@ -118,7 +118,7 @@ export default function Sidebar({
                       </ListItem>{" "}
                     </>
                   ) : (
-                    <Link href={`/ar/${cat.name.en}/subcat`} className="hover:text-primary">
+                    <Link href={`/ar/${cat.name.en}/${cat.name.en}`} className="hover:text-primary">
                       <ListItem key={cat._id}>{cat.name.ar}</ListItem>
                     </Link>
                   )}
