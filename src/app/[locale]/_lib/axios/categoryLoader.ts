@@ -1,7 +1,8 @@
+import ICategory from "../../_models/category"
 import axiosInstance from "./axiosInstance"
 
 
-export default async function categoriesLoader() {
+export default async function categoriesLoader() : Promise<ICategory[]> {
     try {
       const response = await axiosInstance.get(`categories`)
       if (response.data) {

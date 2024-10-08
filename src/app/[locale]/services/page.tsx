@@ -19,7 +19,7 @@ const Page = async() => {
     <div className="pt-20 mx-auto w-full xl:container p-container-space">
       <div className="flex flex-wrap p-section">
         <div className="hidden lg:flex lg:w-[24%]">
-          <Sidebar />
+          <Sidebar filters={{category: '', subcategory: ''}}/>
         </div>
         <div className="w-full lg:w-[76%]">
         <ServicesCollection>
