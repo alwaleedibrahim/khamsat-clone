@@ -5,6 +5,10 @@
                 "addService": "Add Service",
                 "viewServices": "Purchases",
                 "incomingService": "Incoming Orders",
+                "login": "Login",
+                "logout": "Logout",
+                "register": "Register",
+                "search": "search for ...",
                 "categories": {
                     "title": "Categories",
                     "design": "Design",

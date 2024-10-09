@@ -5,6 +5,10 @@
                 "addService": "أضف خدمة",
                 "viewServices": "المشتريات",
                 "incomingService": "الطلبات الواردة",
+                "login": "دخول",
+                "register": "حساب جديد",
+                "search": "ابحث عن ...",
+                "logout": "خروج",
                 "categories": {
                     "title": "التصنيفات",
                     "design": "تصميم",
