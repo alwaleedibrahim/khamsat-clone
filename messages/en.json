@@ -69,14 +69,14 @@
             "profileTab": "Your Profile",
             "EditTab": "Edit Profile Information"
         },
-        "Profile":{
-            "aboutMe":{
-                "title":"Summary",
-                "description":"No Summary Yet, Tell us a little about yourself"
+        "Profile": {
+            "aboutMe": {
+                "title": "Summary",
+                "description": "No Summary Yet, Tell us a little about yourself"
             },
             "myServices": {
-                "title":"Services",
-                "description":"No Services Yet"
+                "title": "Services",
+                "description": "No Services Yet"
             },
             "statistics": {
                 "title": "Statistics",
@@ -95,5 +95,75 @@
                 "personal_id": "Personal ID"
             }
         }
-    }
+    },
+    "LoginPage": {
+        "login": "Login",
+        "email": "Email",
+        "email_placeholder": "Enter your email",
+        "email_required": "Email is required",
+        "email_invalid": "Invalid email address",
+        "password": "Password",
+        "password_placeholder": "Enter your password",
+        "password_required": "Password is required",
+        "passwordNotValid": "The password must contain letters, symbols and numbers",
+        "password_min_length": "Password must be at least 8 characters",
+        "invalidEmailOrPassword":"The email or password is incorrect",
+        "login_success": "Login successful",
+        "google_login": "Using Google",
+        "microsoft_login": "Using Microsoft",
+        "or": "or",
+        "login_button": "Login",
+        "help": "Help",
+        "no_account": "I don't have an account",
+        "lost_password": "I forgot my password",
+        "resend_confirmation": "I didn’t receive the activation code"
+    },
+    "RegisterPage": {
+        "title": "Create New Account",
+        "socialLogin": {
+          "google": "Using Google",
+          "microsoft": "Using Microsoft"
+        },
+        "or": "Or",
+        "form": {
+          "name": "Name",
+          "namePlaceholder": "Write your name in Arabic",
+          "familyName": "Family Name",
+          "familyNamePlaceholder": "Write your family name in Arabic",
+          "email": "Email",
+          "emailPlaceholder": "Enter your email address",
+          "password": "Password",
+          "passwordPlaceholder": "Enter your password",
+          "submit": "Sign Up",
+          "submitting": "Signing Up...",
+          "terms": {
+            "text": "I have read and agree to the",
+            "termsLink": "Terms of Use",
+            "and": "and",
+            "privacyLink": "Privacy Policy"
+          }
+        },
+        "validation": {
+          "nameRequired": "Name is required",
+          "familyNameRequired": "Family name is required",
+          "emailRequired": "Email is required",
+          "email_invalid":"Invalid email address",
+          "passwordRequired": "Password is required",
+          "notValid": "The password must contain letters, symbols and numbers",
+          "password_min_length":"Password must be at least 8 characters",
+          "termsRequired": "You must agree to the terms and privacy policy"
+        },
+        "success": {
+          "accountCreated": "Account created successfully!"
+        },
+        "errors": {
+          "registrationFailed": "Registration failed. Please try again."
+        },
+        "sidebar": {
+          "title": "One Account for All Our Products"
+        },
+        "footer": {
+          "copyright": "© 2024 Hsoub. All rights reserved."
+        }
+      }
 }

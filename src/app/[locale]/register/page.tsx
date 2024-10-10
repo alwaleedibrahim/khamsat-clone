@@ -6,18 +6,20 @@ import { faGoogle, faWindows } from "@fortawesome/free-brands-svg-icons";
 import React, { useState } from "react";
 import styles from "./register.module.css";
 import Image from "next/image";
-
 import { useDispatch } from "react-redux";
 import { login } from "../_lib/redux/slice/authSlice";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import { useLocale, useTranslations } from "next-intl";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface RegisterFormData {
   email: string;
   password: string;
   name: string;
   familyName: string;
+  terms: boolean;
 }
-
 const Register: React.FC = () => {
   const mediaItems = [
     {
@@ -75,25 +77,41 @@ const Register: React.FC = () => {
       brand: "/images/brands/io.png",
     },
   ];
-
+  const t = useTranslations('RegisterPage');
+  const localActive = useLocale();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormData>();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const onSubmit = async (data: RegisterFormData) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch(`${process.env.API_BASE_URL}/users`, {
+      const payload = {
+        email: data.email,
+        password: data.password,
+        username: "",
+        account_type: "seller",
+        first_name: {
+          en: data.name,
+          ar: data.name
+        },
+        last_name: {
+          en: data.familyName,
+          ar: data.familyName
+        }
+      };
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -102,9 +120,11 @@ const Register: React.FC = () => {
 
       const result = await response.json();
       dispatch(login(result.token)); // Use the token received backend
-      router.push("/") //make user redirected to home page
+      toast.success(t("success.accountCreated"));
+      setTimeout(() => router.push("/"), 2000); //make user redirected to home page
     } catch (error) {
       console.log("Registration failed", error);
+      toast.error(t("errors.registrationFailed"));
     } finally {
       setIsSubmitting(false);
     }
@@ -118,7 +138,7 @@ const Register: React.FC = () => {
         <div
           className={`${styles.custom_container} lg:w-[60%] w-[90%] pl-[30px] font-kufi`}
         >
-          <h1 className="text-2xl text-style1 mb-[40px] ">إنشاء حساب جديد</h1>
+          <h1 className="text-2xl text-style1 mb-[40px] ">{t("title")}</h1>
 
           <div className={`text-center grid lg:grid-cols-2 gap-[30px]`}>
             <div>
@@ -127,7 +147,7 @@ const Register: React.FC = () => {
                 className={`bg-[#dd4b39]  text-white flex items-center justify-center py-[12px] px-[21px] gap-3`}
               >
                 <FontAwesomeIcon icon={faGoogle} style={{ fontSize: "26px" }} />
-                <span className="text-[14px]">باستخدام جوجل</span>
+                <span className="text-[14px]">{t("socialLogin.google")}</span>
               </a>
             </div>
 
@@ -140,18 +160,19 @@ const Register: React.FC = () => {
                   icon={faWindows}
                   style={{ fontSize: "26px" }}
                 />
-                <span className="text-[14px]">باستخدام مايكروسوفت</span>
+                <span className="text-[14px]">{t("socialLogin.microsoft")}</span>
               </a>
             </div>
           </div>
 
-          <hr className={`${styles.hr_text}`} data-content="أو" />
+          <hr className={`${styles.hr_text}`} data-content={t("or")} />
 
           {/* registeration form */}
 
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-4 bg-[#f7f9fc] py-[40px] px-[30px]"
+            noValidate
           >
             <div
               className={`${styles.form_group}  grid lg:grid-cols-2 gap-[30px]`}
@@ -161,13 +182,13 @@ const Register: React.FC = () => {
                   htmlFor="name"
                   className="text-[14px] text-style1 mb-[10px] block"
                 >
-                  الاسم
+                  {t("form.name")}
                 </label>
                 <input
-                  {...register("name", { required: "الاسم مطلوب" })}
+                  {...register("name", { required: t("validation.nameRequired") })}
                   type="text"
                   id="name"
-                  placeholder="اكتب اسمك باللغة العربية"
+                  placeholder={t("form.namePlaceholder")}
                   required
                   className="bg-[#fcfdfd] shadow-none px-[10px] py-[9px] text-[14px] border border-[#aaafb9] h-[40px] text-style1 w-full focus:bg-[#fcfdfd] outline-none"
                 />
@@ -183,13 +204,13 @@ const Register: React.FC = () => {
                   htmlFor="name"
                   className="text-[14px] text-style1 mb-[10px] block"
                 >
-                  اسم العائلة
+                  {t("form.familyName")}
                 </label>
                 <input
-                  {...register("familyName", { required: "اسم العائلة مطلوب" })}
+                  {...register("familyName", { required: t("validation.familyNameRequired") })}
                   type="text"
                   id="name"
-                  placeholder="اكتب اسم العائلة هنا باللغة العربية"
+                  placeholder={t("form.familyNamePlaceholder")}
                   required
                   className="bg-[#fcfdfd] shadow-none px-[10px] py-[9px] text-[14px] border border-[#aaafb9] h-[40px] text-style1 w-full focus:bg-[#fcfdfd] outline-none"
                 />
@@ -206,13 +227,19 @@ const Register: React.FC = () => {
                 htmlFor="email"
                 className="text-[14px] text-style1 mb-[10px] block"
               >
-                البريد الالكتروني
+                {t("form.email")}
               </label>
               <input
-                {...register("email", { required: "البريد الالكتروني مطلوب" })}
+                {...register("email", {
+                  required: t("validation.emailRequired"),
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: t("validation.email_invalid"),
+                  },
+                })}
                 type="email"
                 id="email"
-                placeholder="أدخل البريد الإلكتروني الخاص بك"
+                placeholder={t("form.emailPlaceholder")}
                 required
                 className="bg-[#fcfdfd] shadow-none px-[10px] py-[9px] text-[14px] border border-[#aaafb9] h-[40px] text-style1 w-full focus:bg-[#fcfdfd] outline-none"
               />
@@ -228,13 +255,23 @@ const Register: React.FC = () => {
                 htmlFor="password"
                 className="text-[14px] text-style1 mb-[10px] block"
               >
-                كلمة المرور
+                {t("form.password")}
               </label>
               <input
-                {...register("password", { required: "كلمة المرور مطلوبة" })}
+                {...register("password", {
+                  required: t("validation.passwordRequired"),
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,}$/,
+                    message: t("validation.notValid")
+                  },
+                  minLength: {
+                    value: 8,
+                    message: t("validation.password_min_length")
+                  }
+                })}
                 type="password"
                 id="password"
-                placeholder="أدخل كلمة المرور الخاصة بك"
+                placeholder={t("validation.passwordRequired")}
                 required
                 className="bg-[#fcfdfd] shadow-none px-[10px] py-[9px] text-[14px] border border-[#aaafb9] h-[40px] text-style1 w-full focus:bg-[#fcfdfd] outline-none"
               />
@@ -249,7 +286,9 @@ const Register: React.FC = () => {
               <div className="field checkbox c-checkbox">
                 <label className="flex items-center space-x-2">
                   <input
+                    {...register("terms", { required: t("validation.termsRequired") })}
                     type="checkbox"
+                    onChange={() => setTermsAccepted((t) => !t)}
                     name="terms"
                     className="absolute w-0 h-0 peer"
                   />
@@ -259,30 +298,35 @@ const Register: React.FC = () => {
                       height={24}
                       alt="checked"
                       src="/images/icons/checked.png"
-                      className="hidden peer-checked:block w-[0.8rem] h-[0.8rem] p-0"
+                      className={`${termsAccepted ? 'block' : 'hidden'}  peer-checked:block w-[0.8rem] h-[0.8rem] p-0`}
                     />
                   </span>
 
                   <span className="text-[14px] text-style1">
-                    قرأت وأوافق على&nbsp;
+                    {t("form.terms.text")}&nbsp;
                     <a
                       target="_blank"
                       href="/terms"
                       className="text-[#337ab7] text-naskh text-sm hover:text-[#1e476c]"
                     >
-                      شروط الاستخدام
+                      {t("form.terms.termsLink")}
                     </a>
-                    &nbsp;و&nbsp;
+                    &nbsp;{t("form.terms.and")}&nbsp;
                     <a
                       target="_blank"
                       href="/privacy"
                       className="text-[#337ab7] text-naskh text-sm hover:text-[#1e476c]"
                     >
-                      بيان الخصوصية
+                      {t("form.terms.privacyLink")}
                     </a>
                   </span>
                 </label>
               </div>
+              {errors.terms && ( // عرض رسالة الخطأ إذا كانت الشروط غير محددة
+                <p className="text-red-500 text-sm mt-1">
+                  {(errors.terms as FieldError)?.message}
+                </p>
+              )}
             </div>
             <div
               className={`${styles.form_group} grid lg:grid-cols-[175px_minmax(900px,_1fr)_100px]  mb-[10px]`}
@@ -292,7 +336,7 @@ const Register: React.FC = () => {
                 className="text-white font-[400] w-[100%] hover:opacity-75 rounded-0 bg-[#2caae2] text-[14px] py-[12px] px-[21px]"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "جاري الدخول..." : "دخول"}
+                {isSubmitting ? t("form.submitting") : t("form.submit")}
               </button>
             </div>
           </form>
@@ -332,7 +376,7 @@ const Register: React.FC = () => {
           </div>
         </div>
       </div>
-
+      <ToastContainer rtl={localActive=="ar"} position={`top-${localActive=="ar"?'left':'right'}`}/>
       <div className="text-center text-[14px] text-naskh py-[30px]">
         <p>&copy; 2024 حسوب. جميع الحقوق محفوظة.</p>
       </div>
