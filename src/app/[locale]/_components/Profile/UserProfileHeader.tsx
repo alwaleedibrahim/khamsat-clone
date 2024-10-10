@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircle, faBriefcase, faSliders } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { RootState } from '../../_lib/redux/store';
+import { TypedUseSelectorHook, useSelector as  useReduxSelector} from 'react-redux';
+import IUserProfile from '../../_models/userProfile';
 
 interface UserProfileHeaderProps {
     activeTab: string;
@@ -10,6 +13,9 @@ interface UserProfileHeaderProps {
 }
 
 const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({ handleActiveTab, activeTab }) => {
+
+    const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+    const user : IUserProfile = useSelector((state)=> state.profile.user)
     const t = useTranslations("ProfilePage.Header")
     return (
         <div className="bg-white pt-[100px]">
@@ -29,7 +35,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({ handleActiveTab, 
                     {/* Username and Status */}
                     <div className='flex justify-center'>
                         <h1 className="text-[26px]">
-                            Ola Adel
+                            {`${user.first_name?.ar} ${user.last_name?.ar}`}
                         </h1>
                         <span className="m-2.5">
                             <FontAwesomeIcon
