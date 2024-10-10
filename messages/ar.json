@@ -67,20 +67,20 @@
     "Footer": {
         "copyright": "حقوق النشر 2020"
     },
-    "ProfilePage":{
-        "Header":{
-            "servicesTab":"الخدمات",
-            "profileTab":"الملف الشخصي",
-            "EditTab":"تعديل الملف الشخصي"
+    "ProfilePage": {
+        "Header": {
+            "servicesTab": "الخدمات",
+            "profileTab": "الملف الشخصي",
+            "EditTab": "تعديل الملف الشخصي"
         },
-        "Profile":{
-            "aboutMe":{
-                "title":"نبذة عني",
-                "description":"لم يكتب نبذة شخصية"
+        "Profile": {
+            "aboutMe": {
+                "title": "نبذة عني",
+                "description": "لم يكتب نبذة شخصية"
             },
             "myServices": {
-                "title":"خدماتي",
-                "description":"لا يوجد خدمات"
+                "title": "خدماتي",
+                "description": "لا يوجد خدمات"
             },
             "statistics": {
                 "title": "إحصائيات",
@@ -92,12 +92,82 @@
                 "registration_date": "تاريخ التسجيل",
                 "last_seen": "آخر تواجد"
             },
-            "verifications":{
+            "verifications": {
                 "title": "توثيقات",
                 "email": "البريد الإلكتروني",
                 "phone_number": "رقم الجوال",
                 "personal_id": "الهوية الشخصية"
             }
+        }
+    },
+    "LoginPage": {
+        "login": "تسجيل الدخول",
+        "email": "البريد الإلكتروني",
+        "email_placeholder": "أدخل البريد الإلكتروني الخاص بك",
+        "email_required": "البريد الإلكتروني مطلوب",
+        "email_invalid": "البريد الإلكتروني غير صالح",
+        "password": "كلمة المرور",
+        "password_placeholder": "أدخل كلمة المرور الخاصة بك",
+        "password_required": "كلمة المرور مطلوبة",
+        "paasswordNotValid":"كلمة المرور يجب أن تحتوي على حروف ورموز وارقام",
+        "password_min_length": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+        "invalidEmailOrPassword":"البريد الاكتروني او الرقم السري غير صحيح",
+        "login_success": "تم تسجيل الدخول بنجاح",
+        "google_login": "باستخدام جوجل",
+        "microsoft_login": "باستخدام مايكروسوفت",
+        "or": "أو",
+        "login_button": "دخول",
+        "help": "مساعدة",
+        "no_account": "لا أملك حساب بعد",
+        "lost_password": "فقدت كلمة المرور",
+        "resend_confirmation": "لم يصلني رمز التفعيل"
+    },
+    "RegisterPage": {
+        "title": "إنشاء حساب جديد",
+        "socialLogin": {
+            "google": "باستخدام جوجل",
+            "microsoft": "باستخدام مايكروسوفت"
+        },
+        "or": "أو",
+        "form": {
+            "name": "الاسم",
+            "namePlaceholder": "اكتب اسمك باللغة العربية",
+            "familyName": "اسم العائلة",
+            "familyNamePlaceholder": "اكتب اسم العائلة هنا باللغة العربية",
+            "email": "البريد الالكتروني",
+            "emailPlaceholder": "أدخل البريد الإلكتروني الخاص بك",
+            "password": "كلمة المرور",
+            "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
+            "submit": "دخول",
+            "submitting": "جاري الدخول...",
+            "terms": {
+                "text": "قرأت وأوافق على",
+                "termsLink": "شروط الاستخدام",
+                "and": "و",
+                "privacyLink": "بيان الخصوصية"
+            }
+        },
+        "validation": {
+            "nameRequired": "الاسم مطلوب",
+            "familyNameRequired": "اسم العائلة مطلوب",
+            "emailRequired": "البريد الالكتروني مطلوب",
+            "email_invalid":"البريد الإلكتروني غير صالح",
+            "passwordRequired": "كلمة المرور مطلوبة",
+            "notValid": "كلمة المرور يجب أن تحتوي على حروف ورموز وارقام",
+            "password_min_length":"كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+            "termsRequired": "يجب الموافقة على الشروط والخصوصية"
+        },
+        "success": {
+            "accountCreated": "تم إنشاء الحساب بنجاح!"
+        },
+        "errors": {
+            "registrationFailed": "فشل التسجيل. يرجى المحاولة مرة أخرى."
+        },
+        "sidebar": {
+            "title": "حساب واحد لجميع منتجاتنا"
+        },
+        "footer": {
+            "copyright": "© 2024 حسوب. جميع الحقوق محفوظة."
         }
     }
 }
