@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const base_url = 'http://localhost:4500/services';
+const base_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const fetchServices = async (query: string) => {
     try {
