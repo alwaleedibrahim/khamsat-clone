@@ -11,88 +11,29 @@ import ServiceData from "@/app/[locale]/_components/single-service/ServiceData";
 import ServiceInfo from "@/app/[locale]/_components/single-service/ServiceInfo";
 import SellerCard from "@/app/[locale]/_components/single-service/SellerCard";
 import { GetServerSidePropsContext } from "next";
+import { fetchUpgradesById } from "@/app/[locale]/_lib/upgardes";
+import { fetchServiceReviews } from "@/app/[locale]/_lib/reviews";
 
 const page = async(context: GetServerSidePropsContext) => {
     const { serviceId } = context.params! as {
         serviceId: string
     }
     let serviceData;
+    let upgradesData;
+    let reviewsData;
     // ========================================== //
     // service data
     try{
         const response = await fetchServiceById(serviceId);
         serviceData = response.service;
+        const responseUpgrades = await fetchUpgradesById(serviceId);
+        upgradesData = responseUpgrades.upgrades;     
+        const responseReviews = await fetchServiceReviews(serviceId)
+        reviewsData = responseReviews.serviceReviews;     
     }catch(err){
         console.log(err);
     }
-    // ========================================== //
-    // upgardes
-    const serviceUpgradesData = [
-        {
-            id: 'upgrade-2340086',
-            title: 'تصميم واجهات التطبيق بإستخدام SwiftUI',
-            price: 25.00,
-            duration: '7 أيام',
-            description: 'مقابل 25.00$ إضافية على سعر الخدمة. سيزيد مدة التنفيذ 7 أيام إضافية.',
-        },
-        {
-            id: 'upgrade-2125384',
-            title: 'تسليم السورس كود كاملا',
-            price: 100.00,
-            duration: '30 يوم',
-            description: 'مقابل 100.00$ إضافية على سعر الخدمة. سيزيد مدة التنفيذ 30 يوم إضافي.',
-        },
-        {
-            id: 'upgrade-2096277',
-            title: 'ربط التطبيق بقاعدة بيانات Firebase',
-            price: 200.00,
-            duration: 'يوم واحد',
-            description: 'مقابل 200.00$ إضافية على سعر الخدمة. سيزيد مدة التنفيذ يوم إضافي.',
-        },
-        {
-            id: 'upgrade-2096278',
-            title: 'رفع التطبيق لمتجر App store',
-            price: 200.00,
-            duration: '21 يوم',
-            description: 'مقابل 200.00$ إضافية على سعر الخدمة. سيزيد مدة التنفيذ 21 يوم إضافي.',
-        },
-        {
-            id: 'upgrade-2096279',
-            title: 'ربط التطبيق مع Firebase',
-            price: 200.00,
-            duration: '5 أيام',
-            description: 'مقابل 200.00$ إضافية على سعر الخدمة. سيزيد مدة التنفيذ 5 أيام إضافية.',
-        },
-    ]
 
-    // ========================================== //
-    // review data
-    const reviewData = [
-        {
-            clientRating: {
-                qualityOfService: 4,
-                communication: 4.2,
-                deliveryPunctuality: 4.7,
-            },
-            clientReview: {
-                userName: ".Mohammed A",
-                userReply: "انصح الجميع بالتعامل معه الاخ خالد يسهل عليك تصميم مشروعك وتشوف الشغل بعينك مرحلة بمرحلة ، تسلم ايدك على الشغل الطيب",
-                userReplyTime: ' منذ 20 يوم و18 ساعة',
-                userLink: '/user/.Mohammed_A',
-                userType: ' المشتري'
-            },
-            userReply: [
-                {
-                    userImage: "/images/services/97fe064c7ef498b3fc5183f1c59626fa.png",
-                    userName: ".Khaled M",
-                    userReply: "تشرفت جدا بالعمل معك أستاذ محمد و أشكرك على ثقتك الغالية و إن شاء الله دائما العمل يكون عند حسن ظنك",
-                    userReplyTime: ' منذ 20 يوم و18 ساعة',
-                    userLink: '/user/khaled_m2',
-                    userType: 'البائع'
-                },
-            ],
-        },
-    ];
 
     return (
         <div className="flex flex-col lg:bg-transparent bg-white pt-[100px]">
@@ -102,7 +43,8 @@ const page = async(context: GetServerSidePropsContext) => {
                 </div>
                 <div className="lg:w-[32%] w-[100%] lg:p-sm-screen">
                     <ServiceInfo data={serviceData.serviceCard} deliveryTime={serviceData.deliveryTime} price={serviceData.price} />
-                    <SellerCard profilePicture={serviceData.userId.profilePicture} username={serviceData.userId.username}/>
+                    {/* {serviceData.userId.profilePicture} */}
+                    <SellerCard profilePicture='/images/services/defaultuser.jfif' username={serviceData.userId.username}/>
                 </div>
             </div>
 
@@ -110,7 +52,7 @@ const page = async(context: GetServerSidePropsContext) => {
                 <div className="lg:w-[68%] w-[100%]">
 
                     <div className="w-full lg:p-sm-screen my-[20px]">
-                        <AdditionalServices upgrades={serviceUpgradesData} />
+                        <AdditionalServices upgrades={upgradesData} />
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">
@@ -123,9 +65,9 @@ const page = async(context: GetServerSidePropsContext) => {
 
                     {
                         (
-                            reviewData.length > 0) ? (
+                            reviewsData.length > 0) ? (
                             <div className="w-full lg:p-sm-screen my-[10px]">
-                                <Reviews reviews={reviewData} />
+                                <Reviews reviews={reviewsData} />
                             </div>
                         ) : null
                     }
