@@ -27,7 +27,6 @@ export const fetchAllServices = async () => {
 export const fetchServiceById = async (serviceId:string) => {
     try {
         const response = await axios.get(`${base_url}/${serviceId}`);
-        
         return response.data;
     } catch (error) {
         console.error('Fetch Services Error:', error);

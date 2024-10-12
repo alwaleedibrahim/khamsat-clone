@@ -20,8 +20,8 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({ handleActiveTab, 
                         <Image
                             className="rounded-full shadow-md"
                             src="/images/profile/bc8f040c02a7064f813491350aa9dc64.png"
-                            width="128"
-                            height="128"
+                            width={128}
+                            height={128}
                             alt="User Avatar"
                         />
                     </div>
