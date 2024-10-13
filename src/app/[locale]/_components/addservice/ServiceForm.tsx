@@ -420,8 +420,8 @@ const ServiceForm: React.FC = () => {
                             {/* Modal for Adding Images/Videos */}
                             {showGalleryModal && (
                                 <GalleryModal
-                                    // setShowGalleryModal={setShowGalleryModal}
-                                    // handleImages={handleImages}
+                                    setShowGalleryModal={setShowGalleryModal}
+                                    handleImages={handleImages}
                                 />
                             )}
 
@@ -500,9 +500,7 @@ const ServiceForm: React.FC = () => {
 
                     {/* Tag Input */}
                     <div className="mb-5">
-                        <TagInput
-                        // handlekeywords={handlekeywords} 
-                        />
+                        <TagInput handlekeywords={handlekeywords} />
                     </div>
 
                     {/* Add Development Button */}
