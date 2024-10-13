@@ -5,7 +5,7 @@ const page = () => {
     return (
         <div className="flex flex-col lg:bg-transparent bg-white pt-[100px]">
             <div className="flex lg:flex-row flex-col w-full justify-center">
-                <div className="lg:w-[67%] w-[100%] lg:p-sm-screen">
+                <div className="lg:w-[65%] w-[100%] lg:p-sm-screen">
                     <ServiceForm />
                 </div>
                 <div className="lg:w-[33%] lg:block hidden lg:p-sm-screen px-4">

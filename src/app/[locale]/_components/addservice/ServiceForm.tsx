@@ -57,9 +57,14 @@ export interface FormDataProp {
     price: number;
     deliveryTime: number;
     keywords: string[];
-    images?: string[];
-    developmentOptions?: DevelopmentOptions;
+    images?: (File | string)[];
 }
+
+const initialDevelopmentOptions: DevelopmentOptions = {
+    unique: false,
+    ownership: false,
+    acknowledgment: false,
+};
 
 const initialFormData: FormDataProp = {
     userId: '',
@@ -77,13 +82,9 @@ const initialFormData: FormDataProp = {
     price: 5,
     deliveryTime: 1,
     keywords: [],
+    images: []
 };
 
-const initialDevelopmentOptions: DevelopmentOptions = {
-    unique: false,
-    ownership: false,
-    acknowledgment: false,
-};
 
 const ServiceForm: React.FC = () => {
     const [categories, setCategories] = useState<Categories[]>([]);
@@ -116,14 +117,13 @@ const ServiceForm: React.FC = () => {
                 setLoadingCategories(false);
             }
         };
-
+    
         fetchCategories();
     }, []);
-
-    // Fetch subcategories when a main category is selected
+    
     useEffect(() => {
-        if (formData.categoryId) {
-            const fetchSubCategories = async () => {
+        const fetchSubCategories = async () => {
+            if (formData.categoryId) {
                 setLoadingSubCategories(true);
                 try {
                     const response = await axios.get(`http://localhost:4500/categories/category/${formData.categoryId}`);
@@ -135,14 +135,18 @@ const ServiceForm: React.FC = () => {
                 } finally {
                     setLoadingSubCategories(false);
                 }
-            };
-
-            fetchSubCategories();
-        } else {
-            setSubCategories([]);
-            setFormData(prev => ({ ...prev, subcategoryId: '' }));
-        }
-    }, [formData.categoryId]);
+            } else {
+                setSubCategories([]);
+                if (formData.subcategoryId) {
+                    setFormData(prev => ({ ...prev, subcategoryId: '' }));
+                }
+            }
+        };
+    
+        fetchSubCategories();
+    }, [formData.categoryId]); 
+    
+    
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -179,7 +183,7 @@ const ServiceForm: React.FC = () => {
         }
     };
 
-    const handleImages = (images: string[]) => {
+    const handleImages = (images: (File | string)[]) => {
         setFormData(prev => ({
             ...prev,
             images: images,
@@ -204,65 +208,44 @@ const ServiceForm: React.FC = () => {
     // Handle form submission
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const form = new FormData();
+        console.log(formData);
+        // const form = new FormData();
+        // form.append('userId', '66febc9bd66445b2cf6466a1'); 
+        // form.append('title.ar', formData.title.ar);
+        // form.append('title.en', formData.title.en);
+        // form.append('description.ar', formData.description.ar);
+        // form.append('description.en', formData.description.en);
+        // form.append('BuyerRules', formData.BuyerRules);
+        // form.append('categoryId', formData.categoryId);
+        // form.append('subcategoryId', formData.subcategoryId);
+        // form.append('price', formData.price.toString());
+        // form.append('deliveryTime', formData.deliveryTime.toString());
 
-        // Replace with actual user ID from auth
-        // if (!user || !user.id) {
-        //     alert('User not authenticated');
-        //     return;
+        // // Append keywords individually
+        // formData.keywords.forEach((keyword) => {
+        //     form.append('keywords', keyword);
+        // });
+
+        // files.forEach((file) => {
+        //     form.append('images', file);
+        // });
+
+        // try {
+        //     const response = await createService();
+        //     alert(response.message);
+        //     // Reset form
+        //     setFormData(initialFormData);
+        //     setSingleFile(null);
+        //     setFiles([]);
+        //     setError("");
+        // } catch (error) {
+        //     console.error('Error creating service:', error);
+        //     setError("Failed to create service. Please try again.");
+        //     alert('Failed to create service');
         // }
-        // form.append('userId', user.id);
-
-        // For demonstration, using a placeholder
-        form.append('userId', 'your-user-id'); // Replace this
-
-        form.append('title.ar', formData.title.ar);
-        form.append('title.en', formData.title.en);
-        form.append('description.ar', formData.description.ar);
-        form.append('description.en', formData.description.en);
-        form.append('BuyerRules', formData.BuyerRules);
-        form.append('categoryId', formData.categoryId);
-        form.append('subcategoryId', formData.subcategoryId);
-        form.append('price', formData.price.toString());
-        form.append('deliveryTime', formData.deliveryTime.toString());
-
-        // Append keywords individually
-        formData.keywords.forEach((keyword) => {
-            form.append('keywords', keyword);
-        });
-
-        // Append development options as JSON
-        form.append('developmentOptions', JSON.stringify(developmentOptions));
-
-        // Append files if they exist
-        if (singleFile) {
-            form.append('singleFile', singleFile);
-        }
-
-        files.forEach((file) => {
-            form.append('files', file);
-        });
-
-        try {
-            const response = await createService();
-            alert(response.message);
-            // Reset form
-            setFormData(initialFormData);
-            setDevelopmentOptions(initialDevelopmentOptions);
-            setSingleFile(null);
-            setFiles([]);
-            setError("");
-        } catch (error) {
-            console.error('Error creating service:', error);
-            setError("Failed to create service. Please try again.");
-            alert('Failed to create service');
-        }
     };
 
-    // Placeholder for handling adding development options
-    const handleAddDevelopment = () => {
-        // Implement logic to add development options if needed
-    };
+
 
     return (
         <form onSubmit={handleSubmit} className='mb-[30px]'>
@@ -422,6 +405,7 @@ const ServiceForm: React.FC = () => {
                                 <GalleryModal
                                     setShowGalleryModal={setShowGalleryModal}
                                     handleImages={handleImages}
+                                    setFiles={setFiles}
                                 />
                             )}
 
@@ -508,7 +492,6 @@ const ServiceForm: React.FC = () => {
                         <button
                             type="button"
                             className="flex items-center text-[12px] px-4 py-2 w-fit font-kufi border border-primary text-primary hover:bg-primary hover:text-white transition-all rounded"
-                            onClick={handleAddDevelopment}
                         >
                             <FaPlus className="mr-2" />
                             <span>أضف تطويرا لهذه الخدمة</span>
