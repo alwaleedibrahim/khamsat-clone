@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, KeyboardEvent, useEffect } from 'react';
 
 interface TagInputProps {
@@ -31,7 +31,7 @@ const TagInput: React.FC<TagInputProps> = ({ handlekeywords }) => {
     };
 
     return (
-        <form className="bg-white font-kufi">
+        <div className="bg-white font-kufi">
             <div className="u-margin-bottom">
                 <div className="control-group">
                     <label htmlFor="select-tags" className="block mb-[11px] text-style1">كلمات مفتاحية</label>
@@ -63,7 +63,7 @@ const TagInput: React.FC<TagInputProps> = ({ handlekeywords }) => {
                     <p className="text-[12px] text-gray-600 mt-[10px]">اختر الكلمات المفتاحية المناسبة بحد أقصى 5 كلمات</p>
                 </div>
             </div>
-        </form>
+        </div>
     );
 };
 

@@ -4,33 +4,36 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 
 interface GalleryModalProps {
     setShowGalleryModal: React.Dispatch<React.SetStateAction<boolean>>;
-    handleImages: (images: string[]) => void;
+    handleImages: (images: (File | string)[]) => void; 
+    setFiles: React.Dispatch<React.SetStateAction<File[]>>; 
 }
 
-const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handleImages }) => {
+const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handleImages, setFiles }) => {
     const [activeTab, setActiveTab] = useState<'device' | 'url' | 'video'>('device');
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [imageURL, setImageURL] = useState<string>('');
     const [videoURL, setVideoURL] = useState<string>('');
-    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+    const [previewUrls, setPreviewUrls] = useState<(File | string)[]>([]); 
 
     useEffect(() => {
-        const handleOutsideClick = (event: MouseEvent) => {
-            const target = event.target as HTMLElement;
-            if (target.classList.contains('fixed') && target.classList.contains('inset-0')) {
-                setShowGalleryModal(false);
-            }
-        };
-        window.addEventListener('click', handleOutsideClick);
-        return () => {
-            window.removeEventListener('click', handleOutsideClick);
-        };
-    }, [setShowGalleryModal]);
+      const handleOutsideClick = (event: MouseEvent) => {
+          const target = event.target as HTMLElement;
+          if (target.classList.contains('fixed') && target.classList.contains('inset-0')) {
+              setShowGalleryModal(false); 
+          }
+      };
+      window.addEventListener('click', handleOutsideClick);
+      return () => {
+          window.removeEventListener('click', handleOutsideClick);
+      };
+  }, []); 
+  
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const filesArray = Array.from(e.target.files);
             setSelectedFiles(filesArray);
+            setFiles(filesArray); 
 
             const fileReaders = filesArray.map(file => {
                 return new Promise<string>((resolve, reject) => {
@@ -49,7 +52,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handle
 
             Promise.all(fileReaders)
                 .then(urls => {
-                    setPreviewUrls(prev => [...prev, ...urls]);
+                    setPreviewUrls(prev => [...prev, ...urls, ...filesArray]); 
                 })
                 .catch(err => {
                     console.error(err);
@@ -82,7 +85,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handle
     };
 
     const handleSave = () => {
-        handleImages(previewUrls);
+        handleImages(previewUrls); 
         setShowGalleryModal(false);
     };
 
@@ -145,9 +148,6 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handle
                                             onChange={handleFileChange}
                                         />
                                     </label>
-                                    <button type="button" className="btn btn-primary hidden">
-                                        <i className="fa fa-upload"></i> رفع الصور
-                                    </button>
                                 </div>
                             </div>
                         )}
@@ -195,49 +195,58 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handle
                         <h5 className="text-md font-semibold mb-2">المعاينة:</h5>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                             {previewUrls.map((url, index) => {
-                                const isYouTube = url.includes('youtube.com') || url.includes('youtu.be');
+                                const isYouTube = typeof url === 'string' && (url.includes('youtube.com') || url.includes('youtu.be'));
                                 return (
                                     <div key={index} className="relative">
                                         {isYouTube ? (
+                                            <iframe
+                                                width="100%"
+                                                height="150"
+                                                src={`https://www.youtube.com/embed/${extractYouTubeID(url)}`}
+                                                title="YouTube video player"
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                            />
+                                        ) : (
                                             <Image
-                                                src={url}
-                                                alt={`Preview ${index}`}
+                                                src={url as string}
+                                                alt={`Preview ${index + 1}`}
                                                 layout="responsive"
                                                 width={300}
                                                 height={200}
-                                                className="object-cover rounded"
+                                                objectFit="cover"
+                                                className="rounded-lg"
+                                                onError={(e) => {
+                                                    e.currentTarget.src = '/fallback-image.png';
+                                                }}
                                             />
-                                        ): null}
-                                        <button
-                                            className="absolute top-0 right-0 text-red-500"
-                                            onClick={() => setPreviewUrls(prev => prev.filter((_, i) => i !== index))}
-                                            aria-label="Remove preview"
-                                        >
-                                            &times;
-                                        </button>
+                                        )}
                                     </div>
                                 );
                             })}
                         </div>
                     </div>
-                </div>
 
-                <div className="modal-footer flex justify-end p-4 border-t">
-                    <button className="btn btn-secondary mr-2" onClick={() => setShowGalleryModal(false)}>
-                        إلغاء
-                    </button>
-                    <button className="btn btn-primary" onClick={handleSave}>
-                        حفظ
-                    </button>
+                    <div className="mt-4 flex justify-end">
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={handleSave}
+                        >
+                            حفظ
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
 
-const extractYouTubeID = (url: string): string => {
-    const match = url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
-    return match ? match[1] : '';
+const extractYouTubeID = (url: string) => {
+    const regex = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/i;
+    const matches = url.match(regex);
+    return matches ? matches[1] : '';
 };
 
 export default GalleryModal;
