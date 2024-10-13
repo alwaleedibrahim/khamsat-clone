@@ -12,7 +12,7 @@ const TagInput: React.FC<TagInputProps> = ({ handlekeywords }) => {
     const maxTags = 5;
 
     useEffect(() => {
-        handlekeywords(tags);gi
+        handlekeywords(tags);
     }, [tags, handlekeywords]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
