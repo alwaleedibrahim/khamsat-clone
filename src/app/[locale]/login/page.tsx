@@ -54,7 +54,7 @@ const Login: React.FC = () => {
       }
 
       const result = await response.json();
-      dispatch(login(result.token));
+      dispatch(login(result.data.token));
       toast.success(t("login_success"));
       setTimeout(() => router.push("/"), 2000);
     } catch (error) {

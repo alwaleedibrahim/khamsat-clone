@@ -25,7 +25,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({ handleActiveTab, 
                     <div className="relative inline-block">
                         <Image
                             className="rounded-full shadow-md"
-                            src="/images/profile/bc8f040c02a7064f813491350aa9dc64.png"
+                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}
                             width="128"
                             height="128"
                             alt="User Avatar"
