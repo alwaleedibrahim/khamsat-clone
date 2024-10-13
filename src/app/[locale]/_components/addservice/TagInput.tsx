@@ -13,7 +13,7 @@ const TagInput: React.FC<TagInputProps> = ({ handlekeywords }) => {
 
     useEffect(() => {
         handlekeywords(tags);
-    }, [tags, handlekeywords]);
+    }, [tags]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' || event.key === ',') {
@@ -52,6 +52,7 @@ const TagInput: React.FC<TagInputProps> = ({ handlekeywords }) => {
                         {tags.length < maxTags && (
                             <input
                                 type="text"
+                                id="select-tags"
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyDown={handleKeyDown}
