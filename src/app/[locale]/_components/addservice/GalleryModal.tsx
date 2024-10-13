@@ -4,11 +4,11 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 
 interface GalleryModalProps {
     setShowGalleryModal: React.Dispatch<React.SetStateAction<boolean>>;
-    handleImages: (images: (File | string)[]) => void; 
+    // handleImages: (images: (File | string)[]) => void; 
     setFiles: React.Dispatch<React.SetStateAction<File[]>>; 
 }
 
-const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handleImages, setFiles }) => {
+const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFiles }) => {
     const [activeTab, setActiveTab] = useState<'device' | 'url' | 'video'>('device');
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [imageURL, setImageURL] = useState<string>('');
@@ -34,7 +34,8 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handle
             const filesArray = Array.from(e.target.files);
             setSelectedFiles(filesArray);
             setFiles(filesArray); 
-
+            console.log(filesArray);
+            
             const fileReaders = filesArray.map(file => {
                 return new Promise<string>((resolve, reject) => {
                     const reader = new FileReader();
@@ -85,7 +86,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, handle
     };
 
     const handleSave = () => {
-        handleImages(previewUrls); 
+        // handleImages(previewUrls); 
         setShowGalleryModal(false);
     };
 

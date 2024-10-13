@@ -34,17 +34,35 @@ export const fetchServiceById = async (serviceId:string) => {
     }
 };
 
-export const createService = async () => {
+export interface FormDataProp {
+    userId: string;
+    title: {
+        ar: string;
+        en: string;
+    };
+    categoryId: string;
+    subcategoryId: string;
+    description: {
+        ar: string;
+        en: string;
+    };
+    BuyerRules: string;
+    price: number;
+    deliveryTime: number;
+    keywords: string[];
+}
+
+export const createService = async (formData: FormData) => {
     try {
-        const response = await axios.post(`${base_url}`,{
-            headers:{
-                'Content-Type': 'application/json',
-            }
+        const response = await axios.post(`${base_url}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
         });
-        
         return response.data;
-    } catch (error) {
-        console.error('Fetch Services Error:', error);
+    } catch (error: any) {
+        console.error('Post Services Error:', error);
         throw error;
     }
 };
+

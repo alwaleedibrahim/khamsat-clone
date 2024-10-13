@@ -5,7 +5,7 @@ import { FaImage, FaPlus } from 'react-icons/fa';
 import TagInput from './TagInput';
 import ButtonA from '../reusable/buttons/ButtonA';
 import axios from 'axios';
-import { createService } from '../../_lib/services';
+import { createService, FormDataProp } from '../../_lib/services';
 // Import your AuthContext or any other context as needed
 // import { AuthContext } from '../../context/AuthContext';
 
@@ -41,25 +41,6 @@ interface DevelopmentOptions {
     acknowledgment: boolean;
 }
 
-export interface FormDataProp {
-    userId: string;
-    title: {
-        ar: string;
-        en: string;
-    };
-    categoryId: string;
-    subcategoryId: string;
-    description: {
-        ar: string;
-        en: string;
-    };
-    BuyerRules: string;
-    price: number;
-    deliveryTime: number;
-    keywords: string[];
-    images?: (File | string)[];
-}
-
 const initialDevelopmentOptions: DevelopmentOptions = {
     unique: false,
     ownership: false,
@@ -82,7 +63,6 @@ const initialFormData: FormDataProp = {
     price: 5,
     deliveryTime: 1,
     keywords: [],
-    images: []
 };
 
 
@@ -183,13 +163,6 @@ const ServiceForm: React.FC = () => {
         }
     };
 
-    const handleImages = (images: (File | string)[]) => {
-        setFormData(prev => ({
-            ...prev,
-            images: images,
-        }));
-    };
-
     const handlekeywords = (keywords: string[]) => {
         setFormData(prev => ({
             ...prev,
@@ -208,42 +181,44 @@ const ServiceForm: React.FC = () => {
     // Handle form submission
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
-        // const form = new FormData();
-        // form.append('userId', '66febc9bd66445b2cf6466a1'); 
-        // form.append('title.ar', formData.title.ar);
-        // form.append('title.en', formData.title.en);
-        // form.append('description.ar', formData.description.ar);
-        // form.append('description.en', formData.description.en);
-        // form.append('BuyerRules', formData.BuyerRules);
-        // form.append('categoryId', formData.categoryId);
-        // form.append('subcategoryId', formData.subcategoryId);
-        // form.append('price', formData.price.toString());
-        // form.append('deliveryTime', formData.deliveryTime.toString());
-
-        // // Append keywords individually
-        // formData.keywords.forEach((keyword) => {
-        //     form.append('keywords', keyword);
-        // });
-
-        // files.forEach((file) => {
-        //     form.append('images', file);
-        // });
-
-        // try {
-        //     const response = await createService();
-        //     alert(response.message);
-        //     // Reset form
-        //     setFormData(initialFormData);
-        //     setSingleFile(null);
-        //     setFiles([]);
-        //     setError("");
-        // } catch (error) {
-        //     console.error('Error creating service:', error);
-        //     setError("Failed to create service. Please try again.");
-        //     alert('Failed to create service');
-        // }
+        const form = new FormData();
+        form.append('userId', '66febc9bd66445b2cf6466a1'); 
+    
+        // Use bracket notation for nested fields
+        form.append('title[ar]', formData.title.ar);
+        form.append('title[en]', formData.title.en);
+        form.append('description[ar]', formData.description.ar);
+        form.append('description[en]', formData.description.en);
+        form.append('BuyerRules', formData.BuyerRules);
+        form.append('categoryId', formData.categoryId);
+        form.append('subcategoryId', formData.subcategoryId);
+        form.append('price', formData.price.toString());
+        form.append('deliveryTime', formData.deliveryTime.toString());
+    
+        // Append keywords individually
+        formData.keywords.forEach((keyword) => {
+            form.append('keywords', keyword);
+        });
+    
+        files.forEach((file) => {
+            form.append('images', file);
+        });
+    
+        try {
+            const response = await createService(form);
+            alert(response.message);
+            // Reset form
+            setFormData(initialFormData);
+            setSingleFile(null);
+            setFiles([]);
+            setError("");
+        } catch (error: any) {
+            console.error('Error creating service:', error);
+            setError("Failed to create service. Please try again.");
+            alert('Failed to create service');
+        }
     };
+    
 
 
 
@@ -254,9 +229,10 @@ const ServiceForm: React.FC = () => {
                 <div className='bg-white p-container-space '>
                     {/* Arabic Title */}
                     <div className='mb-5'>
-                        <label className="block mb-3 text-style1">عنوان الخدمة</label>
+                        <label htmlFor="titleAr" className="block mb-3 text-style1">عنوان الخدمة</label>
                         <input
                             type="text"
+                            id="titleAr" 
                             name="title.ar"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             maxLength={60}
@@ -273,9 +249,10 @@ const ServiceForm: React.FC = () => {
 
                     {/* English Title */}
                     <div className='mb-5'>
-                        <label className="block mb-3 text-style1">Service title</label>
+                        <label htmlFor="titleEn" className="block mb-3 text-style1">Service title</label>
                         <input
                             type="text"
+                            id="titleEn" 
                             name="title.en"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             maxLength={60}
@@ -292,7 +269,7 @@ const ServiceForm: React.FC = () => {
 
                     {/* Category Selection */}
                     <div className="mb-5">
-                        <label className="block mb-3 text-style1">التصنيف</label>
+                        <label htmlFor="categoryId" className="block mb-3 text-style1">التصنيف</label>
                         <div className="flex flex-wrap">
                             {/* Main Category Dropdown */}
                             <div className="w-full md:w-1/2 mb-4 md:mb-0 pl-2">
@@ -319,6 +296,7 @@ const ServiceForm: React.FC = () => {
 
                             {/* Sub Category Dropdown */}
                             <div className="w-full md:w-1/2 pr-2">
+                                <label htmlFor="subcategoryId" className="sr-only">Subcategory</label> {/* Optional for accessibility */}
                                 <select
                                     id="subcategoryId"
                                     name="subcategoryId"
@@ -345,8 +323,9 @@ const ServiceForm: React.FC = () => {
 
                     {/* Service Description */}
                     <div className="mb-5">
-                        <label className="block mb-3 text-style1">وصف الخدمة</label>
+                        <label htmlFor="descriptionAr" className="block mb-3 text-style1">وصف الخدمة</label>
                         <textarea
+                            id="descriptionAr" 
                             name="description.ar"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             rows={6}
@@ -364,8 +343,9 @@ const ServiceForm: React.FC = () => {
 
                     {/* English Service Description */}
                     <div className="mb-5">
-                        <label className="block mb-3 text-style1">Service description</label>
+                        <label htmlFor="descriptionEn" className="block mb-3 text-style1">Service description</label>
                         <textarea
+                            id="descriptionEn"
                             name="description.en"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             rows={6}
@@ -383,12 +363,13 @@ const ServiceForm: React.FC = () => {
 
                     {/* Service Gallery */}
                     <div className="mb-5">
-                        <label className="block mb-3 text-style1">معرض الخدمة</label>
+                        <label htmlFor="images" className="block mb-3 text-style1">معرض الخدمة</label>
                         <div className="text-center p-10 bg-[#f7f9fc] rounded">
                             {/* Gallery Upload Section */}
-                            <div id="images">
+                            <div>
                                 <div className="mb-6">
                                     <button
+                                        id="images"
                                         type="button"
                                         onClick={() => setShowGalleryModal(true)}
                                         className="flex items-center gap-2 mx-auto bg-primary font-kufi text-white px-6 py-3 hover:bg-[#3a7d25] transition-all rounded"
@@ -397,14 +378,14 @@ const ServiceForm: React.FC = () => {
                                         <span>أضف صورة أو فيديو</span>
                                     </button>
                                 </div>
-                                <p className="text-[12px]">القياس: 800x470 بكسل . الحجم الأقصى: 5 ميجا. العدد المسموح: 10 ملفات.</p>
+                                <p className="text-[12px]">القياس: 800x470 بكسل . الحجم الأقصى: 5 ميجا. العدد المسموح: 5 ملفات.</p>
                             </div>
 
                             {/* Modal for Adding Images/Videos */}
                             {showGalleryModal && (
                                 <GalleryModal
                                     setShowGalleryModal={setShowGalleryModal}
-                                    handleImages={handleImages}
+                                    // handleImages={handleImages}
                                     setFiles={setFiles}
                                 />
                             )}
@@ -417,10 +398,11 @@ const ServiceForm: React.FC = () => {
 
                     {/* Instructions for Buyers */}
                     <div className="mb-5">
-                        <label className="block mb-3 text-style1">
+                        <label htmlFor="buyerRules" className="block mb-3 text-style1">
                             تعليمات للمشتري
                         </label>
                         <textarea
+                            id="buyerRules" 
                             name="BuyerRules"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             rows={4}
@@ -441,7 +423,7 @@ const ServiceForm: React.FC = () => {
                         <div className="flex flex-wrap">
                             {/* Price Dropdown */}
                             <div className="w-full md:w-1/2 mb-4 md:mb-0 pl-2">
-                                <label className="block mb-3 text-style1">سعر الخدمة</label>
+                                <label htmlFor="price" className="block mb-3 text-style1">سعر الخدمة</label>
                                 <select
                                     id="price"
                                     name="price"
@@ -458,7 +440,7 @@ const ServiceForm: React.FC = () => {
 
                             {/* Delivery Time Dropdown */}
                             <div className="w-full md:w-1/2 pr-2">
-                                <label className="block mb-3 text-style1">مدة التسليم</label>
+                                <label htmlFor="deliveryTime" className="block mb-3 text-style1">مدة التسليم</label>
                                 <select
                                     id="deliveryTime"
                                     name="deliveryTime"
