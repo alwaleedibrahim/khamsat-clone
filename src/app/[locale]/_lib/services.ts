@@ -34,6 +34,13 @@ export const fetchServiceById = async (serviceId:string) => {
     }
 };
 
+export interface Keyword {
+    title: {
+        ar: string;
+        en: string;
+    };
+}
+
 export interface FormDataProp {
     userId: string;
     title: {
@@ -49,16 +56,19 @@ export interface FormDataProp {
     BuyerRules: string;
     price: number;
     deliveryTime: number;
-    keywords: string[];
+    keywords: Keyword[];
 }
 
 export const createService = async (formData: FormData) => {
+    console.log(formData);
     try {
         const response = await axios.post(`${base_url}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
+        console.log(response);
+        
         return response.data;
     } catch (error: any) {
         console.error('Post Services Error:', error);

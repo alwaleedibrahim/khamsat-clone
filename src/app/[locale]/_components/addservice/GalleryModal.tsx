@@ -4,8 +4,7 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 
 interface GalleryModalProps {
     setShowGalleryModal: React.Dispatch<React.SetStateAction<boolean>>;
-    // handleImages: (images: (File | string)[]) => void; 
-    setFiles: React.Dispatch<React.SetStateAction<File[]>>; 
+    setFiles: React.Dispatch<React.SetStateAction<(string | File)[]>>;
 }
 
 const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFiles }) => {
@@ -13,28 +12,28 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFil
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [imageURL, setImageURL] = useState<string>('');
     const [videoURL, setVideoURL] = useState<string>('');
-    const [previewUrls, setPreviewUrls] = useState<(File | string)[]>([]); 
+    const [previewUrls, setPreviewUrls] = useState<(File | string)[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+    // Effect to handle outside click to close modal
     useEffect(() => {
-      const handleOutsideClick = (event: MouseEvent) => {
-          const target = event.target as HTMLElement;
-          if (target.classList.contains('fixed') && target.classList.contains('inset-0')) {
-              setShowGalleryModal(false); 
-          }
-      };
-      window.addEventListener('click', handleOutsideClick);
-      return () => {
-          window.removeEventListener('click', handleOutsideClick);
-      };
-  }, []); 
-  
+        const handleOutsideClick = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            if (target.classList.contains('fixed') && target.classList.contains('inset-0')) {
+                setShowGalleryModal(false);
+            }
+        };
+        window.addEventListener('click', handleOutsideClick);
+        return () => {
+            window.removeEventListener('click', handleOutsideClick);
+        };
+    }, [setShowGalleryModal]);
 
+    // Handle file selection from device
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const filesArray = Array.from(e.target.files);
             setSelectedFiles(filesArray);
-            setFiles(filesArray); 
-            console.log(filesArray);
             
             const fileReaders = filesArray.map(file => {
                 return new Promise<string>((resolve, reject) => {
@@ -53,40 +52,55 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFil
 
             Promise.all(fileReaders)
                 .then(urls => {
-                    setPreviewUrls(prev => [...prev, ...urls, ...filesArray]); 
+                    const uniqueUrls = Array.from(new Set([...previewUrls, ...urls]));
+                    setPreviewUrls(uniqueUrls);
                 })
                 .catch(err => {
                     console.error(err);
-                    alert('Failed to load some images. Please try again.');
+                    setErrorMessage('Failed to load some images. Please try again.');
                 });
         }
     };
 
+    // Add image URL to preview
     const handleAddImageURL = () => {
         if (imageURL.trim() === '') {
-            alert('Please enter a valid image URL.');
+            setErrorMessage('Please enter a valid image URL.');
             return;
         }
-        setPreviewUrls(prev => [...prev, imageURL.trim()]);
+        setPreviewUrls(prev => {
+            const newUrls = [...prev, imageURL.trim()];
+            return Array.from(new Set(newUrls));
+        });
         setImageURL('');
+        setErrorMessage(null);
     };
 
+    // Add video URL to preview
     const handleAddVideoURL = () => {
         if (videoURL.trim() === '' || !isValidYouTubeURL(videoURL)) {
-            alert('Please enter a valid YouTube video URL.');
+            setErrorMessage('Please enter a valid YouTube video URL.');
             return;
         }
-        setPreviewUrls(prev => [...prev, videoURL.trim()]);
+        setPreviewUrls(prev => {
+            const newUrls = [...prev, videoURL.trim()];
+            return Array.from(new Set(newUrls));
+        });
         setVideoURL('');
+        setErrorMessage(null);
     };
 
+    // Validate YouTube URL
     const isValidYouTubeURL = (url: string): boolean => {
         const regex = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/i;
         return regex.test(url);
     };
 
+    // Save and close modal
     const handleSave = () => {
-        // handleImages(previewUrls); 
+        const filesToSave = activeTab === 'device' ? selectedFiles : previewUrls;
+        
+        setFiles(filesToSave); 
         setShowGalleryModal(false);
     };
 
@@ -106,6 +120,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFil
                 </div>
 
                 <div className="modal-body p-4">
+                    {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
                     <div className="flex space-x-2 border-b mb-4">
                         <button
                             type="button"
@@ -194,60 +209,51 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFil
 
                     <div className="mt-6">
                         <h5 className="text-md font-semibold mb-2">المعاينة:</h5>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {previewUrls.map((url, index) => {
-                                const isYouTube = typeof url === 'string' && (url.includes('youtube.com') || url.includes('youtu.be'));
-                                return (
-                                    <div key={index} className="relative">
-                                        {isYouTube ? (
-                                            <iframe
-                                                width="100%"
-                                                height="150"
-                                                src={`https://www.youtube.com/embed/${extractYouTubeID(url)}`}
-                                                title="YouTube video player"
-                                                frameBorder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowFullScreen
-                                            />
-                                        ) : (
-                                            <Image
-                                                src={url as string}
-                                                alt={`Preview ${index + 1}`}
-                                                layout="responsive"
-                                                width={300}
-                                                height={200}
-                                                objectFit="cover"
-                                                className="rounded-lg"
-                                                onError={(e) => {
-                                                    e.currentTarget.src = '/fallback-image.png';
-                                                }}
-                                            />
-                                        )}
-                                    </div>
-                                );
-                            })}
+                        <div className="grid grid-cols-3 gap-2">
+                            {previewUrls.map((url, index) => (
+                                <div key={index} className="relative">
+                                    {typeof url === 'string' && (url.includes('youtube.com') || url.includes('youtu.be')) ? (
+                                        <iframe
+                                            className="w-full h-24 rounded"
+                                            src={`https://www.youtube.com/embed/${url.split('v=')[1]}`}
+                                            title={`Video ${index}`}
+                                            allowFullScreen
+                                        ></iframe>
+                                    ) : (
+                                        <Image
+                                            src={url as string}
+                                            alt={`Preview ${index}`}
+                                            width={100}
+                                            height={100}
+                                            className="object-cover rounded"
+                                            onError={(e) => { (e.target as HTMLImageElement).src = '/fallback-image.png'; }}
+                                        />
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
+                </div>
 
-                    <div className="mt-4 flex justify-end">
-                        <button
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={handleSave}
-                        >
-                            حفظ
-                        </button>
-                    </div>
+                <div className="modal-footer p-4 border-t">
+                    <button
+                        type="button"
+                        className="btn btn-secondary mr-2"
+                        onClick={() => setShowGalleryModal(false)}
+                    >
+                        إلغاء
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={handleSave}
+                    >
+                        حفظ
+                    </button>
                 </div>
             </div>
         </div>
     );
-};
-
-const extractYouTubeID = (url: string) => {
-    const regex = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/i;
-    const matches = url.match(regex);
-    return matches ? matches[1] : '';
 };
 
 export default GalleryModal;

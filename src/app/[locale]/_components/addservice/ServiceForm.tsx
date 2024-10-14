@@ -5,7 +5,7 @@ import { FaImage, FaPlus } from 'react-icons/fa';
 import TagInput from './TagInput';
 import ButtonA from '../reusable/buttons/ButtonA';
 import axios from 'axios';
-import { createService, FormDataProp } from '../../_lib/services';
+import { createService, FormDataProp, Keyword } from '../../_lib/services';
 // Import your AuthContext or any other context as needed
 // import { AuthContext } from '../../context/AuthContext';
 
@@ -62,7 +62,7 @@ const initialFormData: FormDataProp = {
     BuyerRules: '',
     price: 5,
     deliveryTime: 1,
-    keywords: [],
+    keywords: [] as Keyword[],
 };
 
 
@@ -71,7 +71,7 @@ const ServiceForm: React.FC = () => {
     const [subCategories, setSubCategories] = useState<SubCategories[]>([]);
     const [formData, setFormData] = useState<FormDataProp>(initialFormData);
     const [singleFile, setSingleFile] = useState<File | null>(null);
-    const [files, setFiles] = useState<File[]>([]);
+    const [files, setFiles] = useState<(string | File)[]>([]);
   
     const [showGalleryModal, setShowGalleryModal] = useState<boolean>(false);
     const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
@@ -163,7 +163,7 @@ const ServiceForm: React.FC = () => {
         }
     };
 
-    const handlekeywords = (keywords: string[]) => {
+    const handlekeywords = (keywords: Keyword[]) => {
         setFormData(prev => ({
             ...prev,
             keywords: keywords,
@@ -183,8 +183,6 @@ const ServiceForm: React.FC = () => {
         e.preventDefault();
         const form = new FormData();
         form.append('userId', '66febc9bd66445b2cf6466a1'); 
-    
-        // Use bracket notation for nested fields
         form.append('title[ar]', formData.title.ar);
         form.append('title[en]', formData.title.en);
         form.append('description[ar]', formData.description.ar);
@@ -194,18 +192,33 @@ const ServiceForm: React.FC = () => {
         form.append('subcategoryId', formData.subcategoryId);
         form.append('price', formData.price.toString());
         form.append('deliveryTime', formData.deliveryTime.toString());
-    
+
         // Append keywords individually
-        formData.keywords.forEach((keyword) => {
-            form.append('keywords', keyword);
+        if (formData.keywords) {
+            formData.keywords.forEach((keyword, index) => {
+                form.append(`keywords[${index}][title][ar]`, keyword.title.ar);
+                form.append(`keywords[${index}][title][en]`, keyword.title.en);
+            });
+        }
+        console.log(formData.keywords)
+        const entries = Array.from(form.entries());
+        entries.forEach(([key, value]) => {
+            console.log(`${key}: ${value}`);
         });
-    
-        files.forEach((file) => {
-            form.append('images', file);
-        });
+
+
+        if(files){
+            files.forEach((file) => {
+                form.append('images', file);
+            });
+        }
+
     
         try {
+            console.log(form);
             const response = await createService(form);
+            console.log(response);
+
             alert(response.message);
             // Reset form
             setFormData(initialFormData);
@@ -223,7 +236,7 @@ const ServiceForm: React.FC = () => {
 
 
     return (
-        <form onSubmit={handleSubmit} className='mb-[30px]'>
+        <form onSubmit={handleSubmit} className='mb-[30px]' encType="multipart/form-data">
             <div className="font-kufi">
                 {/* Service Title */}
                 <div className='bg-white p-container-space '>
@@ -385,7 +398,6 @@ const ServiceForm: React.FC = () => {
                             {showGalleryModal && (
                                 <GalleryModal
                                     setShowGalleryModal={setShowGalleryModal}
-                                    // handleImages={handleImages}
                                     setFiles={setFiles}
                                 />
                             )}
