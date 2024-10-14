@@ -6,8 +6,21 @@ import TagInput from './TagInput';
 import ButtonA from '../reusable/buttons/ButtonA';
 import axios from 'axios';
 import { createService, FormDataProp, Keyword } from '../../_lib/services';
+import { serviceFormSchema } from '../../_validation/service';
+
 // Import your AuthContext or any other context as needed
 // import { AuthContext } from '../../context/AuthContext';
+interface DevelopmentOptions {
+    unique: boolean;
+    ownership: boolean;
+    acknowledgment: boolean;
+}
+
+const initialDevelopmentOptions: DevelopmentOptions = {
+    unique: false,
+    ownership: false,
+    acknowledgment: false,
+};
 
 interface Categories {
     _id: string;
@@ -35,18 +48,6 @@ interface SubCategories {
     subcategories: Category[];
 }
 
-interface DevelopmentOptions {
-    unique: boolean;
-    ownership: boolean;
-    acknowledgment: boolean;
-}
-
-const initialDevelopmentOptions: DevelopmentOptions = {
-    unique: false,
-    ownership: false,
-    acknowledgment: false,
-};
-
 const initialFormData: FormDataProp = {
     userId: '',
     title: {
@@ -72,7 +73,8 @@ const ServiceForm: React.FC = () => {
     const [formData, setFormData] = useState<FormDataProp>(initialFormData);
     const [singleFile, setSingleFile] = useState<File | null>(null);
     const [files, setFiles] = useState<(string | File)[]>([]);
-  
+    const [isSubmit, setIsSubmit] =  useState<boolean>(false);
+
     const [showGalleryModal, setShowGalleryModal] = useState<boolean>(false);
     const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
     const [loadingSubCategories, setLoadingSubCategories] = useState<boolean>(false);
@@ -97,10 +99,10 @@ const ServiceForm: React.FC = () => {
                 setLoadingCategories(false);
             }
         };
-    
+
         fetchCategories();
     }, []);
-    
+
     useEffect(() => {
         const fetchSubCategories = async () => {
             if (formData.categoryId) {
@@ -122,11 +124,11 @@ const ServiceForm: React.FC = () => {
                 }
             }
         };
-    
+
         fetchSubCategories();
-    }, [formData.categoryId]); 
-    
-    
+    }, [formData.categoryId]);
+
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -134,6 +136,7 @@ const ServiceForm: React.FC = () => {
         // Handle nested fields
         if (name.startsWith('title.')) {
             const lang = name.split('.')[1];
+            const fieldName = `title.${lang}`;
             setFormData(prev => ({
                 ...prev,
                 title: {
@@ -141,8 +144,14 @@ const ServiceForm: React.FC = () => {
                     [lang]: value,
                 },
             }));
+            setFieldErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[fieldName];
+                return newErrors;
+            });
         } else if (name.startsWith('description.')) {
             const lang = name.split('.')[1];
+            const fieldName = `description.${lang}`;
             setFormData(prev => ({
                 ...prev,
                 description: {
@@ -150,16 +159,31 @@ const ServiceForm: React.FC = () => {
                     [lang]: value,
                 },
             }));
+            setFieldErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[fieldName];
+                return newErrors;
+            });
         } else if (['price', 'deliveryTime'].includes(name)) {
             setFormData(prev => ({
                 ...prev,
                 [name]: Number(value),
             }));
+            setFieldErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[name];
+                return newErrors;
+            });
         } else {
             setFormData(prev => ({
                 ...prev,
                 [name]: value,
             }));
+            setFieldErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[name];
+                return newErrors;
+            });
         }
     };
 
@@ -168,7 +192,12 @@ const ServiceForm: React.FC = () => {
             ...prev,
             keywords: keywords,
         }));
+        setFieldErrors(prev => {
+            const newErrors = { ...prev };
+            return newErrors;
+        });
     };
+
 
     const handleDevelopmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
@@ -179,61 +208,76 @@ const ServiceForm: React.FC = () => {
     };
 
     // Handle form submission
+    const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const form = new FormData();
-        form.append('userId', '66febc9bd66445b2cf6466a1'); 
-        form.append('title[ar]', formData.title.ar);
-        form.append('title[en]', formData.title.en);
-        form.append('description[ar]', formData.description.ar);
-        form.append('description[en]', formData.description.en);
-        form.append('BuyerRules', formData.BuyerRules);
-        form.append('categoryId', formData.categoryId);
-        form.append('subcategoryId', formData.subcategoryId);
-        form.append('price', formData.price.toString());
-        form.append('deliveryTime', formData.deliveryTime.toString());
+        e.preventDefault();        
+        const dataToValidate = {
+            userId: '66febc9bd66445b2cf6466a1',
+            title: formData.title,
+            categoryId: formData.categoryId,
+            subcategoryId: formData.subcategoryId,
+            description: formData.description,
+            BuyerRules: formData.BuyerRules,
+            price: formData.price,
+            deliveryTime: formData.deliveryTime,
+            keywords: formData.keywords,
+            images: files.filter(file => file instanceof File) as File[],
+        };
 
-        // Append keywords individually
-        if (formData.keywords) {
-            formData.keywords.forEach((keyword, index) => {
+        const validation = serviceFormSchema.safeParse(dataToValidate);
+        if (!validation.success) {
+            const fieldErrorsMap: { [key: string]: string } = {};
+            validation.error.errors.forEach(err => {
+                const path = err.path.join('.');
+                fieldErrorsMap[path] = err.message;
+            });
+            setFieldErrors(fieldErrorsMap);
+            return;
+        }
+
+        const form = new FormData();
+        const validatedData = validation.data;
+
+        form.append('userId', validatedData.userId);
+        form.append('title[ar]', validatedData.title.ar);
+        form.append('title[en]', validatedData.title.en);
+        form.append('description[ar]', validatedData.description.ar);
+        form.append('description[en]', validatedData.description.en);
+        form.append('BuyerRules', validatedData.BuyerRules);
+        form.append('categoryId', validatedData.categoryId);
+        form.append('subcategoryId', validatedData.subcategoryId);
+        form.append('price', validatedData.price.toString());
+        form.append('deliveryTime', validatedData.deliveryTime.toString());
+
+        if (validatedData.keywords) {
+            validatedData.keywords.forEach((keyword, index) => {
                 form.append(`keywords[${index}][title][ar]`, keyword.title.ar);
                 form.append(`keywords[${index}][title][en]`, keyword.title.en);
             });
         }
-        console.log(formData.keywords)
-        const entries = Array.from(form.entries());
-        entries.forEach(([key, value]) => {
-            console.log(`${key}: ${value}`);
-        });
 
-
-        if(files){
-            files.forEach((file) => {
+        if (validatedData.images) {
+            validatedData.images.forEach((file, index) => {
                 form.append('images', file);
             });
         }
 
-    
         try {
-            console.log(form);
             const response = await createService(form);
-            console.log(response);
-
             alert(response.message);
             // Reset form
             setFormData(initialFormData);
+            setIsSubmit(true)
             setSingleFile(null);
             setFiles([]);
             setError("");
         } catch (error: any) {
             console.error('Error creating service:', error);
+            setIsSubmit(false)
             setError("Failed to create service. Please try again.");
             alert('Failed to create service');
         }
     };
-    
-
-
 
     return (
         <form onSubmit={handleSubmit} className='mb-[30px]' encType="multipart/form-data">
@@ -245,7 +289,7 @@ const ServiceForm: React.FC = () => {
                         <label htmlFor="titleAr" className="block mb-3 text-style1">عنوان الخدمة</label>
                         <input
                             type="text"
-                            id="titleAr" 
+                            id="titleAr"
                             name="title.ar"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             maxLength={60}
@@ -254,6 +298,9 @@ const ServiceForm: React.FC = () => {
                             onChange={handleInputChange}
                             required
                         />
+                        {fieldErrors['title.ar'] && (
+                            <p className="text-red-500 text-xs mt-1">{fieldErrors['title.ar']}</p>
+                        )}
                         <p className="text-gray-500 mt-2 text-[12px]">
                             أدخل عنواناً واضحاً باللغة العربية يصف الخدمة التي تريد أن تقدمها. لا تدخل رموزاً أو كلمات مثل
                             &quot;حصرياً&quot;، &quot;لأول مرة&quot;، &quot;لفترة محدود&quot;.. الخ.
@@ -265,7 +312,7 @@ const ServiceForm: React.FC = () => {
                         <label htmlFor="titleEn" className="block mb-3 text-style1">Service title</label>
                         <input
                             type="text"
-                            id="titleEn" 
+                            id="titleEn"
                             name="title.en"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             maxLength={60}
@@ -274,6 +321,9 @@ const ServiceForm: React.FC = () => {
                             onChange={handleInputChange}
                             required
                         />
+                        {fieldErrors['title.en'] && (
+                            <p className="text-red-500 text-xs mt-1">{fieldErrors['title.en']}</p>
+                        )}
                         <p className="text-gray-500 mt-2 text-[12px]">
                             Enter a clear title in English that describes the service you want to provide. Do not enter symbols or words like
                             &quot;Exclusive&quot;, &quot;For the first time&quot;, &quot;For a limited time&quot;, etc.
@@ -305,6 +355,9 @@ const ServiceForm: React.FC = () => {
                                         ) : null
                                     ))}
                                 </select>
+                                {fieldErrors['categoryId'] && (
+                                    <p className="text-red-500 text-xs mt-1">{fieldErrors['categoryId']}</p>
+                                )}
                             </div>
 
                             {/* Sub Category Dropdown */}
@@ -331,14 +384,16 @@ const ServiceForm: React.FC = () => {
                                 </select>
                             </div>
                         </div>
-                        {error && <p className="text-red-500 mt-2 text-[12px]">{error}</p>}
+                        {fieldErrors['subcategoryId'] && (
+                            <p className="text-red-500 text-xs mt-1">{fieldErrors['subcategoryId']}</p>
+                        )}
                     </div>
 
                     {/* Service Description */}
                     <div className="mb-5">
                         <label htmlFor="descriptionAr" className="block mb-3 text-style1">وصف الخدمة</label>
                         <textarea
-                            id="descriptionAr" 
+                            id="descriptionAr"
                             name="description.ar"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             rows={6}
@@ -348,6 +403,9 @@ const ServiceForm: React.FC = () => {
                             onChange={handleInputChange}
                             required
                         ></textarea>
+                        {fieldErrors['description.ar'] && (
+                            <p className="text-red-500 text-xs mt-1">{fieldErrors['description.ar']}</p>
+                        )}
                         <p className="text-[12px] text-gray-600 mt-2">
                             أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط. يمنع وضع البريد
                             الالكتروني، رقم الهاتف أو أي معلومات اتصال أخرى.
@@ -368,6 +426,9 @@ const ServiceForm: React.FC = () => {
                             onChange={handleInputChange}
                             required
                         ></textarea>
+                        {fieldErrors['description.en'] && (
+                            <p className="text-red-500 text-xs mt-1">{fieldErrors['description.en']}</p>
+                        )}
                         <p className="text-[12px] text-gray-600 mt-2">
                             Enter the service description accurately including all the information and conditions. Prevents mail mode
                             Email, phone number or any other contact information.
@@ -401,7 +462,9 @@ const ServiceForm: React.FC = () => {
                                     setFiles={setFiles}
                                 />
                             )}
-
+                            {fieldErrors['images'] && (
+                                <p className="text-red-500 text-xs mt-1">{fieldErrors['images']}</p>
+                            )}
                             <p className="mt-2 text-[12px]">
                                 أضف صور أو فيديو مصمم بشكل جيد لتظهر خدمتك بشكل احترافي وتزيد من مبيعاتك.
                             </p>
@@ -414,7 +477,7 @@ const ServiceForm: React.FC = () => {
                             تعليمات للمشتري
                         </label>
                         <textarea
-                            id="buyerRules" 
+                            id="buyerRules"
                             name="BuyerRules"
                             className="border p-2 w-full text-style2 focus:outline-none focus:border-primary"
                             rows={4}
@@ -424,6 +487,9 @@ const ServiceForm: React.FC = () => {
                             onChange={handleInputChange}
                             required
                         ></textarea>
+                        {fieldErrors['BuyerRules'] && (
+                            <p className="text-red-500 text-xs mt-1">{fieldErrors['BuyerRules']}</p>
+                        )}
                         <p className="text-[12px] text-gray-600 mt-2">
                             أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط. يمنع وضع البريد
                             الالكتروني، رقم الهاتف أو أي معلومات اتصال أخرى.
@@ -448,6 +514,9 @@ const ServiceForm: React.FC = () => {
                                     <option value={10}>$10.00</option>
                                     {/* Add more options as needed */}
                                 </select>
+                                {fieldErrors['price'] && (
+                                    <p className="text-red-500 text-xs mt-1">{fieldErrors['price']}</p>
+                                )}
                             </div>
 
                             {/* Delivery Time Dropdown */}
@@ -474,12 +543,18 @@ const ServiceForm: React.FC = () => {
                                 </select>
                             </div>
                         </div>
+                        {fieldErrors['deliveryTime'] && (
+                            <p className="text-red-500 text-xs mt-1">{fieldErrors['deliveryTime']}</p>
+                        )}
                     </div>
 
                     {/* Tag Input */}
                     <div className="mb-5">
-                        <TagInput handlekeywords={handlekeywords} />
+                        <TagInput handlekeywords={handlekeywords} isSubmit = {isSubmit}/>
                     </div>
+                    {fieldErrors['keywords'] && (
+                        <p className="text-red-500 text-xs mt-1">{fieldErrors['keywords']}</p>
+                    )}
 
                     {/* Add Development Button */}
                     <div className="flex justify-end mb-5">
@@ -509,6 +584,7 @@ const ServiceForm: React.FC = () => {
                                     className="ml-2 checked:text-primary w-[14px] h-[14px]"
                                     checked={developmentOptions.unique}
                                     onChange={handleDevelopmentChange}
+                                    required
                                 />
                                 <label htmlFor="unique">
                                     <span>عنوان ووصف الخدمة من صياغتي الخاصة وليس منسوخ من أي مكان آخر</span>
@@ -525,6 +601,7 @@ const ServiceForm: React.FC = () => {
                                     className="ml-2 checked:text-primary w-[14px] h-[14px]"
                                     checked={developmentOptions.ownership}
                                     onChange={handleDevelopmentChange}
+                                    required
                                 />
                                 <label htmlFor="ownership">
                                     <span>جميع الأعمال بمعرض الخدمة نفذتها بنفسي ولدي الصلاحية لنشرها</span>
@@ -541,6 +618,7 @@ const ServiceForm: React.FC = () => {
                                     className="ml-2 checked:text-primary w-[14px] h-[14px]"
                                     checked={developmentOptions.acknowledgment}
                                     onChange={handleDevelopmentChange}
+                                    required
                                 />
                                 <label htmlFor="acknowledgment">
                                     <span>
