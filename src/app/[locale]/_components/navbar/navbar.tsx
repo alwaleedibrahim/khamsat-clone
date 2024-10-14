@@ -36,6 +36,8 @@ import { logout } from "../../_lib/redux/slice/authSlice";
 import { useEffect } from "react";
 import { getProfile } from "../../_lib/redux/slice/profileSlice";
 import IUserProfile from "../../_models/userProfile";
+import KSAIcon from "../reusable/icons/KSAIcon";
+import UKIcons from "../reusable/icons/UKIcons";
 
 export default function Navbar() {
   const router = useRouter();
@@ -309,7 +311,7 @@ export default function Navbar() {
                 width={144}
                 height={36}
                 alt="logo"
-                src="/images/khamsat-logo.png"
+                src={localActive=='ar'?`/images/khamsat-logo.png`: `/images/khamsat-logo-en.png`}
                 className="w-[144px] h-[36px] min-w-fit"
               />
               </Link>
@@ -406,9 +408,8 @@ export default function Navbar() {
               {/* change language */}
               <li onClick={handleLang} data-lang={localActive} className="flex items-center">
                 <NavItem>
-                  <FaGlobe className="text-lg" />
+                  {localActive == 'en'? <KSAIcon /> : <UKIcons />}
                 </NavItem>
-                {localActive}
               </li>
               <li className={`${isAuthenticated? `flex` : `hidden`}`}>
                 <button className="group p-0 m-0 h-full">
@@ -418,7 +419,7 @@ export default function Navbar() {
                         width={40}
                         height={40}
                         alt="logo"
-                        src="/images/avatar.png"
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}
                         className="w-[40] h-[40] rounded-full min-w-fit"
                       />
                       <div

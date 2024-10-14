@@ -11,7 +11,7 @@ export default interface IUserProfile {
     ar?: string;
     en?: string;
   };
-  profile_picture_url?: string;
+  profilePicture?: string;
   country?: string;
   city?: string;
   gender?: string;
