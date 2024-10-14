@@ -169,5 +169,12 @@
         "footer": {
           "copyright": "© 2024 Hsoub. All rights reserved."
         }
-      }
+      },
+    "CategoryPage": {
+        "HowItWorks": "How does Khamsat work",
+        "common": "Common",
+        "categories": "categories",
+        "browse": "Browse",
+        "services": "services"
+    }
 }

@@ -4,7 +4,7 @@ import axiosInstance from "./axiosInstance"
 
 export default async function categoriesLoader() : Promise<ICategory[]> {
     try {
-      const response = await axiosInstance.get(`categories`)
+      const response = await axiosInstance.get(`categories/subcategories`)
       if (response.data) {
           return response.data.categories
       } else {

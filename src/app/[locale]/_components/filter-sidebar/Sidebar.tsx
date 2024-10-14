@@ -41,8 +41,6 @@ export default function Sidebar({
   const selectedSubCategory = useSelector(
     (state) => state.category.selectedSubCategory
   );
-  console.log(selectedCategory);
-  console.log(selectedSubCategory);
 
   return (
     <div className="mx-20">
