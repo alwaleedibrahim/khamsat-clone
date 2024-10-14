@@ -33,11 +33,12 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { TypedUseSelectorHook, useDispatch, useSelector as useReduxSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../_lib/redux/store";
 import { logout } from "../../_lib/redux/slice/authSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProfile } from "../../_lib/redux/slice/profileSlice";
 import IUserProfile from "../../_models/userProfile";
 import KSAIcon from "../reusable/icons/KSAIcon";
 import UKIcons from "../reusable/icons/UKIcons";
+import Categorydropdown from "./categorydropdown";
 
 export default function Navbar() {
   const router = useRouter();
@@ -65,6 +66,8 @@ export default function Navbar() {
   const handleLogout = () => {
       dispatch(logout())
   }
+
+  const [categoryOpen, setCategoryOpen] = useState(false)
   return (
     <>
       <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full z-[200]">
@@ -324,13 +327,16 @@ export default function Navbar() {
                   <span>{t('sidebar.menu.addService')}</span>
                 </NavItem>
               </li>
-              <li>
-                <Link href={`/${localActive}/services`} >
+              <li onClick={()=> {setCategoryOpen(!categoryOpen)}} className="hover:cursor-pointer">
                 <NavItem>
                   <FaCubes className="me-2" />
                   <span>{t('sidebar.menu.categories.title')}</span>
                   </NavItem>
-                </Link>
+                {categoryOpen && <div
+                  className={`absolute left-0 transition-all duration-300 overflow-y-auto h-screen pb-20 ${categoryOpen? `visible opacity-100`: `invisible opacity-0`} `}>
+                  <Categorydropdown />
+                </div>}
+
               </li>
               <li className={`${isAuthenticated? `flex` : `hidden`}`}>
               <Link href={`/${localActive}/purchases`} >
@@ -341,7 +347,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className={`${isAuthenticated? `flex` : `hidden`}`}>
-              <Link href={`/${localActive}/oders`} >
+              <Link href={`/${localActive}/orders`} >
                 <NavItem>
                   <FaTruck className="me-2 scale-x-[-1]" />
                   <span>{t('sidebar.menu.incomingService')} </span>

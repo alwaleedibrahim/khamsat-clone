@@ -10,7 +10,7 @@ export default async function subcategoriesLoader(name: string) {
           console.log(`/categories/category/${categoryId}`);
           
           if(subcategoryResponse.data) {
-            return subcategoryResponse.data.subcategoryTitle
+            return subcategoryResponse.data.subcategories
           }
       } else {
         throw new Error("Cannot get category")

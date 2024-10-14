@@ -169,5 +169,12 @@
         "footer": {
             "copyright": "© 2024 حسوب. جميع الحقوق محفوظة."
         }
+    },
+    "CategoryPage": {
+        "HowItWorks": "كيف يعمل خمسات",
+        "common": "شائعة",
+        "categories": "تصنيفات",
+        "browse": "تصفح",
+        "services": "خدمات"
     }
 }
