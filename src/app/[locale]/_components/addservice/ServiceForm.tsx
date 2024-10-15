@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import GalleryModal from "./GalleryModal";
 import { FaImage, FaPlus } from 'react-icons/fa';
 import TagInput from './TagInput';
@@ -89,7 +90,7 @@ const ServiceForm: React.FC = () => {
         const fetchCategories = async () => {
             setLoadingCategories(true);
             try {
-                const response = await axios.get(`http://localhost:4500/categories`);
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`);
                 setCategories(response.data.categories);
                 setError("");
             } catch (err) {
@@ -108,7 +109,7 @@ const ServiceForm: React.FC = () => {
             if (formData.categoryId) {
                 setLoadingSubCategories(true);
                 try {
-                    const response = await axios.get(`http://localhost:4500/categories/category/${formData.categoryId}`);
+                    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/category/${formData.categoryId}`);
                     setSubCategories(response.data.subcategories);
                     setError("");
                 } catch (err) {
@@ -227,7 +228,7 @@ const ServiceForm: React.FC = () => {
         const validation = serviceFormSchema.safeParse(dataToValidate);
         if (!validation.success) {
             const fieldErrorsMap: { [key: string]: string } = {};
-            validation.error.errors.forEach(err => {
+            validation.error.errors.forEach((err : {message: string, path: Array<string | number>}) => {
                 const path = err.path.join('.');
                 fieldErrorsMap[path] = err.message;
             });
@@ -250,14 +251,14 @@ const ServiceForm: React.FC = () => {
         form.append('deliveryTime', validatedData.deliveryTime.toString());
 
         if (validatedData.keywords) {
-            validatedData.keywords.forEach((keyword, index) => {
+            validatedData.keywords.forEach((keyword : {title: {ar: string, en:string}}, index: number) => {
                 form.append(`keywords[${index}][title][ar]`, keyword.title.ar);
                 form.append(`keywords[${index}][title][en]`, keyword.title.en);
             });
         }
 
         if (validatedData.images) {
-            validatedData.images.forEach((file, index) => {
+            validatedData.images.forEach((file: string | Blob) => {
                 form.append('images', file);
             });
         }
@@ -271,7 +272,7 @@ const ServiceForm: React.FC = () => {
             setSingleFile(null);
             setFiles([]);
             setError("");
-        } catch (error: any) {
+        } catch (error) {
             console.error('Error creating service:', error);
             setIsSubmit(false)
             setError("Failed to create service. Please try again.");

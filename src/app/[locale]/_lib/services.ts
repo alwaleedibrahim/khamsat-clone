@@ -67,7 +67,7 @@ export const createService = async (formData: FormData) => {
             },
         });        
         return response.data;
-    } catch (error: any) {
+    } catch (error) {
         console.error('Post Services Error:', error);
         throw error;
     }
