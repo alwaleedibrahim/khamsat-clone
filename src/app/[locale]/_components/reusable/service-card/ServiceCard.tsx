@@ -3,8 +3,10 @@ import ImageSwiper from '../img-swiper/ImageSwiper'
 import Stars from '../stars/Stars'
 import Image from 'next/image'
 import { useLocale } from 'next-intl';
+import Link from 'next/link';
 
 export interface ServicesCard {
+    _id: string;
     title: {
         ar: string,
         en: string
@@ -39,25 +41,27 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
 
     return (
         <div>
-            <div className="relative w-full h-auto">
-                <ImageSwiper
-                    images={serviceData.images}
-                    extraStyle='h-[180px]'
-                />
+            <Link href={`/${localActive}/${serviceData.category?.name.en}/${serviceData.subcategory?.title.en}/${serviceData._id}`} passHref>
+                <div className="relative w-full h-auto">
+                    <ImageSwiper
+                        images={serviceData.images}
+                        extraStyle='h-[180px]'
+                    />
 
-                <div className="absolute bottom-[10px] left-[15px] w-[36px] h-[36px] z-[100]">
-                    <a href="">
-                        <Image
-                            src={serviceData.authorImg}
-                            alt="Author's profile picture"
-                            width={36}
-                            height={36}
-                            className="h-[100%] object-cover rounded-full border border-white"
-                        />
-                    </a>
+                    <div className="absolute bottom-[10px] left-[15px] w-[36px] h-[36px] z-[100]">
+                        <a href="">
+                            <Image
+                                src={serviceData.authorImg}
+                                alt="Author's profile picture"
+                                width={36}
+                                height={36}
+                                className="h-[100%] object-cover rounded-full border border-white"
+                            />
+                        </a>
+                    </div>
+
                 </div>
-
-            </div>
+            </Link>
             <div className="text-start">
                 <h4 className="font-kufi text-md my-2">
                     <a href="/training/learn-engineering">{localActive === "ar" ? serviceData.title.ar : serviceData.title.en}</a>
