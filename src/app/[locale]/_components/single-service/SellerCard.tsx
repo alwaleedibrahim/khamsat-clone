@@ -4,7 +4,11 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faUser} from '@fortawesome/free-solid-svg-icons'
 
-const SellerCard = () => {
+interface SellerCardProps {
+    profilePicture:string,
+    username:string
+}
+const SellerCard:React.FC<SellerCardProps> = ({profilePicture, username}) => {
     return (
         <div className='bg-white p-container-space font-kufi'>
             <h6 className='text-[16px]'>صاحب الخدمة</h6>
@@ -17,9 +21,11 @@ const SellerCard = () => {
                                     <td className="text-center pl-[5px]">
                                         <a href="/user/khaled_m2" >
                                             <div className="relative w-[64px] h-[64px]">
-                                                <img
+                                                <Image
+                                                    width={64}
+                                                    height={64}
                                                     className="rounded-full border border-gray-300 w-full h-full"
-                                                    src="/images/services/97fe064c7ef498b3fc5183f1c59626fa.png"
+                                                    src={`${profilePicture}`}
                                                     alt="Khaled M"
                                                 />
                                                 <Image
@@ -36,7 +42,7 @@ const SellerCard = () => {
                                     <td className="p-2">
                                         <h3>
                                             <a className="block text-md text-style1 mb-1.5" href="/user/khaled_m2">
-                                                .Khaled M
+                                                {username}
                                             </a>
                                         </h3>
                                         <ul className="text-sm text-style2">
