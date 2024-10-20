@@ -1,0 +1,38 @@
+.alertify .ajs-dialog {
+    max-width: 500px !important;
+    padding: 24px !important;
+    border-radius: 8px !important;
+    text-align: right !important;
+}
+.alertify .ajs-header {
+    padding: 0 !important;
+    margin: 0 !important ;
+    margin-bottom: 20px !important;
+    color: #333 !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+.alertify .ajs-content {
+    padding: 0 !important;
+    margin-bottom: 20px !important;
+    color: #666 !important;
+}
+.alertify .ajs-buttons {
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+.alertify .ajs-button {
+    margin: 0 10px 0 0 !important;
+    padding: 10px 20px !important;
+    border-radius: 4px !important;
+    font-size: 14px !important;
+}
+.alertify .ajs-ok {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+.alertify .ajs-cancel {
+    background-color: #f1f1f1 !important;
+    color: #333 !important;
+}

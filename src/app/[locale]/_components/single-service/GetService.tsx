@@ -4,8 +4,8 @@ import { useCart } from 'react-use-cart'; // استيراد useCart من react-u
 import ButtonA from '../reusable/buttons/ButtonA';
 import { useRouter } from 'next/navigation';
 const alertify = require('alertifyjs');
-import './alertify.css'
 // import 'alertifyjs/build/css/alertify.css';
+import '../../alertify.css';
 import 'alertifyjs/build/css/alertify.rtl.css';
 import { useLocale } from 'next-intl';
 
@@ -70,7 +70,9 @@ const GetService = ({ serviceData }: Readonly<{ serviceData: any }>) => {
                     </select>
                 </div>
                 <h3 className="mb-4 text-lg">
-                    <span>المبلغ 5$</span>
+                    <span className='me-3'>المبلغ</span>
+                    <span>{serviceData.price * quantity}</span>
+                    <span>$</span>
                 </h3>
             </div>
 

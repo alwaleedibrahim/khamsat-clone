@@ -5,6 +5,9 @@ import ButtonA from "../_components/reusable/buttons/ButtonA";
 import ButtonB from "../_components/reusable/buttons/ButtonB";
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
+const alertify = require('alertifyjs'); 
+import 'alertifyjs/build/css/alertify.rtl.css';
+import '../alertify.css';
 
 const Cart: React.FC = () => {
   const {
@@ -21,7 +24,7 @@ const Cart: React.FC = () => {
   const fees = cartTotal * 0.05; // 5% fees
   const totalWithFees = cartTotal + fees;
   const path = `/${localActive}/`
-
+  console.log(useCart())
   const CartItem: React.FC<{ item: any }> = ({ item }) => {
     return (
       <div className="cart-body border-b py-5">
@@ -44,7 +47,7 @@ const Cart: React.FC = () => {
               ))}
             </select>
           </div>
-          <div className="w-2/12">
+          <div className="w-2/12 ms-2">
             <h4>${item.price.toFixed(2)}</h4>
           </div>
           <div className="">
@@ -53,7 +56,19 @@ const Cart: React.FC = () => {
               extraStyle="border-red-600 py-[3px] px-[8px] text-red-600 text-sm"
               onClick={(event:Event) => {
                 event.preventDefault();
-                removeItem(item.id)
+                alertify.confirm('إشعار', 'هل أنت متأكد من رغبتك بحذف الخدمة من سلة المشتريات؟',
+                  function () {
+                      // alertify.success('تم إتمام الشراء');
+                      // const path = `/${localActive}/cart`
+                      // router.replace(path);
+                      removeItem(item.id)
+                  },
+                  function () {
+                      alertify.message('');
+                  })
+                  .set('labels', { ok: 'موافق', cancel: 'إلغاء الأمر' })
+                  .set('defaultFocus', 'ok')
+                  .set('closable', false);
               }}
             />
           </div>

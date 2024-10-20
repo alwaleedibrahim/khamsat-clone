@@ -39,6 +39,7 @@ import IUserProfile from "../../_models/userProfile";
 import KSAIcon from "../reusable/icons/KSAIcon";
 import UKIcons from "../reusable/icons/UKIcons";
 import Categorydropdown from "./categorydropdown";
+import { useCart } from "react-use-cart";
 
 export default function Navbar() {
   const router = useRouter();
@@ -46,6 +47,7 @@ export default function Navbar() {
   const t = useTranslations("Header");
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const {items} = useCart()
 
   const handleLang = (e:React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
@@ -366,6 +368,11 @@ export default function Navbar() {
               <li>
                 <NavItem>
                   <FaShoppingCart className="text-lg" />
+                  {items.length > 0 && (
+                    <span className="relative end-[9px] top-[-7px] bg-[#e75737] text-white rounded-full h-[20px] w-[20px] text-xs flex items-center justify-center">
+                      {items.length}
+                    </span>
+                  )}
                 </NavItem>
               </li>
               <li className={`${isAuthenticated? `flex` : `hidden`}`}>
@@ -642,6 +649,9 @@ export default function Navbar() {
               className="p-0 m-0 h-full flex flex-col items-center justify-around"
             >
               <FaShoppingCart />
+              {items.length > 0 && (
+                    <span className="relative end-[9px] top-[-22px] bg-[#e75737] text-white rounded-full h-[12px] w-[12px] text-xs flex items-center justify-center"></span>
+              )}
               <span>السلة</span>
             </label>
             <input

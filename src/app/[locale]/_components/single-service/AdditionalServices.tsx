@@ -28,7 +28,7 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({ upgrades }) => 
             [_id]: !prev[_id],
         }));
     };
-
+    console.log(upgrades)
     return (
         <div className="bg-white">
             <h5 className='py-[14px] px-[20px] font-kufi border-b-[1px] border-[#F1F1F1]'>
