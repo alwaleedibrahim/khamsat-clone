@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import GalleryModal from "./GalleryModal";
 import { FaImage, FaPlus } from 'react-icons/fa';
 import TagInput from './TagInput';
@@ -8,6 +7,8 @@ import ButtonA from '../reusable/buttons/ButtonA';
 import axios from 'axios';
 import { createService, FormDataProp, Keyword } from '../../_lib/services';
 import { serviceFormSchema } from '../../_validation/service';
+import UpgradeService from './UpgradesService';
+import { Upgrade } from '../../_lib/upgardes';
 
 // Import your AuthContext or any other context as needed
 // import { AuthContext } from '../../context/AuthContext';
@@ -74,7 +75,7 @@ const ServiceForm: React.FC = () => {
     const [formData, setFormData] = useState<FormDataProp>(initialFormData);
     const [singleFile, setSingleFile] = useState<File | null>(null);
     const [files, setFiles] = useState<(string | File)[]>([]);
-    const [isSubmit, setIsSubmit] =  useState<boolean>(false);
+    const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
     const [showGalleryModal, setShowGalleryModal] = useState<boolean>(false);
     const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
@@ -90,7 +91,7 @@ const ServiceForm: React.FC = () => {
         const fetchCategories = async () => {
             setLoadingCategories(true);
             try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`);
+                const response = await axios.get(`http://localhost:4500/categories`);
                 setCategories(response.data.categories);
                 setError("");
             } catch (err) {
@@ -109,7 +110,7 @@ const ServiceForm: React.FC = () => {
             if (formData.categoryId) {
                 setLoadingSubCategories(true);
                 try {
-                    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/category/${formData.categoryId}`);
+                    const response = await axios.get(`http://localhost:4500/categories/category/${formData.categoryId}`);
                     setSubCategories(response.data.subcategories);
                     setError("");
                 } catch (err) {
@@ -211,7 +212,7 @@ const ServiceForm: React.FC = () => {
     // Handle form submission
     const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();        
+        e.preventDefault();
         const dataToValidate = {
             userId: '66febc9bd66445b2cf6466a1',
             title: formData.title,
@@ -228,7 +229,7 @@ const ServiceForm: React.FC = () => {
         const validation = serviceFormSchema.safeParse(dataToValidate);
         if (!validation.success) {
             const fieldErrorsMap: { [key: string]: string } = {};
-            validation.error.errors.forEach((err : {message: string, path: Array<string | number>}) => {
+            validation.error.errors.forEach(err => {
                 const path = err.path.join('.');
                 fieldErrorsMap[path] = err.message;
             });
@@ -251,14 +252,14 @@ const ServiceForm: React.FC = () => {
         form.append('deliveryTime', validatedData.deliveryTime.toString());
 
         if (validatedData.keywords) {
-            validatedData.keywords.forEach((keyword : {title: {ar: string, en:string}}, index: number) => {
+            validatedData.keywords.forEach((keyword, index) => {
                 form.append(`keywords[${index}][title][ar]`, keyword.title.ar);
                 form.append(`keywords[${index}][title][en]`, keyword.title.en);
             });
         }
 
         if (validatedData.images) {
-            validatedData.images.forEach((file: string | Blob) => {
+            validatedData.images.forEach((file, index) => {
                 form.append('images', file);
             });
         }
@@ -272,13 +273,21 @@ const ServiceForm: React.FC = () => {
             setSingleFile(null);
             setFiles([]);
             setError("");
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error creating service:', error);
             setIsSubmit(false)
             setError("Failed to create service. Please try again.");
             alert('Failed to create service');
         }
     };
+
+    // ///////////////////////////////////////////////////////////////////////////////////////// //
+    // Upgrades Logic 
+    const [upgrades, setUpgrades] = useState<Upgrade[]>([]);
+
+    const handleUgradesButton = () => {
+        setUpgrades((prevUpgrades) => [...prevUpgrades, {} as Upgrade]);
+    }
 
     return (
         <form onSubmit={handleSubmit} className='mb-[30px]' encType="multipart/form-data">
@@ -551,16 +560,26 @@ const ServiceForm: React.FC = () => {
 
                     {/* Tag Input */}
                     <div className="mb-5">
-                        <TagInput handlekeywords={handlekeywords} isSubmit = {isSubmit}/>
+                        <TagInput handlekeywords={handlekeywords} isSubmit={isSubmit} />
                     </div>
                     {fieldErrors['keywords'] && (
                         <p className="text-red-500 text-xs mt-1">{fieldErrors['keywords']}</p>
                     )}
 
+                    {upgrades.length > 0 ? (
+                        <div>
+                            <h3 className="block mb-3 text-style1">أضف تطويراً لهذه الخدمة</h3>
+                            {upgrades.map((upgrade, index) => (
+                                <UpgradeService key={index} index={index} setUpgrades={setUpgrades}/>
+                            ))}
+                        </div>
+                    ) : null}
+
                     {/* Add Development Button */}
                     <div className="flex justify-end mb-5">
                         <button
                             type="button"
+                            onClick={handleUgradesButton}
                             className="flex items-center text-[12px] px-4 py-2 w-fit font-kufi border border-primary text-primary hover:bg-primary hover:text-white transition-all rounded"
                         >
                             <FaPlus className="mr-2" />

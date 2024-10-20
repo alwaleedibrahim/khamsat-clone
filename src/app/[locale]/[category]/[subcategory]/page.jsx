@@ -16,7 +16,7 @@ export default async function page({params: {locale, category, subcategory}, sea
         </div>
         <div className="w-full lg:w-[76%]">
         <ServicesCollection>
-        {services.map((service, index) => (
+        {services?.map((service, index) => (
                 <ServiceCard key={index} serviceData={service} /> 
             ))}
           </ServicesCollection>

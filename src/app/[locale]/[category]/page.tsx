@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import ButtonB from "../../_components/reusable/buttons/ButtonB";
+import ButtonB from "../_components/reusable/buttons/ButtonB";
 import Image from "next/image";
 import {
   TypedUseSelectorHook,
@@ -12,10 +12,10 @@ import {
   getCategory,
   getSubCategory,
   selectCategory,
-} from "../../_lib/redux/slice/categorySlice";
-import ICategory from "../../_models/category";
+} from "../_lib/redux/slice/categorySlice";
+import ICategory from "../_models/category";
 import { useLocale, useTranslations } from "next-intl";
-import ISubCategory from "../../_models/subcategory";
+import ISubCategory from "../_models/subcategory";
 import Link from "next/link";
 import { FaPlayCircle } from "react-icons/fa";
 
@@ -29,7 +29,7 @@ export default function Page({
     dispatch(selectCategory(decodeURIComponent(category)));
     dispatch(getCategory());
     dispatch(getSubCategory(category));
-  }, [category]);
+  }, [category, dispatch]);
   const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
   const categories = useSelector((state) => state.category.categories);
   const selectedCategory: ICategory = categories.find(
