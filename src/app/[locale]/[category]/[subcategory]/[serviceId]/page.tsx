@@ -30,10 +30,11 @@ const page = async(context: GetServerSidePropsContext) => {
         upgradesData = responseUpgrades.upgrades;     
         const responseReviews = await fetchServiceReviews(serviceId)
         reviewsData = responseReviews.serviceReviews;     
+        console.log(upgradesData)
     }catch(err){
         console.log(err);
     }
-
+    console.log("hello")      
 
     return (
         <div className="flex flex-col lg:bg-transparent bg-white pt-[100px]">
@@ -56,7 +57,7 @@ const page = async(context: GetServerSidePropsContext) => {
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">
-                        <GetService />
+                        <GetService serviceData={serviceData} />
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">

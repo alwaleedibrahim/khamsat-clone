@@ -1,0 +1,37 @@
+.alertify .ajs-dialog {
+    max-width: 400px;
+    padding: 24px;
+    border-radius: 8px;
+    text-align: right;
+}
+.alertify .ajs-header {
+    padding: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+}
+.alertify .ajs-content {
+    padding: 0;
+    margin-bottom: 20px;
+    color: #666;
+}
+.alertify .ajs-buttons {
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+.alertify .ajs-button {
+    margin: 0 10px 0 0;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.alertify .ajs-ok {
+    background-color: #4CAF50;
+    color: white;
+}
+.alertify .ajs-cancel {
+    background-color: #f1f1f1;
+    color: #333;
+}

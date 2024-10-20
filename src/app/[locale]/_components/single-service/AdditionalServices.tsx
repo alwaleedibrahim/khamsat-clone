@@ -49,7 +49,7 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({ upgrades }) => 
                                         <label htmlFor={upgrade._id} className="u-no--margin">
                                             <input
                                                 type="checkbox"
-                                                className="hidden"
+                                                className="block"
                                                 id={upgrade._id}
                                                 name="service_upgrade_check"
                                                 value={upgrade._id}
@@ -57,7 +57,7 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({ upgrades }) => 
                                                 onChange={() => handleCheckboxChange(upgrade._id)}
                                             />
                                             {/* FontAwesome Icon */}
-                                            <span
+                                            {/* <span
                                                 className={`text-lg transition-opacity duration-200 ${checkedItems[upgrade._id] ? 'block text-primary' : 'hidden'}`}
                                                 style={{ fontFamily: 'FontAwesome' }}
                                             >
@@ -68,7 +68,7 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({ upgrades }) => 
                                                 style={{ fontFamily: 'FontAwesome' }}
                                             >
                                                 &#xf096;
-                                            </span>
+                                            </span> */}
 
                                         </label>
                                     </td>
