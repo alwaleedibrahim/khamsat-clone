@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import AdditionalServices from "@/app/[locale]/_components/single-service/AdditionalServices";
@@ -14,27 +15,37 @@ import { GetServerSidePropsContext } from "next";
 import { fetchUpgradesById } from "@/app/[locale]/_lib/upgardes";
 import { fetchServiceReviews } from "@/app/[locale]/_lib/reviews";
 
-const page = async(context: GetServerSidePropsContext) => {
-    const { serviceId } = context.params! as {
-        serviceId: string
-    }
+import { useState, useEffect } from "react";
+
+const Page = async (context: GetServerSidePropsContext) => {
+    const { serviceId } = context.params! as { serviceId: string };
     let serviceData;
     let upgradesData;
     let reviewsData;
-    // ========================================== //
-    // service data
-    try{
+    try {
         const response = await fetchServiceById(serviceId);
         serviceData = response.service;
         const responseUpgrades = await fetchUpgradesById(serviceId);
-        upgradesData = responseUpgrades.upgrades;     
-        const responseReviews = await fetchServiceReviews(serviceId)
-        reviewsData = responseReviews.serviceReviews;     
-        console.log(upgradesData)
-    }catch(err){
+        upgradesData = responseUpgrades.upgrades;
+        const responseReviews = await fetchServiceReviews(serviceId);
+        reviewsData = responseReviews.serviceReviews;
+    } catch (err) {
         console.log(err);
     }
-    console.log("hello")      
+
+    return (
+        <PageContent serviceData={serviceData} upgradesData={upgradesData} reviewsData={reviewsData} />
+    );
+};
+
+const PageContent = ({ serviceData, upgradesData, reviewsData }) => {
+    // استخدام حالة للسعر الكلي
+    const [totalPrice, setTotalPrice] = useState(serviceData.price);
+
+    // دالة لمعالجة تغييرات الترقية
+    const handleUpgradeChange = (priceChange: number) => {
+        setTotalPrice((prevPrice) => prevPrice + priceChange);
+    };
 
     return (
         <div className="flex flex-col lg:bg-transparent bg-white pt-[100px]">
@@ -43,17 +54,16 @@ const page = async(context: GetServerSidePropsContext) => {
                     <ServiceData images={serviceData.images} description={serviceData.description} />
                 </div>
                 <div className="lg:w-[32%] w-[100%] lg:p-sm-screen">
-                    <ServiceInfo data={serviceData.serviceCard} deliveryTime={serviceData.deliveryTime} price={serviceData.price} />
-                    {/* {serviceData.userId.profilePicture} */}
-                    <SellerCard profilePicture='/images/services/defaultuser.jfif' username={serviceData.userId.username}/>
+                    <ServiceInfo data={serviceData.serviceCard} deliveryTime={serviceData.deliveryTime} price={totalPrice} />
+                    <SellerCard profilePicture='/images/services/defaultuser.jfif' username={serviceData.userId.username} />
                 </div>
             </div>
 
             <div className="flex lg:flex-row flex-col w-full justify-center">
                 <div className="lg:w-[68%] w-[100%]">
-
                     <div className="w-full lg:p-sm-screen my-[20px]">
-                        <AdditionalServices upgrades={upgradesData} />
+                        {/* تمرير دالة تحديث السعر إلى مكون التحديثات */}
+                        <AdditionalServices upgrades={upgradesData} onUpgradeChange={handleUpgradeChange} />
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">
@@ -64,15 +74,11 @@ const page = async(context: GetServerSidePropsContext) => {
                         <ServicesRecommended />
                     </div>
 
-                    {
-                        (
-                            reviewsData.length > 0) ? (
-                            <div className="w-full lg:p-sm-screen my-[10px]">
-                                <Reviews reviews={reviewsData} />
-                            </div>
-                        ) : null
-                    }
-
+                    {reviewsData.length > 0 && (
+                        <div className="w-full lg:p-sm-screen my-[10px]">
+                            <Reviews reviews={reviewsData} />
+                        </div>
+                    )}
 
                     <div className="w-full lg:p-sm-screen my-[20px]">
                         <ServiceKeywords />
@@ -99,9 +105,8 @@ const page = async(context: GetServerSidePropsContext) => {
                     </div>
                 </div>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default page
+export default Page;
