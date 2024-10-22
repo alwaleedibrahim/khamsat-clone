@@ -1,91 +1,100 @@
-import React from 'react'
-import ServiceForm from '../../_components/addservice/ServiceForm'
+import Link from "next/link";
+import Image from "next/image";
+import AdditionalServices from "@/app/[locale]/_components/single-service/AdditionalServices";
+import GetService from "@/app/[locale]/_components/single-service/GetService";
+import ServicesRecommended from "@/app/[locale]/_components/single-service/ServicesRecommended";
+import ServiceKeywords from "@/app/[locale]/_components/single-service/ServiceKeywords";
+import Reviews from "@/app/[locale]/_components/single-service/Reviews";
+import ServiceSocialMedia from "@/app/[locale]/_components/single-service/ServiceSocialMedia";
+import { fetchServiceById } from "@/app/[locale]/_lib/services";
+import ServiceData from "@/app/[locale]/_components/single-service/ServiceData";
+import ServiceInfo from "@/app/[locale]/_components/single-service/ServiceInfo";
+import SellerCard from "@/app/[locale]/_components/single-service/SellerCard";
+import { GetServerSidePropsContext } from "next";
+import { fetchServiceReviews } from "@/app/[locale]/_lib/reviews";
 
-const page = () => {
+const page = async(context: GetServerSidePropsContext) => {
+    const { serviceId } = context.params! as {
+        serviceId: string
+    }
+    let serviceData;
+    let reviewsData;
+    // ========================================== //
+    // service data
+    try{
+        const response = await fetchServiceById(serviceId);
+        serviceData = response.service;
+        const responseReviews = await fetchServiceReviews(serviceId)
+        reviewsData = responseReviews.serviceReviews;     
+    }catch(err){
+        console.log(err);
+    }
+
+
     return (
         <div className="flex flex-col lg:bg-transparent bg-white pt-[100px]">
             <div className="flex lg:flex-row flex-col w-full justify-center">
-                <div className="lg:w-[65%] w-[100%] lg:p-sm-screen">
-                    <ServiceForm />
+                <div className="lg:w-[68%] w-[100%] lg:p-sm-screen">
+                    <ServiceData images={serviceData.images} description={serviceData.description} />
                 </div>
-                <div className="lg:w-[33%] lg:block hidden lg:p-sm-screen px-4">
-                    <div>
-                        <h3 className="mb-2 text-[18px] text-[#314459] font-kufi">أضف خدمتك وابدأ بتحقيق الأرباح</h3>
-                        <div className="mt-3">
-                            <p className="font-naskh text-[16px] text-[#545454] leading-loose">
-                                يتيح لك خمسات إمكانية تحقيق الأرباح عبر إضافة خدمات تجيد تنفيذها
-                                وإتاحتها للبيع للعملاء المهتمين. أدخل تفاصيل الخدمة بعناية ليقوم
-                                فريق خمسات بمراجعتها ونشرها.
-                            </p>
-                        </div>
-                        <br />
+                <div className="lg:w-[32%] w-[100%] lg:p-sm-screen">
+                    <ServiceInfo data={serviceData.serviceCard} deliveryTime={serviceData.deliveryTime} price={serviceData.price} />
+                    {/* {serviceData.userId.profilePicture} */}
+                    <SellerCard profilePicture='/images/services/defaultuser.jfif' username={serviceData.userId.username}/>
+                </div>
+            </div>
 
-                        <h3 className="mb-2 text-[18px] mt-4 text-[#314459] font-kufi">نصائح لإضافة خدمة صحيحة</h3>
+            <div className="flex lg:flex-row flex-col w-full justify-center">
+                <div className="lg:w-[68%] w-[100%]">
 
-                        <div className="mt-3">
-                            <h4 className="text-[16px] font-kufi mb-2 text-[#314459]">عنوان الخدمة</h4>
-                            <p className="font-naskh text-[16px] text-[14px] text-[#545454] leading-loose" >
-                                اختر عنوانًا مختصرًا وواضحًا يعكس ما ستقدمه بالتحديد في خدمتك، ليتمكن
-                                المشترين من العثور عليها عند البحث بكلمات ذات صلة بمجال الخدمة.
-                            </p>
-                            <br />
+                    <div className="w-full lg:p-sm-screen my-[20px]">
+                        <AdditionalServices serviceId={serviceId} />
+                    </div>
 
-                            <h4 className="text-[16px] font-kufi mb-2  text-[#314459]">وصف الخدمة</h4>
-                            <p className="font-naskh text-[16px] text-[14px] text-[#545454] leading-loose" >
-                                اكتب وصفًا مميزًا للخدمة بلغة سليمة خالية من الأخطاء، تشرح خلاله ما
-                                سيحصل عليه العميل بالتفصيل عند شراء الخدمة.
-                            </p>
-                            <br />
+                    <div className="w-full lg:p-sm-screen my-[10px]">
+                        <GetService />
+                    </div>
 
-                            <h4 className="text-[16px] font-kufi mb-2  text-[#314459]">معرض الخدمة</h4>
-                            <p className="font-naskh text-[16px] text-[14px] text-[#545454] leading-loose" >
-                                أضف صورة معبرة عن الخدمة بالإضافة إلى ثلاثة نماذج حصرية على الأقل
-                                تعرّف المشتري من خلالها على أسلوبك في العمل ومهاراتك.
-                            </p>
-                            <br />
+                    <div className="w-full lg:p-sm-screen my-[10px]">
+                        <ServicesRecommended />
+                    </div>
 
-                            <h4 className="text-[16px] font-kufi mb-2  text-[#314459]">سعر الخدمة</h4>
-                            <p className="font-naskh text-[16px] text-[14px] text-[#545454] leading-loose" >
-                                احرص على تحديد سعر مناسب للخدمة بناء على حجم العمل والجهد المبذول مع
-                                الأخذ بعين الاعتبار{' '}
-                                <a
-                                    href="https://khamsat.com/terms"
-                                    className="text-primary"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    عمولة الموقع
-                                </a>
-                                ، وحدد مدة تسليم مناسبة لإنجاز الخدمة بإتقان.
-                            </p>
-                        </div>
+                    {
+                        (
+                            reviewsData.length > 0) ? (
+                            <div className="w-full lg:p-sm-screen my-[10px]">
+                                <Reviews reviews={reviewsData} />
+                            </div>
+                        ) : null
+                    }
 
-                        <br />
 
-                        <h3 className="mt-4 text-[18px] text-[#314459] font-kufi">لماذا تُرفض الخدمة في خمسات؟</h3>
-                        <div className="mt-3 text-[#314459] px-9">
-                            <ul className="font-naskh">
-                                <li className="my-2 text-[16px] list-disc">عنوان طويل أو غير واضح أو يدمج أكثر من خدمة معًا</li>
-                                 <li className="my-2 text-[16px] list-disc">تجاهل تحديد حجم العمل الذي سيحصل عليه المشتري في وصف الخدمة</li>
-                                 <li className="my-2 text-[16px] list-disc">صور أو تصاميم ذات جودة منخفضة أو ليست من إعداد البائع</li>
-                                 <li className="my-2 text-[16px] list-disc">إرفاق أقل من ثلاثة نماذج لمعرض أعمال الخدمة</li>
-                                 <li className="my-2 text-[16px] list-disc">
-                                    خدمات مخالفة وفقًا{' '}
-                                    <a
-                                        href="https://khamsat.com/terms"
-                                        className="text-primary"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        لشروط الاستخدام
-                                    </a>{' '}
-                                    موقع خمسات
-                                </li>
-                            </ul>
-                        </div>
+                    <div className="w-full lg:p-sm-screen my-[20px]">
+                        <ServiceKeywords />
+                    </div>
+                </div>
+
+                <div className="lg:w-[32%] w-[100%] lg:-mt-[140px]">
+                    <div className="w-full lg:p-sm-screen">
+                        <Link href="/guarantee">
+                            <Image
+                                id="guarantee_img"
+                                src="/images/services/ads.png"
+                                alt="Guarantee Image"
+                                layout="responsive"
+                                width={1000}
+                                height={500}
+                                className="w-full"
+                                priority
+                            />
+                        </Link>
+                    </div>
+                    <div className="w-full mt-[20px] lg:p-sm-screen">
+                        <ServiceSocialMedia />
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }
