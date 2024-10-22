@@ -1,22 +1,26 @@
 "use client"
 
 import { useState } from "react";
-import ButtonA from "../_components/reusable/buttons/ButtonA";
+// import ButtonA from "../_components/reusable/buttons/ButtonA";
 import { FaPaypal, FaRegCreditCard, FaInfoCircle } from "react-icons/fa";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import convertToSubcurrency from "@/app/[locale]/_lib/payment/convert";
+import CheckoutPage from "@/app/[locale]/_components/payment/CheckoutForm";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
 
 const Payment = () => {
   const [selectedMethod, setSelectedMethod] = useState<"creditCard" | "paypal">(
     "creditCard"
   );
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
-
+  
+ const amount = 5
   return (
-    <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 min-h-screen">
+    <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 min-h-screen pt-20">
       {/* قسم الدفع */}
+
       <div className="p-4 font-kufi text-right lg:w-2/3 w-full lg:mr-12 mt-8">
         <a href="#" className="text-gray-500">
           الرئيسية
@@ -50,8 +54,19 @@ const Payment = () => {
         </div>
 
         {/* محتوى البطاقة الائتمانية */}
-        {selectedMethod === "creditCard" && (
-          <div className="p-4 w-full bg-white">
+        {selectedMethod === "creditCard" && (<>
+          
+      <Elements
+      stripe={stripePromise}
+      options={{
+        mode: "payment",
+        amount: convertToSubcurrency(amount),
+        currency: "usd",
+      }}
+    >
+      <CheckoutPage amount={amount} />
+    </Elements>
+          {/* <div className="p-4 w-full bg-white">
             <div className="mb-4 flex flex-col md:flex-row md:space-x-4">
               <div className="flex-1 pl-4">
                 <label className="block mb-2">الاسم الكامل</label>
@@ -73,27 +88,15 @@ const Payment = () => {
               </div>
             </div>
 
-            <div className="flex items-center mb-4">
-              <input
-                type="checkbox"
-                className={`h-5 w-5 focus:ring-green-500 ${
-                  isChecked ? "bg-green-600 border-green-600" : "bg-white"
-                }`}
-                checked={isChecked}
-                onChange={handleCheckboxChange}
-              />
-              <label className="ml-2 text-gray-700 pr-2">
-                احفظ البطاقة لتسهيل الدفع في المستقبل
-              </label>
-            </div>
+            
 
             <ButtonA
               text="ادفع بالبطاقة الائتمانية"
               type="button"
               extraStyle="py-2 w-full md:w-64 text-center text-sm mt-10"
             />
-          </div>
-        )}
+          </div> */}
+        </>)}
 
         {/* محتوى PayPal */}
         {selectedMethod === "paypal" && (
