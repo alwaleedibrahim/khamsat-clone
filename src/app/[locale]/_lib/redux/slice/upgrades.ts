@@ -37,7 +37,7 @@ export const fetchUpgradesById = createAsyncThunk<
     'upgrades/fetchById',
     async (serviceId, { rejectWithValue }) => {
         try {
-            const response = await axios.get(${base_url}/${serviceId});
+            const response = await axios.get(`${base_url}/${serviceId}`);
             return response.data; 
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch upgrades';
