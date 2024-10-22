@@ -1,17 +1,19 @@
 "use client"
 import { useLocale } from 'next-intl';
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckSquare, faSquare } from '@fortawesome/free-solid-svg-icons';
 
 export interface AdditionalService {
     _id: string;
     title: {
         ar: string;
-        en: string
+        en: string;
     };
     price: number;
-    duration: string;
-    description: string;
-    createdAt: string,
+    deliveryTime: number;
+    createdAt: string;
+    checked: boolean;
 }
 
 interface AdditionalServicesProps {
@@ -56,20 +58,18 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({ upgrades }) => 
                                                 checked={!!checkedItems[upgrade._id]}
                                                 onChange={() => handleCheckboxChange(upgrade._id)}
                                             />
-                                            {/* FontAwesome Icon */}
-                                            <span
-                                                className={`text-lg transition-opacity duration-200 ${checkedItems[upgrade._id] ? 'block text-primary' : 'hidden'}`}
-                                                style={{ fontFamily: 'FontAwesome' }}
-                                            >
-                                                &#xf14a;
-                                            </span>
-                                            <span
-                                                className={`text-lg transition-opacity duration-200 ${!checkedItems[upgrade._id] ? 'block text-gray-500' : 'hidden'}`}
-                                                style={{ fontFamily: 'FontAwesome' }}
-                                            >
-                                                &#xf096;
-                                            </span>
-
+                                            <FontAwesomeIcon
+                                                icon={checkedItems[upgrade._id] ? faCheckSquare : faSquare}
+                                                className="text-lg transition-opacity duration-200"
+                                                style={{
+                                                    marginTop: 9,
+                                                    padding:0,
+                                                    height: checkedItems[upgrade._id] ? '17px' :'14px',
+                                                    borderRadius:'3px',
+                                                    color: checkedItems[upgrade._id] ? '#52b035' : '#fff',
+                                                    border: checkedItems[upgrade._id] ? 'none' : '1.5px solid #777',
+                                                }}
+                                            />
                                         </label>
                                     </td>
                                     <td className="checkable details-td">
@@ -77,11 +77,9 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({ upgrades }) => 
                                             {localActive === "ar" ? upgrade.title.ar : upgrade.title.en}
                                         </h3>
                                         <div>
-                                            <span className="hidden" data-price={upgrade.price}>
-                                                {upgrade.price}
-                                            </span>
-                                            <span className="number hidden">{upgrade.duration}</span>
-                                            <p className='text-[14px] text-[#777] font-naskh'>{upgrade.description}</p>
+                                            <p className='text-[14px] text-[#777] font-naskh'>
+                                                مقابل {upgrade.price}$ إضافية على سعر الخدمة. سيزيد مدة التنفيذ {upgrade.deliveryTime}.
+                                            </p>
                                         </div>
                                     </td>
                                 </tr>

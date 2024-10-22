@@ -42,7 +42,9 @@ export interface Keyword {
 }
 
 export interface FormDataProp {
-    userId: string;
+    userId: {
+        profilePicture: string
+    };
     title: {
         ar: string;
         en: string;

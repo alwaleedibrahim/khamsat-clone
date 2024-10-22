@@ -11,8 +11,8 @@ import ServiceData from "@/app/[locale]/_components/single-service/ServiceData";
 import ServiceInfo from "@/app/[locale]/_components/single-service/ServiceInfo";
 import SellerCard from "@/app/[locale]/_components/single-service/SellerCard";
 import { GetServerSidePropsContext } from "next";
-import { fetchUpgradesById } from "@/app/[locale]/_lib/upgardes";
 import { fetchServiceReviews } from "@/app/[locale]/_lib/reviews";
+import { fetchUpgradesById } from "@/app/[locale]/_lib/upgardes";
 
 const page = async(context: GetServerSidePropsContext) => {
     const { serviceId } = context.params! as {
