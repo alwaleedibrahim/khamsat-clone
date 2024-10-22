@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckSquare, faSquare } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUpgradesById } from '../../store/reducers/upgrades';
+import { fetchUpgradesById } from '@/app/[locale]/_lib/redux/slice/upgrades';
 
 interface AdditionalServicesProps {
     serviceId: string;
