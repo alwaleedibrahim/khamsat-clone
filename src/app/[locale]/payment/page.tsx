@@ -8,14 +8,17 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import convertToSubcurrency from "@/app/[locale]/_lib/payment/convert";
 import CheckoutPage from "@/app/[locale]/_components/payment/CheckoutForm";
+import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
+import { RootState } from "../_lib/redux/store";
+const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
 
 const Payment = () => {
   const [selectedMethod, setSelectedMethod] = useState<"creditCard" | "paypal">(
     "creditCard"
   );
-  
+  const token : string = useSelector((state)=> state.auth.token) || ''
+  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
  const amount = 5
   return (
     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 min-h-screen pt-20">
@@ -64,7 +67,7 @@ const Payment = () => {
         currency: "usd",
       }}
     >
-      <CheckoutPage amount={amount} />
+      <CheckoutPage amount={amount} token={token} />
     </Elements>
           {/* <div className="p-4 w-full bg-white">
             <div className="mb-4 flex flex-col md:flex-row md:space-x-4">

@@ -8,6 +8,7 @@ import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google";
 import Navbar from './_components/navbar/navbar';
 import Footer from './_components/footer/footer';
 import ReduxProvider from './_components/redux-provider/provider';
+import PersistProvider from './_components/redux-provider/persist';
 
 config.autoAddCss = false; 
 
@@ -35,9 +36,11 @@ export default async function LocaleLayout({
             <body  className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}>
                 <NextIntlClientProvider messages={messages}>
                     <ReduxProvider>
-                        <Navbar />
-                            {children}
-                        <Footer />
+                        <PersistProvider>
+                            <Navbar />
+                                {children}
+                            <Footer />
+                        </PersistProvider>
                     </ReduxProvider>
                 </NextIntlClientProvider>
             </body>

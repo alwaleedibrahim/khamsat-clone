@@ -9,7 +9,7 @@ import {
 import convertToSubcurrency from "@/app/[locale]/_lib/payment/convert";
 import createPaymentIntent from "../../_lib/axios/payment";
 
-const CheckoutPage = ({ amount }: { amount: number }) => {
+const CheckoutPage = ({ amount, token }: { amount: number, token: string }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -21,7 +21,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     setIsChecked(!isChecked);
   };
   useEffect(() => {
-    createPaymentIntent(convertToSubcurrency(amount))
+    createPaymentIntent(convertToSubcurrency(amount), token)
     .then((data) => setClientSecret(data.clientSecret));
   }, [amount]);
 
