@@ -48,6 +48,7 @@ export const fetchUpgradesById = createAsyncThunk<AdditionalService[], string, {
             const response = await axios.get(`${base_url}/${serviceId}`);
             const upgradesData = response.data;
             return upgradesData.upgrades;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch upgrades';
             return rejectWithValue(errorMessage);

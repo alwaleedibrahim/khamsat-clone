@@ -1,6 +1,6 @@
 import React from "react";
-import ServicesCollection from "../_components/home/ServicesCollection";
-import ServiceCard from "../_components/reusable/service-card/ServiceCard";
+// import ServicesCollection from "../_components/home/ServicesCollection";
+// import ServiceCard from "../_components/reusable/service-card/ServiceCard";
 import OrdersSidebar from "../_components/filter-sidebar/OrdersSidebar";
 
 export default function page() {
@@ -46,10 +46,6 @@ export default function page() {
           <p className='font-naskh text-lg text-center'>لا يوجد طلبات</p>
         </div>
         </>}
-          <ServicesCollection>
-            <ServiceCard serviceData={orders[0]}
-              />
-          </ServicesCollection>
           {/* <ServicesCollection> */}
             {/* <ServiceCard serviceData={{
                 title: {

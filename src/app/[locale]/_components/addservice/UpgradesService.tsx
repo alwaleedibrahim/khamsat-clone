@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { SetStateAction } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { Upgrade } from '../../_lib/upgardes';

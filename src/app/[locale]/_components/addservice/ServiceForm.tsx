@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useEffect, useState, useContext } from 'react';
 import GalleryModal from "./GalleryModal";
@@ -273,6 +274,7 @@ const ServiceForm: React.FC = () => {
             setSingleFile(null);
             setFiles([]);
             setError("");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.error('Error creating service:', error);
             setIsSubmit(false)

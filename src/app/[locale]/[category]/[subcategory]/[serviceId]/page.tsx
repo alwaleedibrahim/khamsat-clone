@@ -10,14 +10,10 @@ import { fetchServiceById } from "@/app/[locale]/_lib/services";
 import ServiceData from "@/app/[locale]/_components/single-service/ServiceData";
 import ServiceInfo from "@/app/[locale]/_components/single-service/ServiceInfo";
 import SellerCard from "@/app/[locale]/_components/single-service/SellerCard";
-import { GetServerSidePropsContext } from "next";
 import { fetchServiceReviews } from "@/app/[locale]/_lib/reviews";
 import { notFound } from "next/navigation";
 
-const page = async(context: GetServerSidePropsContext) => {
-    const { serviceId } = context.params! as {
-        serviceId: string
-    }
+const page = async({params: {serviceId}}: {params : {serviceId : string}}) => {
     let serviceData;
     let reviewsData;
     // ========================================== //
