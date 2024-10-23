@@ -39,6 +39,8 @@ import IUserProfile from "../../_models/userProfile";
 import KSAIcon from "../reusable/icons/KSAIcon";
 import UKIcons from "../reusable/icons/UKIcons";
 import Categorydropdown from "./categorydropdown";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Navbar() {
   const router = useRouter();
@@ -66,10 +68,19 @@ export default function Navbar() {
   const handleLogout = () => {
       dispatch(logout())
   }
+  useEffect(()=> {
+    if (searchParams.get('payment-success')) {
+      const paymentAmount = searchParams.get('amount') 
+      toast.success(`You payed ${paymentAmount}$ successfully`);
+      console.log("SUCCESS!!");
+    }
 
+  }, [searchParams])
+  
   const [categoryOpen, setCategoryOpen] = useState(false)
   return (
     <>
+    <ToastContainer rtl={localActive=="ar"} position={`top-center`}/>
       <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full z-[200]">
         <div className="flex w-full justify-between h-16 text-white max-w-[1440px]">
           <div className="flex min-w-fit overflow-hidden">
