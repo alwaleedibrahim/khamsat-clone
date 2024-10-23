@@ -4,6 +4,7 @@ import React from "react";
 import OrdersSidebar from "../_components/filter-sidebar/OrdersSidebar";
 
 export default function page() {
+  const purchases = undefined // !!! fill this data dynamically
   return (
     <div className="pt-20 container">
       <div className="flex flex-wrap p-section">
@@ -11,6 +12,11 @@ export default function page() {
           <OrdersSidebar />
         </div>
         <div className="w-full lg:w-4/6">
+        {!purchases && <>
+        <div className="bg-white w-full p-5">
+          <p className='font-naskh text-lg text-center'>لا يوجد مشتريات</p>
+        </div>
+        </>}
           {/* <ServicesCollection>
           </ServicesCollection> */}
         </div>

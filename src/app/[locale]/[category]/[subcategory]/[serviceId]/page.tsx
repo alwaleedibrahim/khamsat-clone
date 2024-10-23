@@ -12,6 +12,7 @@ import ServiceInfo from "@/app/[locale]/_components/single-service/ServiceInfo";
 import SellerCard from "@/app/[locale]/_components/single-service/SellerCard";
 import { GetServerSidePropsContext } from "next";
 import { fetchServiceReviews } from "@/app/[locale]/_lib/reviews";
+import { notFound } from "next/navigation";
 
 const page = async(context: GetServerSidePropsContext) => {
     const { serviceId } = context.params! as {
@@ -30,7 +31,7 @@ const page = async(context: GetServerSidePropsContext) => {
         console.log(err);
     }
 
-
+    if (!serviceData) notFound()
     return (
         <div className="flex flex-col lg:bg-transparent bg-white pt-[100px]">
             <div className="flex lg:flex-row flex-col w-full justify-center">
@@ -40,7 +41,7 @@ const page = async(context: GetServerSidePropsContext) => {
                 <div className="lg:w-[32%] w-[100%] lg:p-sm-screen">
                     <ServiceInfo data={serviceData.serviceCard} deliveryTime={serviceData.deliveryTime} price={serviceData.price} />
                     {/* {serviceData.userId.profilePicture} */}
-                    <SellerCard profilePicture='/images/services/defaultuser.jfif' username={serviceData.userId.username}/>
+                    <SellerCard profilePicture='/images/services/defaultuser.jfif' username={serviceData.userId?.username}/>
                 </div>
             </div>
 

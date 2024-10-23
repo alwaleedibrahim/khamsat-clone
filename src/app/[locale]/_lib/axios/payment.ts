@@ -2,11 +2,12 @@ import axiosInstance from "./axiosInstance";
 
 export default async function createPaymentIntent(
   amount: number,
-  token: string
+  token: string, 
+  order: string
 ): Promise<{ clientSecret: string }> {
   try {
     const response = await axiosInstance.post(`payment/create-payment-intent`, {
-      amount},
+      amount, order},
       {headers: { authorization: token },
     });
     if (response.data) {

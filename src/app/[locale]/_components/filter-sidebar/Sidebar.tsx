@@ -21,6 +21,7 @@ import {
 } from "../../_lib/redux/slice/categorySlice";
 import Link from "next/link";
 import { AppDispatch, RootState } from "../../_lib/redux/store";
+import { notFound } from "next/navigation";
 
 export default function Sidebar({
   filters: { category, subcategory },
@@ -41,6 +42,7 @@ export default function Sidebar({
   const selectedSubCategory = useSelector(
     (state) => state.category.selectedSubCategory
   );
+  if(!selectedCategory) notFound()
 
   return (
     <div className="mx-20">

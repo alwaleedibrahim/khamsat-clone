@@ -36,7 +36,7 @@ const UserReply: React.FC<UserReplyProps> = async({ userType="بائع",userId, 
                                         width={48}
                                         height={48}
                                         className="rounded-full border border-gray-300 w-[48px] h-[48px]"
-                                        alt={`Image of ${userId.username}`}
+                                        alt={`Image of ${userId?.username}`}
                                     />
                                 </div>
                             </a>
@@ -44,7 +44,7 @@ const UserReply: React.FC<UserReplyProps> = async({ userType="بائع",userId, 
                         <td className="p-2">
                             <h3>
                                 <a className="block text-md text-style1 mb-1.5" href={userLink}>
-                                    {userId.username}
+                                    {userId?.username}
                                 </a>
                             </h3>
                             <ul className="flex text-[12px] gap-4 text-[#6c757d]">
