@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import ButtonA from "../_components/reusable/buttons/ButtonA";
-import ButtonB from "../_components/reusable/buttons/ButtonB";
+import AdditionalServices from "../_components/single-service/AdditionalServices";
 
 interface IService {
   service_id: string;
@@ -111,15 +111,19 @@ const Cart: React.FC = () => {
             <h4>${service.price.toFixed(2)}</h4>
           </div>
           <div className="">
-            <ButtonB
-              text="حذف"
-              onClick={(event: Event) => {
-                event.preventDefault();
-                return removeItem(service.service_id)
-              }}
-              extraStyle="border-red-600 py-[3px] px-[8px] text-red-600 text-sm"
-            />
+          <a
+            onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+              event.preventDefault();  
+              removeItem(service.service_id);  
+            }}
+            className='border-red-600 py-[3px] px-[8px] text-red-600 text-sm flex items-center font-kufi border border-primary text-primary hover:bg-primary hover:text-white transition-all '
+          >
+            حذف
+          </a>
           </div>
+        </div>
+        <div>
+          <AdditionalServices serviceId= '66fd4ef5ed8990501b7d4a05'/>
         </div>
       </div>
     );

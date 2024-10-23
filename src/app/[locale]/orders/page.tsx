@@ -50,6 +50,38 @@ export default function page() {
             <ServiceCard serviceData={orders[0]}
               />
           </ServicesCollection>
+          {/* <ServicesCollection> */}
+            {/* <ServiceCard serviceData={{
+                title: {
+                  ar: "دورة CFPS، النجاح في امتحان CFPS في متناول يدك",
+                  en: "دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
+              },
+              category: {
+                  name: {
+                      ar: "تعليم عن بعد",
+                      en: "تعليم عن بعد"
+                  }
+              },
+              subcategory: {
+                  title: {
+                      ar:"تعليم عن بعد",
+                      en: "تعليم عن بعد"
+                  }
+              },
+              images: [
+                "https://picsum.photos/200/300",
+                "https://picsum.photos/200/301",
+                "https://picsum.photos/200/302",
+              ],
+              authorImg: "/images/R.jfif",
+              serviceCard: {
+                  totalRated: 5,
+                  totalReviewers: 10,
+              },
+              price: 231
+            }}
+              /> */}
+          {/* </ServicesCollection> */}
         </div>
       </div>
     </div>

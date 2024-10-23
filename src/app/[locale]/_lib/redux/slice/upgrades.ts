@@ -29,16 +29,25 @@ const initialState: AdditionalServiceState = {
     error: null,
 };
 
-export const fetchUpgradesById = createAsyncThunk<
-    AdditionalService[],
-    string,
-    { rejectValue: string }
->(
+const loadCheckedItems = () => {
+    const savedItems = localStorage.getItem('checkedItems');
+    return savedItems ? JSON.parse(savedItems) : {};
+};
+
+const initialCheckedItems = loadCheckedItems();
+
+const initialStateWithLocalStorage: AdditionalServiceState = {
+    ...initialState,
+    checkedItems: initialCheckedItems,
+};
+
+export const fetchUpgradesById = createAsyncThunk<AdditionalService[], string, { rejectValue: string }>(
     'upgrades/fetchById',
     async (serviceId, { rejectWithValue }) => {
         try {
             const response = await axios.get(`${base_url}/${serviceId}`);
-            return response.data; 
+            const upgradesData = response.data;
+            return upgradesData.upgrades;
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch upgrades';
             return rejectWithValue(errorMessage);
@@ -48,11 +57,17 @@ export const fetchUpgradesById = createAsyncThunk<
 
 const additionalServicesSlice = createSlice({
     name: 'additionalServices',
-    initialState,
+    initialState: initialStateWithLocalStorage,
     reducers: {
         toggleService: (state, action: PayloadAction<string>) => {
             const id = action.payload;
             state.checkedItems[id] = !state.checkedItems[id];
+
+            localStorage.setItem('checkedItems', JSON.stringify(state.checkedItems));
+        },
+        setCheckedItems: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
+            state.checkedItems = action.payload;
+            localStorage.setItem('checkedItems', JSON.stringify(state.checkedItems));
         },
     },
     extraReducers: (builder) => {
@@ -67,11 +82,11 @@ const additionalServicesSlice = createSlice({
             })
             .addCase(fetchUpgradesById.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload as string || 'Failed to fetch upgrades'; 
+                state.error = action.payload as string || 'Failed to fetch upgrades';
             });
     },
 });
 
-export const { toggleService } = additionalServicesSlice.actions;
+export const { toggleService, setCheckedItems } = additionalServicesSlice.actions;
 
 export default additionalServicesSlice.reducer;
