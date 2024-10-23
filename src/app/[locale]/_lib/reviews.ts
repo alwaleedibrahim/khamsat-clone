@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const base_url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/reviews`;
+const base_url = `http://localhost:4500/reviews`;
 
 export const fetchServiceReviews = async (serviceId:string) => {
     try {

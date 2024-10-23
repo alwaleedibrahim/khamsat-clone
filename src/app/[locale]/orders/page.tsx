@@ -11,8 +11,8 @@ export default function page() {
           <OrdersSidebar />
         </div>
         <div className="w-full lg:w-4/6">
-          <ServicesCollection>
-            <ServiceCard serviceData={{
+          {/* <ServicesCollection> */}
+            {/* <ServiceCard serviceData={{
                 title: {
                   ar: "دورة CFPS، النجاح في امتحان CFPS في متناول يدك",
                   en: "دورة CFPS، النجاح في امتحان CFPS في متناول يدك"
@@ -41,8 +41,8 @@ export default function page() {
               },
               price: 231
             }}
-              />
-          </ServicesCollection>
+              /> */}
+          {/* </ServicesCollection> */}
         </div>
       </div>
     </div>

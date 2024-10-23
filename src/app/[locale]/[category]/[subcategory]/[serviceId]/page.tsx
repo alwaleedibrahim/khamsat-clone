@@ -11,7 +11,6 @@ import ServiceData from "@/app/[locale]/_components/single-service/ServiceData";
 import ServiceInfo from "@/app/[locale]/_components/single-service/ServiceInfo";
 import SellerCard from "@/app/[locale]/_components/single-service/SellerCard";
 import { GetServerSidePropsContext } from "next";
-import { fetchUpgradesById } from "@/app/[locale]/_lib/upgardes";
 import { fetchServiceReviews } from "@/app/[locale]/_lib/reviews";
 
 const page = async(context: GetServerSidePropsContext) => {
@@ -19,15 +18,12 @@ const page = async(context: GetServerSidePropsContext) => {
         serviceId: string
     }
     let serviceData;
-    let upgradesData;
     let reviewsData;
     // ========================================== //
     // service data
     try{
         const response = await fetchServiceById(serviceId);
         serviceData = response.service;
-        const responseUpgrades = await fetchUpgradesById(serviceId);
-        upgradesData = responseUpgrades.upgrades;     
         const responseReviews = await fetchServiceReviews(serviceId)
         reviewsData = responseReviews.serviceReviews;     
     }catch(err){
@@ -52,7 +48,7 @@ const page = async(context: GetServerSidePropsContext) => {
                 <div className="lg:w-[68%] w-[100%]">
 
                     <div className="w-full lg:p-sm-screen my-[20px]">
-                        <AdditionalServices upgrades={upgradesData} />
+                        <AdditionalServices serviceId={serviceId} />
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">

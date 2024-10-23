@@ -425,7 +425,8 @@ export default function Navbar() {
                         width={40}
                         height={40}
                         alt="logo"
-                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}
+                        src='/'
+                        // src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}
                         className="w-[40] h-[40] rounded-full min-w-fit"
                       />
                       <div
