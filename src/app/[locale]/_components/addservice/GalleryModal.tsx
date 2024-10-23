@@ -23,6 +23,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFil
                 setShowGalleryModal(false);
             }
         };
+
         window.addEventListener('click', handleOutsideClick);
         return () => {
             window.removeEventListener('click', handleOutsideClick);
@@ -99,8 +100,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFil
     // Save and close modal
     const handleSave = () => {
         const filesToSave = activeTab === 'device' ? selectedFiles : previewUrls;
-        
-        setFiles(filesToSave); 
+        setFiles(filesToSave);
         setShowGalleryModal(false);
     };
 
