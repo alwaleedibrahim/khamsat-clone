@@ -9,16 +9,17 @@ import Navbar from './_components/navbar/navbar';
 import Footer from './_components/footer/footer';
 import ReduxProvider from './_components/redux-provider/provider';
 import PersistProvider from './_components/redux-provider/persist';
+import ClientSideCartProvider from './ClientSideCartProvider';
 
-config.autoAddCss = false; 
+config.autoAddCss = false;
 
 const NotoKufiArabic = Noto_Kufi_Arabic({
-  subsets: ["arabic"],
-  variable: "--font-noto-kufi",
+    subsets: ["arabic"],
+    variable: "--font-noto-kufi",
 });
 const NotoNaskhArabic = Noto_Naskh_Arabic({
-  subsets: ["arabic"],
-  variable: "--font-noto-naskh",
+    subsets: ["arabic"],
+    variable: "--font-noto-naskh",
 });
 
 
@@ -32,16 +33,18 @@ export default async function LocaleLayout({
     const messages = await getMessages();
 
     return (
-        <html lang={locale} dir={locale === "ar"? "rtl": "ltr"}>
-            <body  className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}>
+        <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
+            <body className={`${NotoKufiArabic.variable} ${NotoNaskhArabic.variable}`}>
                 <NextIntlClientProvider messages={messages}>
-                    <ReduxProvider>
-                        <PersistProvider>
-                            <Navbar />
+                    <ClientSideCartProvider>
+                        <ReduxProvider>
+                            <PersistProvider>
+                                <Navbar />
                                 {children}
-                            <Footer />
-                        </PersistProvider>
-                    </ReduxProvider>
+                                <Footer />
+                            </PersistProvider>
+                        </ReduxProvider>
+                    </ClientSideCartProvider>
                 </NextIntlClientProvider>
             </body>
         </html>
