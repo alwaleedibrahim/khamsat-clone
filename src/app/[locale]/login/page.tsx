@@ -6,7 +6,7 @@ import { faGoogle, faWindows } from "@fortawesome/free-brands-svg-icons";
 import React, { useState } from "react";
 import styles from "./login.module.css";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "../_lib/redux/slice/authSlice";
 import { ToastContainer, toast } from 'react-toastify';
@@ -31,6 +31,9 @@ const Login: React.FC = () => {
   const router = useRouter();
   const t = useTranslations("LoginPage");
   const localActive = useLocale();
+  const searchParams = useSearchParams()
+ 
+  const redirectToPage = searchParams.get('redirect')
 
   const onSubmit = async (data: LoginFormData) => {
     setIsSubmitting(true);
@@ -56,7 +59,13 @@ const Login: React.FC = () => {
       const result = await response.json();
       dispatch(login(result.data.token));
       toast.success(t("login_success"));
-      setTimeout(() => router.push("/"), 2000);
+      setTimeout(() => {
+        if (redirectToPage) {
+          router.push(`/${localActive}/${redirectToPage}`)
+        } else {
+          router.push("/")
+        }
+      }, 2000);
     } catch (error) {
       console.log("Login failed", error);
     } finally {
