@@ -7,7 +7,7 @@ import React from 'react'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default async function page({params: {locale, category, subcategory}, searchParams}) {
   
-  const services = await fetchServices(`categoryName=${category}&subcategoryName=${subcategory}${searchParams.search? `&title=${searchParams.search}`:`` }`)
+  const services = await fetchServices(`categoryName=${category}&subcategoryName=${subcategory}${searchParams.q? `&title=${searchParams.q}`:`` }`)
   
   return (
     <div className="pt-20 mx-auto w-full xl:container p-container-space">

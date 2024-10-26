@@ -1,9 +1,11 @@
 'use client'
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function SearchInput() {
-  const [searchQuery, setSearchQuery] = useState('')
+  const searchParams = useSearchParams()
+  const q : string = searchParams.get('q') || ''
+  const [searchQuery, setSearchQuery] = useState(q)
   const router = useRouter()
  
   const debounce = (fn : CallableFunction, delay: number) => {
@@ -23,7 +25,7 @@ export default function SearchInput() {
   };
 
   useEffect(()=> {
-      const searchParams : string = new URLSearchParams({search: searchQuery}).toString()
+      const searchParams : string = new URLSearchParams({q: searchQuery}).toString()
       router.push(`?${searchParams}`)
 }, [searchQuery])
 
