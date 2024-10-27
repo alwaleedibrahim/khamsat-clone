@@ -9,7 +9,7 @@ import Navbar from './_components/navbar/navbar';
 import Footer from './_components/footer/footer';
 import ReduxProvider from './_components/redux-provider/provider';
 import PersistProvider from './_components/redux-provider/persist';
-import ClientSideCartProvider from './ClientSideCartProvider';
+import ClientSideCartProvider from './_components/cart-provider/ClientSideCartProvider';
 
 config.autoAddCss = false;
 
