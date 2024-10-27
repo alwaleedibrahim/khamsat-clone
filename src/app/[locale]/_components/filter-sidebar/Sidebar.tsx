@@ -42,7 +42,7 @@ export default function Sidebar({
   const selectedSubCategory = useSelector(
     (state) => state.category.selectedSubCategory
   );
-  if(!selectedCategory) notFound()
+  if(!selectedCategory && category !== '') notFound()
 
   return (
     <div className="mx-20">
