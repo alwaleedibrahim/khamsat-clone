@@ -49,7 +49,7 @@ const page = async({params: {serviceId}}: {params : {serviceId : string}}) => {
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">
-                        <GetService />
+                        <GetService serviceData={serviceData} />
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">

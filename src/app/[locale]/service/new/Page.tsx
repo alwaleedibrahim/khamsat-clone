@@ -52,7 +52,7 @@ const page = async(context: GetServerSidePropsContext) => {
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">
-                        <GetService />
+                        <GetService serviceData={serviceData} />
                     </div>
 
                     <div className="w-full lg:p-sm-screen my-[10px]">
