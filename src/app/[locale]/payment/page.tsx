@@ -10,10 +10,17 @@ import convertToSubcurrency from "@/app/[locale]/_lib/payment/convert";
 import CheckoutPage from "@/app/[locale]/_components/payment/CheckoutForm";
 import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
 import { RootState } from "../_lib/redux/store";
-const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+import { useLocale } from "next-intl";
+import { redirect } from "next/navigation";
 
 
 const Payment = () => {
+  const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+  const localActive = useLocale();
+  const isAuthenticated : boolean = useSelector((state)=> state.auth.isAuthenticated)
+if (!isAuthenticated) {
+    redirect(`/${localActive}/login?redirect=payment`)
+}
   const [selectedMethod, setSelectedMethod] = useState<"creditCard" | "paypal">(
     "creditCard"
   );
