@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import NavItem from "./navitem";
 import {
@@ -30,7 +30,11 @@ import { FaBookBookmark, FaFileLines, FaSliders } from "react-icons/fa6";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { TypedUseSelectorHook, useDispatch, useSelector as useReduxSelector } from "react-redux";
+import {
+  TypedUseSelectorHook,
+  useDispatch,
+  useSelector as useReduxSelector,
+} from "react-redux";
 import { AppDispatch, RootState } from "../../_lib/redux/store";
 import { logout } from "../../_lib/redux/slice/authSlice";
 import { useEffect, useState } from "react";
@@ -39,8 +43,8 @@ import IUserProfile from "../../_models/userProfile";
 import KSAIcon from "../reusable/icons/KSAIcon";
 import UKIcons from "../reusable/icons/UKIcons";
 import Categorydropdown from "./categorydropdown";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useCart } from "react-use-cart";
 
 export default function Navbar() {
@@ -49,40 +53,57 @@ export default function Navbar() {
   const t = useTranslations("Header");
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const {totalUniqueItems} = useCart()
+  const { totalUniqueItems } = useCart();
 
-  const handleLang = (e:React.MouseEvent<HTMLLIElement>) => {
+  const handleLang = (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
-    const lang = e.currentTarget.getAttribute('data-lang');
-    const newLang = lang === "ar" ? "en" : "ar"; 
+    const lang = e.currentTarget.getAttribute("data-lang");
+    const newLang = lang === "ar" ? "en" : "ar";
     const newPathname = `/${newLang}${pathname.substring(3)}`;
-    const newUrl = `${newPathname}${searchParams? `?${searchParams.toString()}` : ''}`;
+    const newUrl = `${newPathname}${
+      searchParams ? `?${searchParams.toString()}` : ""
+    }`;
     router.replace(newUrl);
   };
   const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
-  const isAuthenticated : boolean = useSelector((state)=> state.auth.isAuthenticated)
-  const token : string | null = useSelector((state)=> state.auth.token)
-  const user : IUserProfile = useSelector((state)=> state.profile.user)
+  const isAuthenticated: boolean = useSelector(
+    (state) => state.auth.isAuthenticated
+  );
+  const token: string | null = useSelector((state) => state.auth.token);
+  const user: IUserProfile = useSelector((state) => state.profile.user);
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(()=> {
-    dispatch(getProfile(token))    
-  }, [token])
-  const handleLogout = () => {
-      dispatch(logout())
-  }
-  useEffect(()=> {
-    if (searchParams.get('payment-success')) {
-      const paymentAmount = searchParams.get('amount') 
+  useEffect(() => {
+    dispatch(getProfile(token));
+  }, [token]);
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        dispatch(logout());
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+  useEffect(() => {
+    if (searchParams.get("payment-success")) {
+      const paymentAmount = searchParams.get("amount");
       toast.success(`You payed ${paymentAmount}$ successfully`);
       console.log("SUCCESS!!");
     }
+  }, [searchParams]);
 
-  }, [searchParams])
-  
-  const [categoryOpen, setCategoryOpen] = useState(false)
+  const [categoryOpen, setCategoryOpen] = useState(false);
   return (
     <>
-    <ToastContainer rtl={localActive=="ar"} position={`top-center`}/>
+      <ToastContainer rtl={localActive == "ar"} position={`top-center`} />
       <nav className="bg-[#444] font-kufi hidden lg:flex justify-around fixed w-full z-[200]">
         <div className="flex w-full justify-between h-16 text-white max-w-[1440px]">
           <div className="flex min-w-fit overflow-hidden">
@@ -97,7 +118,11 @@ export default function Navbar() {
               </NavItem>
             </label>
             <div
-              className={`overflow-scroll fixed top-16 ${localActive === "ar" ? "right-0 translate-x-full": "left-0 -translate-x-full"} peer-checked:translate-x-0 px-4 py-6 h-full w-64 transition-all duration-500 transform bg-white shadow-lg `}
+              className={`overflow-scroll fixed top-16 ${
+                localActive === "ar"
+                  ? "right-0 translate-x-full"
+                  : "left-0 -translate-x-full"
+              } peer-checked:translate-x-0 px-4 py-6 h-full w-64 transition-all duration-500 transform bg-white shadow-lg `}
               style={{ scrollbarWidth: "none" }}
             >
               <form acceptCharset="UTF-8" className="text-[#888] h-10">
@@ -114,71 +139,120 @@ export default function Navbar() {
 
               {/* ********************************** Start Sidebar ****************************************** */}
               <ul className="text-[#444]">
-                <li className={`${isAuthenticated? `hidden` : `flex`} items-center py-3`}>
-                  <Link href={`/${localActive}/login`} className="flex items-center">
-                  <FaSignInAlt className="me-2" />
-                  <span>{t('sidebar.menu.login')}</span></Link>
-                </li>
-                <li className={`${isAuthenticated? `hidden` : `flex`} items-center py-3`}>
-                  <Link href={`/${localActive}/register`} className="flex items-center">
-                  <FaUserPlus className="me-2" />
-                  <span>{t('sidebar.menu.register')}</span>
+                <li
+                  className={`${
+                    isAuthenticated ? `hidden` : `flex`
+                  } items-center py-3`}
+                >
+                  <Link
+                    href={`/${localActive}/login`}
+                    className="flex items-center"
+                  >
+                    <FaSignInAlt className="me-2" />
+                    <span>{t("sidebar.menu.login")}</span>
                   </Link>
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `hidden` : `flex`
+                  } items-center py-3`}
+                >
+                  <Link
+                    href={`/${localActive}/register`}
+                    className="flex items-center"
+                  >
+                    <FaUserPlus className="me-2" />
+                    <span>{t("sidebar.menu.register")}</span>
+                  </Link>
+                </li>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3`}
+                >
                   <FaPlus className="me-2" />
-                  <span>{t('sidebar.menu.addService')}</span>
+                  <span>{t("sidebar.menu.addService")}</span>
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3`}>   
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3`}
+                >
                   <FaFolderOpen className="me-2" />
-                  <span>{t('sidebar.menu.viewServices')}</span>
+                  <span>{t("sidebar.menu.viewServices")}</span>
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3`}
+                >
                   <FaTruck className="me-2 scale-x-[-1]" />
-                  <span>{t('sidebar.menu.incomingService')} </span>
+                  <span>{t("sidebar.menu.incomingService")} </span>
                 </li>
                 <li className="flex items-center py-3 ">
                   <details className="group w-full">
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaCubes className="me-2" />
-                        <span>{t('sidebar.menu.categories.title')}</span>
+                        <span>{t("sidebar.menu.categories.title")}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.design')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.design")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.writingTranslation')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.writingTranslation")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.digitalMarketing')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.digitalMarketing")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.programmingDevelopment')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.programmingDevelopment")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.videoAnimation')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.videoAnimation")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.engineeringArchitecture')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.engineeringArchitecture")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.business')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.business")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.audio')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.audio")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.eLearning')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.eLearning")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.data')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.data")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.categories.lifestyle')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.categories.lifestyle")}
+                        </span>
                       </li>
                     </ul>
                   </details>
@@ -188,32 +262,46 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaBriefcase className="me-2" />
-                        <span>{t('sidebar.menu.business.title')}</span>
+                        <span>{t("sidebar.menu.business.title")}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.business.turnYourBusinessDigital')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.business.turnYourBusinessDigital")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.business.startYourBusinessProject')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.business.startYourBusinessProject")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.business.createYourOnlineStore')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.business.createYourOnlineStore")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.business.launchYourWebsite')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.business.launchYourWebsite")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.business.digitalMarketingSolutions')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.business.digitalMarketingSolutions")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.business.createYourTrainingCourse')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.business.createYourTrainingCourse")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.business.publishYourBookOnline')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.business.publishYourBookOnline")}
+                        </span>
                       </li>
                     </ul>
                   </details>
@@ -223,23 +311,33 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaComments className="me-2" />
-                        <span>{t('sidebar.menu.community.title')}</span>
+                        <span>{t("sidebar.menu.community.title")}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.community.samplesOfProjects')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.community.samplesOfProjects")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.community.requestsForNonExistingServices')}</span>
+                        <span className="ms-6">
+                          {t(
+                            "sidebar.menu.community.requestsForNonExistingServices"
+                          )}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.community.userExperiencesStories')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.community.userExperiencesStories")}
+                        </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">{t('sidebar.menu.community.generalMatters')}</span>
+                        <span className="ms-6">
+                          {t("sidebar.menu.community.generalMatters")}
+                        </span>
                       </li>
                     </ul>
                   </details>
@@ -322,49 +420,64 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center px-5">
-              <Link href='/'>
-              <Image
-                width={144}
-                height={36}
-                alt="logo"
-                src={localActive=='ar'?`/images/khamsat-logo.png`: `/images/khamsat-logo-en.png`}
-                className="w-[144px] h-[36px] min-w-fit"
-              />
+              <Link href="/">
+                <Image
+                  width={144}
+                  height={36}
+                  alt="logo"
+                  src={
+                    localActive == "ar"
+                      ? `/images/khamsat-logo.png`
+                      : `/images/khamsat-logo-en.png`
+                  }
+                  className="w-[144px] h-[36px] min-w-fit"
+                />
               </Link>
             </div>
 
             <ul className="flex  min-w-fit text-sm">
-              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
+              <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
                 <NavItem>
                   <FaPlus className="me-2" />
-                  <span>{t('sidebar.menu.addService')}</span>
+                  <span>{t("sidebar.menu.addService")}</span>
                 </NavItem>
               </li>
-              <li onClick={()=> {setCategoryOpen(!categoryOpen)}} className="hover:cursor-pointer">
+              <li
+                onClick={() => {
+                  setCategoryOpen(!categoryOpen);
+                }}
+                className="hover:cursor-pointer"
+              >
                 <NavItem>
                   <FaCubes className="me-2" />
-                  <span>{t('sidebar.menu.categories.title')}</span>
-                  </NavItem>
-                {categoryOpen && <div
-                  className={`absolute left-0 transition-all duration-300 overflow-y-auto h-screen pb-20 ${categoryOpen? `visible opacity-100`: `invisible opacity-0`} `}>
-                  <Categorydropdown />
-                </div>}
-
-              </li>
-              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
-              <Link href={`/${localActive}/purchases`} >
-                <NavItem>
-                  <FaFolderOpen className="me-2" />
-                  <span>{t('sidebar.menu.viewServices')}</span>
+                  <span>{t("sidebar.menu.categories.title")}</span>
                 </NavItem>
+                {categoryOpen && (
+                  <div
+                    className={`absolute left-0 transition-all duration-300 overflow-y-auto h-screen pb-20 ${
+                      categoryOpen
+                        ? `visible opacity-100`
+                        : `invisible opacity-0`
+                    } `}
+                  >
+                    <Categorydropdown />
+                  </div>
+                )}
+              </li>
+              <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
+                <Link href={`/${localActive}/purchases`}>
+                  <NavItem>
+                    <FaFolderOpen className="me-2" />
+                    <span>{t("sidebar.menu.viewServices")}</span>
+                  </NavItem>
                 </Link>
               </li>
-              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
-              <Link href={`/${localActive}/orders`} >
-                <NavItem>
-                  <FaTruck className="me-2 scale-x-[-1]" />
-                  <span>{t('sidebar.menu.incomingService')} </span>
-                </NavItem>
+              <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
+                <Link href={`/${localActive}/orders`}>
+                  <NavItem>
+                    <FaTruck className="me-2 scale-x-[-1]" />
+                    <span>{t("sidebar.menu.incomingService")} </span>
+                  </NavItem>
                 </Link>
               </li>
             </ul>
@@ -386,7 +499,7 @@ export default function Navbar() {
                   )}
                 </NavItem>
               </li>
-              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
+              <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
                 <label htmlFor="toggle-messages" className="p-0 m-0 h-full">
                   <NavItem>
                     <div className=" relative">
@@ -410,7 +523,7 @@ export default function Navbar() {
                   </DropDownBox>
                 </div>
               </li>
-              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
+              <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
                 <button className="group p-0 m-0 h-full">
                   <NavItem>
                     <div className=" relative">
@@ -430,12 +543,16 @@ export default function Navbar() {
                 </button>
               </li>
               {/* change language */}
-              <li onClick={handleLang} data-lang={localActive} className="flex items-center">
+              <li
+                onClick={handleLang}
+                data-lang={localActive}
+                className="flex items-center"
+              >
                 <NavItem>
                   {localActive == 'ar'? <KSAIcon /> : <UKIcons />}
                 </NavItem>
               </li>
-              <li className={`${isAuthenticated? `flex` : `hidden`}`}>
+              <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
                 <button className="group p-0 m-0 h-full">
                   <NavItem>
                     <div className=" relative">
@@ -450,31 +567,33 @@ export default function Navbar() {
                         className="absolute invisible opacity-0 top-14 left-0 group-focus-within:visible group-focus-within:opacity-100 transition-all duration-300"
                         id="test"
                       >
-                        <UserDropDownBox userName={user.username}/>
+                        <UserDropDownBox userName={user.username} />
                       </div>
                     </div>
                   </NavItem>
                 </button>
               </li>
-              <li className={`${isAuthenticated? `hidden` : `flex`}`}>
-                  <button className="font-kufi border border-[#888] my-3 mx-2">
+              <li className={`${isAuthenticated ? `hidden` : `flex`}`}>
+                <button className="font-kufi border border-[#888] my-3 mx-2">
                   <Link href={`/${localActive}/login`}>
                     <NavItem>
                       <FaSignInAlt className="me-2" />
-                      <span className="text-sm">{t('sidebar.menu.login')}</span>
+                      <span className="text-sm">{t("sidebar.menu.login")}</span>
                     </NavItem>
                   </Link>
-                  </button>
+                </button>
               </li>
-              <li className={`${isAuthenticated? `hidden` : `flex`}`}>
-                  <button className="font-kufi border border-[#888] my-3 mx-2">
+              <li className={`${isAuthenticated ? `hidden` : `flex`}`}>
+                <button className="font-kufi border border-[#888] my-3 mx-2">
                   <Link href={`/${localActive}/register`}>
                     <NavItem>
                       <FaUserPlus className="me-2" />
-                      <span className="text-sm">{t('sidebar.menu.register')}</span>
+                      <span className="text-sm">
+                        {t("sidebar.menu.register")}
+                      </span>
                     </NavItem>
                   </Link>
-                  </button>
+                </button>
               </li>
             </ul>
           </div>
@@ -525,59 +644,128 @@ export default function Navbar() {
                   {t('sidebar.menu.login')}
                 </Link>
                 </li>
-                <li className={`${isAuthenticated? `hidden` : `flex`} items-center py-3 border-b-[1px]`}>
-                <Link href={`/${localActive}/login`} className="flex items-center" >
-                  <FaUserPlus className="me-3" />
-                  {t('sidebar.menu.register')}
-                </Link>
+                <li
+                  className={`${
+                    isAuthenticated ? `hidden` : `flex`
+                  } items-center py-3 border-b-[1px]`}
+                >
+                  <Link
+                    href={`/${localActive}/login`}
+                    className="flex items-center"
+                  >
+                    <FaSignInAlt className="me-3" />
+                    {t("sidebar.menu.login")}
+                  </Link>
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `hidden` : `flex`
+                  } items-center py-3 border-b-[1px]`}
+                >
+                  <Link
+                    href={`/${localActive}/login`}
+                    className="flex items-center"
+                  >
+                    <FaUserPlus className="me-3" />
+                    {t("sidebar.menu.register")}
+                  </Link>
+                </li>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaUser className="me-3" />
                   user_name
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaPlus className="me-3" />
                   {t('sidebar.menu.addService')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaBell className="me-3" />
                   {t('sidebar.menu.notfiction')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaEnvelope className="me-3" />
                   {t('sidebar.menu.messages')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaFolderOpen className="me-3" />
                   {t('sidebar.menu.viewServices')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaTruck className="me-3 scale-x-[-1]" />
                   {t('sidebar.menu.incomingService')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaBookBookmark className="me-3" />
                   {t('sidebar.menu.myGroubs')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaDollarSign className="me-3" />
                   {t('sidebar.menu.balance')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaSliders className="me-3" />
                   {t('sidebar.menu.settings')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaEdit className="me-3" />
                   {t('sidebar.menu.acountSettings')}
                 </li>
-                <li className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaGlobe className="me-3" />
                   {t('sidebar.menu.helps')}
                 </li>
-                <li onClick={()=> handleLogout()} className={`${isAuthenticated? `flex` : `hidden`} items-center py-3 border-b-[1px]`}>
+                <li
+                  onClick={() => handleLogout()}
+                  className={`${
+                    isAuthenticated ? `flex` : `hidden`
+                  } items-center py-3 border-b-[1px]`}
+                >
                   <FaSignOutAlt className="me-3" />
-                  {t('sidebar.menu.logout')}
+                  {t("sidebar.menu.logout")}
                 </li>
               </ul>
             </div>
@@ -600,7 +788,6 @@ export default function Navbar() {
               className="fixed invisible top-0 right-0 w-full h-full peer-checked:visible overflow-scroll px-4 py-6 bg-white -z-10"
               style={{ scrollbarWidth: "none" }}
             >
-              
               <ul>
                 <li className="flex items-center py-3 ">
                   <h2 className="font-semibold text-2xl">{t('sidebar.menu.search')}</h2>

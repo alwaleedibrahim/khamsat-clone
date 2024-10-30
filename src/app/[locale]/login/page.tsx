@@ -9,10 +9,10 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "../_lib/redux/slice/authSlice";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import { useLocale, useTranslations } from "next-intl";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 interface LoginFormData {
   email: string;
@@ -26,26 +26,30 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm<LoginFormData>();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
   const t = useTranslations("LoginPage");
   const localActive = useLocale();
-  const searchParams = useSearchParams()
- 
-  const redirectToPage = searchParams.get('redirect')
+  const searchParams = useSearchParams();
+
+  const redirectToPage = searchParams.get("redirect");
 
   const onSubmit = async (data: LoginFormData) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+          credentials: "include",
+        }
+      );
 
       if (response.status === 400) {
         const errorResult = await response.json();
@@ -61,9 +65,9 @@ const Login: React.FC = () => {
       toast.success(t("login_success"));
       setTimeout(() => {
         if (redirectToPage) {
-          router.push(`/${localActive}/${redirectToPage}`)
+          router.push(`/${localActive}/${redirectToPage}`);
         } else {
-          router.push("/")
+          router.push("/");
         }
       }, 2000);
     } catch (error) {
@@ -76,7 +80,7 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#eceff4]">
       <div className={`${styles.custom_container} bg-white font-kufi`}>
-        <h3 className="text-2xl text-style1 mb-[15px] ">{t('login')}</h3>
+        <h3 className="text-2xl text-style1 mb-[15px] ">{t("login")}</h3>
 
         <div className={`flex gap-[10px] mt-[15px] mb-[30px]`}>
           <Image
@@ -155,13 +159,14 @@ const Login: React.FC = () => {
               {...register("password", {
                 required: t("password_required"),
                 pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,}$/,
-                  message: t("passwordNotValid")
+                  value:
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,}$/,
+                  message: t("passwordNotValid"),
                 },
                 minLength: {
                   value: 8,
-                  message: t("password_min_length")
-                }
+                  message: t("password_min_length"),
+                },
               })}
               type="password"
               id="password"
@@ -175,7 +180,7 @@ const Login: React.FC = () => {
             )}
           </div>
 
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
           <div
             className={`${styles.form_group} grid lg:grid-cols-[175px_minmax(900px,_1fr)_100px] mb-[10px]`}
@@ -189,7 +194,10 @@ const Login: React.FC = () => {
             </button>
           </div>
         </form>
-        <ToastContainer rtl={localActive=="ar"} position={`top-${localActive=="ar"?'left':'right'}`}/>
+        <ToastContainer
+          rtl={localActive == "ar"}
+          position={`top-${localActive == "ar" ? "left" : "right"}`}
+        />
       </div>
     </div>
   );
