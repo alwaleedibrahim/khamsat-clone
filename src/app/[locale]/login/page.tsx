@@ -62,14 +62,14 @@ const Login: React.FC = () => {
 
       const result = await response.json();
       dispatch(login(result.data.token));
-      toast.success(t("login_success"));
+      // toast.success(t("login_success"));
       setTimeout(() => {
-        if (redirectToPage) {
-          router.push(`/${localActive}/${redirectToPage}`);
+        if (redirectToPage) {          
+          router.push(`/${localActive}/${redirectToPage}/`);
         } else {
           router.push("/");
         }
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.log("Login failed", error);
     } finally {

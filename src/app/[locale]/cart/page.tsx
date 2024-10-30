@@ -1,23 +1,26 @@
-'use client';
+"use client";
 import React, { useState } from "react";
 import { useCart } from "react-use-cart";
 import ButtonA from "../_components/reusable/buttons/ButtonA";
-import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
-import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import {
+  TypedUseSelectorHook,
+  useSelector as useReduxSelector,
+} from "react-redux";
 import { RootState } from "@/app/[locale]/_lib/redux/store";
-import 'alertifyjs/build/css/alertify.rtl.css';
-import '../alertify.css';
-import CartItem from "./CartItem"; 
+import "alertifyjs/build/css/alertify.rtl.css";
+import "../alertify.css";
+import CartItem from "./CartItem";
+import Link from "next/link";
 const Cart: React.FC = () => {
   const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
-  const { checkedItems } = useSelector((state: RootState) => state.additionalServices);
-  
-  const {
-    isEmpty,
-    items,
-  } = useCart();
-  
+  const { checkedItems } = useSelector(
+    (state: RootState) => state.additionalServices
+  );
+
+  const { isEmpty, items } = useCart();
+
   const [additionalServiceTotal, setAdditionalServiceTotal] = useState(0); // حالة جديدة لإدارة السعر الإضافي
   const localActive = useLocale();
   const router = useRouter();
@@ -41,22 +44,24 @@ const Cart: React.FC = () => {
         <div className="cart-dev bg-white py-5 my-5">
           {isEmpty ? (
             <div className="flex flex-col align-center font-kufi bg-white">
-              <h2 className="text-xl text-center">لا يوجد منتجات في سلة المشتريات الخاصة بك</h2>
+              <h2 className="text-xl text-center">
+                لا يوجد منتجات في سلة المشتريات الخاصة بك
+              </h2>
               <ButtonA
                 text="تصفح الخدمات"
                 extraStyle="mx-auto text-sm px-[13px] mt-5"
                 onClick={() => {
-                  router.replace(path + '/services');
+                  router.replace(path + "/services");
                 }}
               />
             </div>
           ) : (
             <>
               {items.map((item) => (
-                <CartItem 
-                  key={item.id} 
-                  item={item} 
-                  checkedItems={checkedItems} 
+                <CartItem
+                  key={item.id}
+                  item={item}
+                  checkedItems={checkedItems}
                   setAdditionalServiceTotal={setAdditionalServiceTotal} // تمرير الدالة لتحديث السعر
                 />
               ))}
@@ -90,7 +95,12 @@ const Cart: React.FC = () => {
                     </h4>
                   </div>
                   <div className="col-span-12 mt-4">
-                    <ButtonA text="إتمام الشراء" extraStyle="text-sm font-kufi p-auto w-[88%]" />
+                    <Link href={`payment`}>
+                      <ButtonA
+                        text="إتمام الشراء"
+                        extraStyle="text-sm font-kufi p-auto w-[88%]"
+                      />
+                    </Link>
                   </div>
                 </div>
               </div>
