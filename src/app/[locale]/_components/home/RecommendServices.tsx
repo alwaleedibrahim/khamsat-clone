@@ -3,9 +3,12 @@ import ButtonB from '../reusable/buttons/ButtonB';
 import ServiceCard, { ServicesCard } from '../reusable/service-card/ServiceCard'; 
 import { fetchAllServices } from '../../_lib/services';
 
+
+
 const RecommendServices = async () => {
     let servicesData: ServicesCard[] = []; 
-
+    // let localActive = useLocale()
+    // const t = useTranslations("HomePage");
     try {
         const rawServices = await fetchAllServices();        
         servicesData = rawServices.services
@@ -19,9 +22,9 @@ const RecommendServices = async () => {
             <div className='xl:container mx-auto'>
                 <div className="flex justify-between items-center px-4 mb-[30px]">
                     <div className="text-2xl text-style1 font-kufi">
-                        <a href="/recommendations">خدمات نرشحها لك</a>
+                        <a href="/recommendations">{('Rexommend.recommendService')}</a>
                     </div>
-                    <ButtonB text='عرض المزيد' extraStyle='text-[14px] px-[8px] py-[4px]' />
+                    <ButtonB text={("Recmmend.showMore")} extraStyle='text-[14px] px-[8px] py-[4px]' />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">

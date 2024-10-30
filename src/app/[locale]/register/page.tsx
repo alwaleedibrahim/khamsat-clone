@@ -25,58 +25,77 @@ const Register: React.FC = () => {
     {
       id: 1,
       title: "أنا",
+      title_en: "Ana",
       sub: "ركز على أهدافك وتابع ما يهمك حقاً",
+      sub_en: "Focus on your goals and pursue what truly matters to you",
       brand: "/images/brands/ana.jpeg",
     },
     {
       id: 2,
       title: "مستقل",
+      title_en: "Mostaql",
       sub: "منصّة العمل الحر العربية",
+      sub_en: "The Arabic freelance platform",
       brand: "/images/brands/mostaql.jfif",
     },
     {
       id: 3,
       title: "خمسات",
+      title_en: "Khamsat",
       sub: "سوق بيع وشراء الخدمات المصغّرة",
+      sub_en: "Marketplace for buying and selling microservices",
       brand: "/images/brands/khamsat.png",
     },
     {
       id: 4,
       title: "بيكاليكا",
+      title_en: "Picalica",
       sub: "أفضل المنتجات الرقمية الجاهزة",
+      sub_en: "The best ready-made digital products",
       brand: "/images/brands/picalica.jfif",
     },
     {
       id: 5,
       title: "بعيد",
+      title_en: "Baaeed",
       sub: "وظّف عن بعد",
+      sub_en: "Hire remotely",
       brand: "/images/brands/baaeed.jpg",
     },
     {
       id: 6,
       title: "زيتون",
+      title_en: "Zaetoon",
       sub: "برنامج خدمة العملاء الأكثر بساطة",
+      sub_en: "The simplest customer service program",
       brand: "/images/brands/zaetoon.jpg",
     },
     {
       id: 7,
       title: "أكاديمية حسوب",
+      title_en: "Hsoub Academy",
       sub: "تعلّم وطوّر مهاراتك",
+      sub_en: "Learn and develop your skills",
       brand: "/images/brands/academy.png",
     },
     {
       id: 8,
       title: "موسوعة حسوب",
+      title_en: "Hsoub Wiki",
       sub: "مرجع المطورين العرب",
+      sub_en: "The reference for Arab developers",
       brand: "/images/brands/wiki.png",
     },
     {
       id: 9,
       title: "حسوب I/O",
+      title_en: "Hsoub I/O",
       sub: "ناقش أشخاصًا بنفس اهتماماتك",
+      sub_en: "Discuss with people of similar interests",
       brand: "/images/brands/io.png",
     },
   ];
+  
   const t = useTranslations('RegisterPage');
   const localActive = useLocale();
   const {
@@ -341,11 +360,9 @@ const Register: React.FC = () => {
             </div>
           </form>
         </div>
-        <div
-          className={`${styles.custom_container} lg:w-[40%] w-[100%] bg-white px-[30px]`}
-        >
-          <h1 className="text-xl text-style1 mb-[40px] font-kufi ">
-            حساب واحد لجميع منتجاتنا
+        <div className={`${styles.custom_container} lg:w-[40%] w-[100%] bg-white px-[30px]`}>
+          <h1 className="text-xl text-style1 mb-[40px] font-kufi">
+            {localActive === 'ar' ? 'حساب واحد لجميع منتجاتنا' : 'One account for all our products'}
           </h1>
           <div className="my-[30px]">
             <ul>
@@ -356,17 +373,17 @@ const Register: React.FC = () => {
                       <Image
                         width={48}
                         height={48}
-                        src={`${item.brand}`}
-                        alt="logo-brand"
-                        className={`w-[48px] h-[48px] bg-gray-200`}
+                        src={item.brand}
+                        alt={`logo-brand-${localActive === 'ar' ? item.title : item.title_en}`}
+                        className="w-[48px] h-[48px] bg-gray-200"
                       />
                     </div>
                     <div>
                       <h3 className="font-kufi text-[18px] mb-[4px]">
-                        {item.title}
+                        {localActive === 'ar' ? item.title : item.title_en}
                       </h3>
                       <h4 className="text-[14px] text-style2 font-naskh">
-                        {item.sub}
+                        {localActive === 'ar' ? item.sub : item.sub_en}
                       </h4>
                     </div>
                   </article>
@@ -375,8 +392,10 @@ const Register: React.FC = () => {
             </ul>
           </div>
         </div>
+
+
       </div>
-      <ToastContainer rtl={localActive=="ar"} position={`top-${localActive=="ar"?'left':'right'}`}/>
+      <ToastContainer rtl={localActive == "ar"} position={`top-${localActive == "ar" ? 'left' : 'right'}`} />
       <div className="text-center text-[14px] text-naskh py-[30px]">
         <p>&copy; 2024 حسوب. جميع الحقوق محفوظة.</p>
       </div>

@@ -1,72 +1,87 @@
 import React from "react";
 import CategoryCard from "./CategoryCard";
+import { useLocale } from "next-intl";
 
 interface ICategory {
-  name: string;
+  nameAr: string;
+  nameEn: string;
   img: string;
 }
 
 const categories: ICategory[] = [
   {
-    name: "تصميم",
+    nameAr: "تصميم",
+    nameEn: "Design",
     img: "design.jpg",
   },
   {
-    name: "كتابة وترجمة",
+    nameAr: "كتابة وترجمة",
+    nameEn: "Writing & Translation",
     img: "translate.jpg",
   },
   {
-    name: "تسويق رقمي",
+    nameAr: "تسويق رقمي",
+    nameEn: "Digital Marketing",
     img: "social.jpg",
   },
   {
-    name: "برمجة وتطوير",
+    nameAr: "برمجة وتطوير",
+    nameEn: "Programming & Development",
     img: "development.jpg",
   },
   {
-    name: "فيديو وأنيميشن",
+    nameAr: "فيديو وأنيميشن",
+    nameEn: "Video & Animation",
     img: "video.jpg",
   },
   {
-    name: "هندسة وعمارة",
+    nameAr: "هندسة وعمارة",
+    nameEn: "Engineering & Architecture",
     img: "engineering.jpg",
   },
   {
-    name: "أعمال",
+    nameAr: "أعمال",
+    nameEn: "Business",
     img: "bussiness.jpg",
   },
   {
-    name: "صوتيات",
+    nameAr: "صوتيات",
+    nameEn: "Audio",
     img: "audio.jpg",
   },
   {
-    name: "تعليم عن بعد",
+    nameAr: "تعليم عن بعد",
+    nameEn: "Remote Learning",
     img: "remote.jpg",
   },
   {
-    name: "بيانات",
+    nameAr: "بيانات",
+    nameEn: "Data",
     img: "data.jpg",
   },
   {
-    name: "أسلوب حياة",
+    nameAr: "أسلوب حياة",
+    nameEn: "Lifestyle",
     img: "lifestyle.jpg",
   },
   {
-    name: "ذكاء اصطناعي",
+    nameAr: "ذكاء اصطناعي",
+    nameEn: "Artificial Intelligence",
     img: "artificial_intelligence.jpg",
   },
 ];
 
 export default function AllCategoriesSection() {
+  const localActive = useLocale();
   return (
     <div className="p-section flex  flex-col items-center">
-      <h2 className="font-kufi text-3xl py-8">كافة الخدمات الاحترافية لتطوير أعمالك</h2>
+      <h2 className="font-kufi text-3xl py-8">{localActive==='ar'?"كافة الخدمات الاحترافية لتطوير أعمالك":"All professional services to develop your business"}</h2>
       <div className="xl:container py-5">
         <div className="flex flex-wrap lg:gap-6 justify-center">
           {categories.map((category, index) => (
             <div key={index} className="w-1/2 p-2 lg:p-0 lg:w-1/5">
               <CategoryCard img={`/images/categories/${category.img}`}>
-                {category.name}
+                {localActive==='ar'?category.nameAr:category.nameEn}
               </CategoryCard>
             </div>
           ))}

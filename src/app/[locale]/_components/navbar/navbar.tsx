@@ -131,7 +131,7 @@ export default function Navbar() {
                   className="w-full h-full"
                   type="search"
                   name="q"
-                  placeholder={t("sidebar.menu.search")}
+                  placeholder={t('sidebar.menu.searchFor')}
                   defaultValue=""
                 />
               </form>
@@ -347,41 +347,41 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaFileLines className="me-2" />
-                        <span>خمسات</span>
+                        <span>{t("sidebar.menu.khamsat.title")}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">حول خمسات</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.aboutKhamas")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">كيف يعمل الموقع</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.howTheSiteWorks")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">الأسئلة الشائعة</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.frequentlyAskedQuestions")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">ضمان الحقوق</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.rightsGuarantee")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">شروط الاستخدام</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.termsOfUse")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">بيان الخصوصية</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.privacyStatement")} </span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">المستويات</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.levels")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">التسويق بالعمولة</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.affiliateMarketing")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">البيع على خمسات</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.sellingOnKhamas")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">مركز المساعدة</span>
+                        <span className="ms-6">{t("sidebar.menu.khamsat.helpCenter")}</span>
                       </li>
                     </ul>
                   </details>
@@ -391,26 +391,26 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaHashtag className="me-2" />
-                        <span>تابعنا</span>
+                        <span>{t("sidebar.menu.support.title")}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">مجتمع خمسات</span>
+                        <span className="ms-6">{t("sidebar.menu.support.khamasCommunity")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">مدونة خمسات</span>
+                        <span className="ms-6">{t("sidebar.menu.support.khamasBlog")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تويتر</span>
+                        <span className="ms-6">{t("sidebar.menu.support.twitter")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تصميم</span>
+                        <span className="ms-6">{t("sidebar.menu.support.design")}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">فيسبوك</span>
+                        <span className="ms-6">{t("sidebar.menu.support.facebook")}</span>
                       </li>
                     </ul>
                   </details>
@@ -518,7 +518,7 @@ export default function Navbar() {
                 >
                   <DropDownBox>
                     <DropDownBoxContent>
-                      <span>لا جديد حتى هذه اللحظة!</span>
+                      <span>{t("sidebar.menu.noNew")}</span>
                     </DropDownBoxContent>
                   </DropDownBox>
                 </div>
@@ -534,7 +534,7 @@ export default function Navbar() {
                       >
                         <DropDownBox>
                           <DropDownBoxContent>
-                            <span>لا جديد حتى هذه اللحظة!</span>
+                            <span>{t("sidebar.menu.noNew")}</span>
                           </DropDownBoxContent>
                         </DropDownBox>
                       </div>
@@ -549,7 +549,7 @@ export default function Navbar() {
                 className="flex items-center"
               >
                 <NavItem>
-                  {localActive == "en" ? <KSAIcon /> : <UKIcons />}
+                  {localActive == 'ar'? <KSAIcon /> : <UKIcons />}
                 </NavItem>
               </li>
               <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
@@ -607,7 +607,7 @@ export default function Navbar() {
               className="p-0 m-0 h-full flex flex-col items-center justify-around"
             >
               <FaHome />
-              <span>الرئيسية</span>
+              <span>{t('sidebar.menu.home')}</span>
             </label>
             <input
               type="radio"
@@ -622,7 +622,7 @@ export default function Navbar() {
               className="p-0 m-0 h-full flex flex-col items-center justify-around"
             >
               <FaUser />
-              <span>حسابي</span>
+              <span>{t('sidebar.menu.myAcount')}</span>
             </label>
             <input
               type="radio"
@@ -635,8 +635,14 @@ export default function Navbar() {
               style={{ scrollbarWidth: "none" }}
             >
               <ul>
-                <li className="flex items-center py-3 ">
-                  <h2 className="font-semibold text-2xl">حسابي</h2>
+              <li className="flex items-center py-3 ">
+                <h2 className="font-semibold text-2xl">{t('sidebar.menu.myAcount')}</h2>
+              </li>
+                <li className={`${isAuthenticated? `hidden` : `flex`} items-center py-3 border-b-[1px]`}>
+                <Link href={`/${localActive}/login`} className="flex items-center" >
+                  <FaSignInAlt className="me-3" />
+                  {t('sidebar.menu.login')}
+                </Link>
                 </li>
                 <li
                   className={`${
@@ -678,7 +684,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaPlus className="me-3" />
-                  أضف خدمة
+                  {t('sidebar.menu.addService')}
                 </li>
                 <li
                   className={`${
@@ -686,7 +692,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaBell className="me-3" />
-                  الإشعارات
+                  {t('sidebar.menu.notfiction')}
                 </li>
                 <li
                   className={`${
@@ -694,7 +700,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaEnvelope className="me-3" />
-                  الرسائل
+                  {t('sidebar.menu.messages')}
                 </li>
                 <li
                   className={`${
@@ -702,7 +708,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaFolderOpen className="me-3" />
-                  المشتريات
+                  {t('sidebar.menu.viewServices')}
                 </li>
                 <li
                   className={`${
@@ -710,7 +716,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaTruck className="me-3 scale-x-[-1]" />
-                  الطلبات الواردة
+                  {t('sidebar.menu.incomingService')}
                 </li>
                 <li
                   className={`${
@@ -718,7 +724,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaBookBookmark className="me-3" />
-                  مجموعاتي
+                  {t('sidebar.menu.myGroubs')}
                 </li>
                 <li
                   className={`${
@@ -726,7 +732,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaDollarSign className="me-3" />
-                  الرصيد
+                  {t('sidebar.menu.balance')}
                 </li>
                 <li
                   className={`${
@@ -734,7 +740,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaSliders className="me-3" />
-                  الإعدادات
+                  {t('sidebar.menu.settings')}
                 </li>
                 <li
                   className={`${
@@ -742,7 +748,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaEdit className="me-3" />
-                  تعديل الحساب
+                  {t('sidebar.menu.acountSettings')}
                 </li>
                 <li
                   className={`${
@@ -750,7 +756,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaGlobe className="me-3" />
-                  المساعدة
+                  {t('sidebar.menu.helps')}
                 </li>
                 <li
                   onClick={() => handleLogout()}
@@ -770,7 +776,7 @@ export default function Navbar() {
               className="p-0 m-0 h-full flex flex-col items-center justify-around"
             >
               <FaSearch />
-              <span>بحث</span>
+              <span>{t('sidebar.menu.search')}</span>
             </label>
             <input
               type="radio"
@@ -784,7 +790,7 @@ export default function Navbar() {
             >
               <ul>
                 <li className="flex items-center py-3 ">
-                  <h2 className="font-semibold text-2xl">بحث</h2>
+                  <h2 className="font-semibold text-2xl">{t('sidebar.menu.search')}</h2>
                 </li>
                 <li className="flex items-center py-3 ">
                   <form acceptCharset="UTF-8" className="text-[#888] h-10">
@@ -793,44 +799,44 @@ export default function Navbar() {
                       className="w-full h-full"
                       type="search"
                       name="q"
-                      placeholder={t("sidebar.menu.search")}
+                      placeholder={t('sidebar.menu.searchFor')}
                       defaultValue=""
                     />
                   </form>
                 </li>
                 <hr className="my-3" />
                 <li className="flex items-center py-3">
-                  <span className="ms-6">تصميم</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.design')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">كتابة وترجمة</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.writingTranslation')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">تسويق رقمي</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.digitalMarketing')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">برمجة وتطوير</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.programmingDevelopment')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">فيديو وأنيميشن</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.videoAnimation')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">هندسة وعمارة</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.engineeringArchitecture')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">أعمال</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.business')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">صوتيات</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.audio')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">تعليم عن بعد</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.eLearning')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">بيانات</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.data')}</span>
                 </li>
                 <li className="flex items-center py-3">
-                  <span className="ms-6">أسلوب حياة</span>
+                  <span className="ms-6">{t('sidebar.menu.categories.lifestyle')}</span>
                 </li>
               </ul>
             </div>
@@ -842,9 +848,9 @@ export default function Navbar() {
             >
               <FaShoppingCart />
               {totalUniqueItems > 0 && (
-                <span className="relative end-[9px] top-[-22px] bg-[#e75737] text-white rounded-full h-[12px] w-[12px] text-xs flex items-center justify-center"></span>
+                    <span className="relative end-[9px] mb-[-18px] top-[-22px] bg-[#e75737] text-white rounded-full h-[12px] w-[12px] text-xs flex items-center justify-center"></span>
               )}
-              <span>السلة</span>
+              <span>{t('sidebar.menu.cart')}</span>
             </label>
             <input
               type="radio"
@@ -859,7 +865,7 @@ export default function Navbar() {
               className="p-0 m-0 h-full flex flex-col items-center justify-around"
             >
               <FaBars />
-              <span>القائمة</span>
+              <span>{t('sidebar.menu.title')}</span>
             </label>
             <input
               type="radio"
@@ -873,7 +879,7 @@ export default function Navbar() {
             >
               <ul>
                 <li className="flex items-center py-3 ">
-                  <h2 className="font-semibold text-2xl">القائمة</h2>
+                  <h2 className="font-semibold text-2xl">{t('sidebar.menu.title')}</h2>
                 </li>
 
                 <li className="flex items-center py-3">
@@ -881,32 +887,32 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaBriefcase className="me-2" />
-                        <span>حلول الأعمال</span>
+                        <span>{t('sidebar.menu.business.title')}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">حوّل أعمالك للعالم الرقمي</span>
+                        <span className="ms-6">{t('sidebar.menu.business.turnYourBusinessDigital')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">ابدأ مشروعك التجاري</span>
+                        <span className="ms-6">{t('sidebar.menu.business.startYourBusinessProject')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أنشئ متجرك الإلكتروني</span>
+                        <span className="ms-6">{t('sidebar.menu.business.createYourOnlineStore')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أطلق موقعك الإلكتروني</span>
+                        <span className="ms-6">{t('sidebar.menu.business.launchYourWebsite')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">حلول التسويق الرقمي</span>
+                        <span className="ms-6">{t('sidebar.menu.business.digitalMarketingSolutions')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أنشئ دورتك التدريبية</span>
+                        <span className="ms-6">{t('sidebar.menu.business.createYourTrainingCourse')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">انشر كتابك عبر الإنترنت</span>
+                        <span className="ms-6">{t('sidebar.menu.business.publishYourBookOnline')}</span>
                       </li>
                     </ul>
                   </details>
@@ -916,23 +922,23 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaComments className="me-2" />
-                        <span>مجتمع خمسات</span>
+                        <span>{t('sidebar.menu.community.title')}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">نماذج أعمال قمت بتنفيذها</span>
+                        <span className="ms-6">{t('sidebar.menu.community.samplesOfProjects')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">طلبات الخدمات غير الموجودة</span>
+                        <span className="ms-6">{t('sidebar.menu.community.requestsForNonExistingServices')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تجارب وقصص المستخدمين</span>
+                        <span className="ms-6">{t('sidebar.menu.community.userExperiencesStories')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">أمور عامة حول خمسات</span>
+                        <span className="ms-6">{t('sidebar.menu.community.generalMatters')}</span>
                       </li>
                     </ul>
                   </details>
@@ -942,41 +948,41 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaFileLines className="me-2" />
-                        <span>خمسات</span>
+                        <span>{t('sidebar.menu.khamsat.title')}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">حول خمسات</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.aboutKhamas')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">كيف يعمل الموقع</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.howTheSiteWorks')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">الأسئلة الشائعة</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.frequentlyAskedQuestions')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">ضمان الحقوق</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.rightsGuarantee')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">شروط الاستخدام</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.termsOfUse')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">بيان الخصوصية</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.privacyStatement')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">المستويات</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.levels')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">التسويق بالعمولة</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.affiliateMarketing')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">البيع على خمسات</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.sellingOnKhamas')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">مركز المساعدة</span>
+                        <span className="ms-6">{t('sidebar.menu.khamsat.helpCenter')}</span>
                       </li>
                     </ul>
                   </details>
@@ -986,26 +992,26 @@ export default function Navbar() {
                     <summary className="flex items-center cursor-pointer justify-between w-full	 ">
                       <div className="flex items-center">
                         <FaHashtag className="me-2" />
-                        <span>تابعنا</span>
+                        <span>{t('sidebar.menu.support.title')}</span>
                       </div>
                       <FaCaretLeft className="group-open:-rotate-90 " />
                     </summary>
 
                     <ul className="my-2">
                       <li className="flex items-center py-3">
-                        <span className="ms-6">مجتمع خمسات</span>
+                        <span className="ms-6">{t('sidebar.menu.support.khamasCommunity')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">مدونة خمسات</span>
+                        <span className="ms-6">{t('sidebar.menu.support.khamasBlog')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تويتر</span>
+                        <span className="ms-6">{t('sidebar.menu.support.twitter')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">تصميم</span>
+                        <span className="ms-6">{t('sidebar.menu.support.design')}</span>
                       </li>
                       <li className="flex items-center py-3">
-                        <span className="ms-6">فيسبوك</span>
+                        <span className="ms-6">{t('sidebar.menu.support.facebook')}</span>
                       </li>
                     </ul>
                   </details>
