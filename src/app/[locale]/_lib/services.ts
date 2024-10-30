@@ -6,8 +6,7 @@ export const fetchServices = async (query: string) => {
     try {
         const queryString = new URLSearchParams(query).toString();
         const response = await axios.get(`${base_url}/filter?${queryString}`);
-        
-        return response.data.services;
+        return response.data;
     } catch (error) {
         console.error('Fetch Services Error:', error);
         throw error;

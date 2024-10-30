@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useCart } from "react-use-cart";
 import ButtonB from "../_components/reusable/buttons/ButtonB";
 import { Upgrade } from "./types"; 
-import alertify from 'alertifyjs';
+import * as alertify from 'alertifyjs';
 import AdditionalServices from "../_components/single-service/AdditionalServices";
 
 interface CartItemType {
@@ -77,7 +77,7 @@ const CartItem: React.FC<{
             <ButtonB
               text="حذف"
               extraStyle="border-red-600 py-[3px] px-[8px] text-red-600 text-sm"
-              onClick={(event: Event) => {
+              onClick={(event: React.MouseEvent) => {
                 event.preventDefault();
                 alertify
                   .confirm('إشعار', 'هل أنت متأكد من رغبتك بحذف الخدمة من سلة المشتريات؟',

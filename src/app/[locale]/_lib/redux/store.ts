@@ -9,7 +9,7 @@ import additionalServicesSlice from "./slice/upgrades";
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'profile'], 
+  whitelist: ['auth', 'profile', 'category'], 
 };
 
 const rootReducer = combineReducers({
