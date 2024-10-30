@@ -22,11 +22,13 @@ import {
 import Link from "next/link";
 import { AppDispatch, RootState } from "../../_lib/redux/store";
 import { notFound } from "next/navigation";
+import { useLocale } from "next-intl";
 
 export default function Sidebar({
   filters: { category, subcategory },
 }: Readonly<{ filters: { category: string; subcategory: string } }>) {
   const dispatch = useDispatch<AppDispatch>();
+  const localActive = useLocale()
   useEffect(() => {
     dispatch(selectCategory(decodeURIComponent(category)));
     dispatch(selectSubCategory(decodeURIComponent(subcategory)));
@@ -66,7 +68,7 @@ export default function Sidebar({
                   {cat.name.en == selectedCategory ? (
                     <>
                       <Link
-                        href={`/ar/${cat.name.en}/${cat.name.en}`}
+                        href={`/${localActive}/categories/${cat.name.en}/${cat.name.en}`}
                         className="text-primary hover:text-primary"
                       >
                         <ListItem key={cat._id}>{cat.name.ar}</ListItem>
@@ -77,7 +79,7 @@ export default function Sidebar({
                             return (
                               <>
                                 <Link
-                                  href={`/ar/${cat.name.en}/${subcat.title.en}`}
+                                  href={`/${localActive}/categories/${cat.name.en}/${subcat.title.en}`}
                                   className={`${
                                     subcat.title.en == selectedSubCategory
                                       ? `text-primary`
@@ -95,7 +97,7 @@ export default function Sidebar({
                                         return (
                                           <Link
                                             key={nestedSubcategory._id}
-                                            href={`/ar/${cat.name.en}/${nestedSubcategory.title.en}`}
+                                            href={`/${localActive}/categories/${cat.name.en}/${nestedSubcategory.title.en}`}
                                             className={`${
                                                 nestedSubcategory.title.en == selectedSubCategory
                                                 ? `text-primary`
@@ -118,7 +120,7 @@ export default function Sidebar({
                       </ListItem>{" "}
                     </>
                   ) : (
-                    <Link href={`/ar/${cat.name.en}/${cat.name.en}`} className="hover:text-primary">
+                    <Link href={`/${localActive}/categories/${cat.name.en}/${cat.name.en}`} className="hover:text-primary">
                       <ListItem key={cat._id}>{cat.name.ar}</ListItem>
                     </Link>
                   )}

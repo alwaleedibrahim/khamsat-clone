@@ -26,14 +26,14 @@ export default function Categorydropdown() {
       {categories.map((category: ICategory, index: number) => (
         <div key={index} className=" basis-1/4 my-3 px-4">
           <h1 className="mb-5 border-b-2 text-xl py-2">
-            <Link href={`/${localActive}/${category.name.en}/`}>
+            <Link href={`/${localActive}/categories/${category.name.en}/`}>
               {localActive=='ar'?category.name.ar : category.name.en}
             </Link>
           </h1>
           {category.subcategories?.map((subcategory, index2) => (
             <div key={index2} className="my-3 text-base">
               <Link
-                href={`/${localActive}/${category.name.en}/${subcategory.title.en}`}
+                href={`/${localActive}/categories/${category.name.en}/${subcategory.title.en}`}
               >
                 {localActive=='ar'? subcategory.title.ar : subcategory.title.en}
               </Link>

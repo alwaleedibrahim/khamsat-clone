@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
   );
 
   // Check if the route is protected and the user is not authenticated
-  if (!token && isProtectedRoute && false) { ///!!!!!!
+  if (!token && isProtectedRoute) {
     const pathSegments = request.nextUrl.pathname.split("/");
     const originalPath = pathSegments.slice(2).join("/"); // Ignore the first three segments (i.e., /en or /ar)
 

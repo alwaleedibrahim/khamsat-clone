@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import ButtonB from "../_components/reusable/buttons/ButtonB";
+import ButtonB from "@/app/[locale]/_components/reusable/buttons/ButtonB";
 import Image from "next/image";
 import {
   TypedUseSelectorHook,
@@ -12,10 +12,10 @@ import {
   getCategory,
   getSubCategory,
   selectCategory,
-} from "../_lib/redux/slice/categorySlice";
-import ICategory from "../_models/category";
+} from "@/app/[locale]/_lib/redux/slice/categorySlice";
+import ICategory from "@/app/[locale]/_models/category";
 import { useLocale, useTranslations } from "next-intl";
-import ISubCategory from "../_models/subcategory";
+import ISubCategory from "@/app/[locale]/_models/subcategory";
 import Link from "next/link";
 import { FaPlayCircle } from "react-icons/fa";
 import { notFound } from "next/navigation";
@@ -72,7 +72,7 @@ export default function Page({
           {subcategories?.map((subcat, index) => (
             <Link
               key={index}
-              href={`/${localActive}/${category}/${subcat.title.en}`}
+              href={`/${localActive}/categories/${category}/${subcat.title.en}`}
             >
               <div className="flex items-center bg-white p-4 shadow-sm">
                 <div className="flex-shrink-0 mr-4">
@@ -107,7 +107,7 @@ export default function Page({
                 {subcat.subcategories?.map((nestedsubcat, index) => (
                   <Link
                     key={index}
-                    href={`/${localActive}/${category}/${nestedsubcat.title.en}`}
+                    href={`/${localActive}/categories/${category}/${nestedsubcat.title.en}`}
                   >
                     <h3 className="text-lg font-naskh my-2">
                       {localActive == "ar"
