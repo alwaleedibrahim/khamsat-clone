@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useCart } from 'react-use-cart'; // استيراد useCart من react-use-cart
 import ButtonA from '../reusable/buttons/ButtonA';
 import { useRouter } from 'next/navigation';
-import * as alertify from 'alertifyjs';
+import alertify from 'alertifyjs';
 // import 'alertifyjs/build/css/alertify.css';
 import '../../alertify.css';
 import 'alertifyjs/build/css/alertify.rtl.css';

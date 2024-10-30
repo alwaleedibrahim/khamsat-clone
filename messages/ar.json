@@ -2,12 +2,25 @@
     "Header": {
         "sidebar": {
             "menu": {
+                "title": "القائمة",
                 "addService": "أضف خدمة",
+                "notfiction": "الإشعارات",
+                "messages": "الرسائل",
                 "viewServices": "المشتريات",
                 "incomingService": "الطلبات الواردة",
+                "myGroubs": "مجموعاتي",
+                "balance": "الرصيد",
+                "settings": "الإعدادات",
+                "acountSettings": "تعديل الحساب",
+                "helps": "المساعدة",
+                "search": "بحث",
+                "cart": "السلة",
+                "noNew": "لا جديد حتى هذه اللحظة!",
+                "home":"الرئيسية",
+                "myAcount":"حسابي",
                 "login": "دخول",
                 "register": "حساب جديد",
-                "search": "ابحث عن ...",
+                "searchFor": "ابحث عن ...",
                 "logout": "خروج",
                 "categories": {
                     "title": "التصنيفات",
@@ -62,6 +75,17 @@
                     "facebook": "فيسبوك"
                 }
             }
+        }
+    },
+    "HomePage":{
+        "HeroSection":{
+            "title":"أكبر سوق عربي للخدمات المصغرة",
+            "pricees":"أنجز أعمالك بسهولة وأمان بأسعار تبدأ من 5$ فقط",
+            "common":"كلمات شائعة"
+        },
+        "Recommend":{
+            "recommendService":"خدمات نرشحها لك",
+            "showMore":"عرض المزيد"
         }
     },
     "Footer": {
@@ -176,5 +200,10 @@
         "categories": "تصنيفات",
         "browse": "تصفح",
         "services": "خدمات"
-    }
+    },
+    "not_found": {
+        "title": "الصفحة المطلوبة غير موجودة",
+        "description": "للأسف لم نتمكن من العثور على الصفحة التي طلبتها. ما رأيك أن تجرب البحث بالموقع؟",
+        "button": "الرجوع إلى الرئيسية"
+      }
 }

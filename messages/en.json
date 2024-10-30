@@ -2,13 +2,26 @@
     "Header": {
         "sidebar": {
             "menu": {
+                "title": "Menu",
                 "addService": "Add Service",
+                "notfiction": "Notifications",
+                "messages": "Messages",
                 "viewServices": "Purchases",
-                "incomingService": "Incoming Orders",
+                "incomingService": "Incoming Requests",
+                "myGroubs": "My Groups",
+                "balance": "Balance",
+                "settings": "Settings",
+                "acountSettings": "Account Settings",
+                "helps": "Help",
+                "search": "Search",
+                "cart": "Cart",
+                "noNew": "Nothing new at this moment!",
+                "home": "Home",
+                "myAcount": "My Acount",
                 "login": "Login",
-                "logout": "Logout",
                 "register": "Register",
-                "search": "search for ...",
+                "searchFor": "Search for ...",
+                "logout": "Logout",
                 "categories": {
                     "title": "Categories",
                     "design": "Design",
@@ -34,15 +47,15 @@
                     "publishYourBookOnline": "Publish Your Book Online"
                 },
                 "community": {
-                    "title": "Khamas Community",
+                    "title": "Khamsat Community",
                     "samplesOfProjects": "Samples of Projects You've Done",
                     "requestsForNonExistingServices": "Requests for Non-Existing Services",
                     "userExperiencesStories": "User Experiences and Stories",
-                    "generalMatters": "General Matters About Khamas"
+                    "generalMatters": "General Matters About Khamsat"
                 },
                 "khamsat": {
-                    "title": "Khamas",
-                    "aboutKhamas": "About Khamas",
+                    "title": "Khamsat",
+                    "aboutKhamas": "About Khamsat",
                     "howTheSiteWorks": "How the Site Works",
                     "frequentlyAskedQuestions": "Frequently Asked Questions",
                     "rightsGuarantee": "Rights Guarantee",
@@ -50,18 +63,28 @@
                     "privacyStatement": "Privacy Statement",
                     "levels": "Levels",
                     "affiliateMarketing": "Affiliate Marketing",
-                    "sellingOnKhamas": "Selling on Khamas",
+                    "sellingOnKhamas": "Selling on Khamsat",
                     "helpCenter": "Help Center"
                 },
                 "support": {
                     "title": "Follow Us",
-                    "khamasCommunity": "Khamas Community",
-                    "khamasBlog": "Khamas Blog",
+                    "khamasCommunity": "Khamsat Community",
+                    "khamasBlog": "Khamsat Blog",
                     "twitter": "Twitter",
                     "design": "Design",
                     "facebook": "Facebook"
                 }
             }
+        }
+    },
+    "HomePage": {
+        "HeroSection": {
+            "title": "The largest Arab marketplace for microservices",
+            "pricees": "Complete your tasks easily and securely with prices starting from just $5.",
+            "common": "Common words"
+        },
+        "Recommend": {
+            "recommendService": "خدمات نرشحها لك"
         }
     },
     "Footer": {
@@ -111,7 +134,7 @@
         "password_required": "Password is required",
         "passwordNotValid": "The password must contain letters, symbols and numbers",
         "password_min_length": "Password must be at least 8 characters",
-        "invalidEmailOrPassword":"The email or password is incorrect",
+        "invalidEmailOrPassword": "The email or password is incorrect",
         "login_success": "Login successful",
         "google_login": "Using Google",
         "microsoft_login": "Using Microsoft",
@@ -125,56 +148,61 @@
     "RegisterPage": {
         "title": "Create New Account",
         "socialLogin": {
-          "google": "Using Google",
-          "microsoft": "Using Microsoft"
+            "google": "Using Google",
+            "microsoft": "Using Microsoft"
         },
         "or": "Or",
         "form": {
-          "name": "Name",
-          "namePlaceholder": "Write your name in Arabic",
-          "familyName": "Family Name",
-          "familyNamePlaceholder": "Write your family name in Arabic",
-          "email": "Email",
-          "emailPlaceholder": "Enter your email address",
-          "password": "Password",
-          "passwordPlaceholder": "Enter your password",
-          "submit": "Sign Up",
-          "submitting": "Signing Up...",
-          "terms": {
-            "text": "I have read and agree to the",
-            "termsLink": "Terms of Use",
-            "and": "and",
-            "privacyLink": "Privacy Policy"
-          }
+            "name": "Name",
+            "namePlaceholder": "Write your name in Arabic",
+            "familyName": "Family Name",
+            "familyNamePlaceholder": "Write your family name in Arabic",
+            "email": "Email",
+            "emailPlaceholder": "Enter your email address",
+            "password": "Password",
+            "passwordPlaceholder": "Enter your password",
+            "submit": "Sign Up",
+            "submitting": "Signing Up...",
+            "terms": {
+                "text": "I have read and agree to the",
+                "termsLink": "Terms of Use",
+                "and": "and",
+                "privacyLink": "Privacy Policy"
+            }
         },
         "validation": {
-          "nameRequired": "Name is required",
-          "familyNameRequired": "Family name is required",
-          "emailRequired": "Email is required",
-          "email_invalid":"Invalid email address",
-          "passwordRequired": "Password is required",
-          "notValid": "The password must contain letters, symbols and numbers",
-          "password_min_length":"Password must be at least 8 characters",
-          "termsRequired": "You must agree to the terms and privacy policy"
+            "nameRequired": "Name is required",
+            "familyNameRequired": "Family name is required",
+            "emailRequired": "Email is required",
+            "email_invalid": "Invalid email address",
+            "passwordRequired": "Password is required",
+            "notValid": "The password must contain letters, symbols and numbers",
+            "password_min_length": "Password must be at least 8 characters",
+            "termsRequired": "You must agree to the terms and privacy policy"
         },
         "success": {
-          "accountCreated": "Account created successfully!"
+            "accountCreated": "Account created successfully!"
         },
         "errors": {
-          "registrationFailed": "Registration failed. Please try again."
+            "registrationFailed": "Registration failed. Please try again."
         },
         "sidebar": {
-          "title": "One Account for All Our Products"
+            "title": "One Account for All Our Products"
         },
         "footer": {
-          "copyright": "© 2024 Hsoub. All rights reserved."
+            "copyright": "© 2024 Hsoub. All rights reserved."
         }
-      },
+    },
     "CategoryPage": {
         "HowItWorks": "How does Khamsat work",
         "common": "Common",
         "categories": "categories",
         "browse": "Browse",
         "services": "services"
+    },
+    "not_found": {
+        "title": "Page Not Found",
+        "description": "Sorry, we couldn't find the page you requested. How about trying to search the site?",
+        "button": "Return to Home"
     }
 }
