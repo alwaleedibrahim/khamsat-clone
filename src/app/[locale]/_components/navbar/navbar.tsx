@@ -437,10 +437,12 @@ export default function Navbar() {
 
             <ul className="flex  min-w-fit text-sm">
               <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
-                <NavItem>
-                  <FaPlus className="me-2" />
-                  <span>{t("sidebar.menu.addService")}</span>
-                </NavItem>
+                <Link href={`/${localActive}/service/new`}>
+                  <NavItem>
+                    <FaPlus className="me-2" />
+                    <span>{t("sidebar.menu.addService")}</span>
+                  </NavItem>
+                </Link>
               </li>
               <li
                 onClick={() => {

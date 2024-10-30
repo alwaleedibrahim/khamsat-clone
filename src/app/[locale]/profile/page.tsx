@@ -3,9 +3,6 @@ import React, { useState } from 'react'
 import UserProfileHeader from '../_components/Profile/UserProfileHeader'
 import Profile from '../_components/Profile/Profile';
 import UserServices from '../_components/Profile/UserServices';
-import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
-import { RootState } from '../_lib/redux/store';
-import { useLocale } from 'next-intl';
 
 const Page = () => {
     const [activeTab, setActiveTab] = useState('profile');
@@ -16,8 +13,6 @@ const Page = () => {
             setActiveTab(tab);
         }
     }
-    const localActive = useLocale();
-    const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
     return (
         <div>
             <div>

@@ -7,7 +7,6 @@ export default async function subcategoriesLoader(name: string) {
       if (categoryResponse.data) {
           const categoryId = categoryResponse.data.categories[0]._id
           const subcategoryResponse : AxiosResponse = await axiosInstance.get(`/categories/category/${categoryId}`)
-          console.log(`/categories/category/${categoryId}`);
           
           if(subcategoryResponse.data) {
             return subcategoryResponse.data.subcategories
