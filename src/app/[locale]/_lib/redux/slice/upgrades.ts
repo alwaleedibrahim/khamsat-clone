@@ -16,29 +16,21 @@ export interface AdditionalService {
 }
 
 interface AdditionalServiceState {
-    checkedItems: { [key: string]: boolean };
+    checkedItems: AdditionalService[];
     upgrades: AdditionalService[];
     loading: boolean;
     error: string | null;
 }
 
 const initialState: AdditionalServiceState = {
-    checkedItems: {},
+    checkedItems: [] as AdditionalService[],
     upgrades: [],
     loading: false,
     error: null,
 };
 
-const loadCheckedItems = () => {
-    const savedItems = localStorage.getItem('checkedItems');
-    return savedItems ? JSON.parse(savedItems) : {};
-};
-
-const initialCheckedItems = loadCheckedItems();
-
 const initialStateWithLocalStorage: AdditionalServiceState = {
     ...initialState,
-    checkedItems: initialCheckedItems,
 };
 
 export const fetchUpgradesById = createAsyncThunk<AdditionalService[], string, { rejectValue: string }>(
@@ -60,16 +52,22 @@ const additionalServicesSlice = createSlice({
     name: 'additionalServices',
     initialState: initialStateWithLocalStorage,
     reducers: {
-        toggleService: (state, action: PayloadAction<string>) => {
-            const id = action.payload;
-            state.checkedItems[id] = !state.checkedItems[id];
+        // toggleService: (state, action: PayloadAction<string>) => {
+        //     const id = action.payload;
+        //     state.checkedItems[id] = !state.checkedItems[id];
 
-            localStorage.setItem('checkedItems', JSON.stringify(state.checkedItems));
+        //     localStorage.setItem('checkedItems', JSON.stringify(state.checkedItems));
+        // },
+        // setCheckedItems: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
+        //     state.checkedItems = action.payload;
+        //     localStorage.setItem('checkedItems', JSON.stringify(state.checkedItems));
+        // },
+        addUpgrade: (state, action : PayloadAction<AdditionalService>) => {
+            state.checkedItems.push(action.payload)
         },
-        setCheckedItems: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
-            state.checkedItems = action.payload;
-            localStorage.setItem('checkedItems', JSON.stringify(state.checkedItems));
-        },
+        removeUpgrade: (state, action : PayloadAction<AdditionalService>) => {
+            state.checkedItems = state.checkedItems.filter((i)=> i._id != action.payload._id)
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -88,6 +86,6 @@ const additionalServicesSlice = createSlice({
     },
 });
 
-export const { toggleService, setCheckedItems } = additionalServicesSlice.actions;
+export const { addUpgrade, removeUpgrade } = additionalServicesSlice.actions;
 
 export default additionalServicesSlice.reducer;

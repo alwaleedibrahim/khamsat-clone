@@ -10,28 +10,21 @@ import convertToSubcurrency from "@/app/[locale]/_lib/payment/convert";
 import createPaymentIntent from "../../_lib/axios/payment";
 import IOrder from "../../_models/order";
 
-const CheckoutPage = ({ amount, token }: { amount: number, token: string }) => {
+const CheckoutPage = ({ amount, token, items }: { amount: number, token: string, items: any[] }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-
-  const order: IOrder = { // !!! for testing. remove this and get data from cart
+  
+  const order = { // !!! for testing. remove this and get data from cart
     user_id: '66febc9bd66445b2cf6466a1',
-    items: [
-      {
-        service_id: '66fb0c9ec51b9b0c3abfcc9c',
-         quantity: 2,
-         price:5,
-         upgrades: [
-          {id: '670549ecdcd6d6aee623462b', price: 5}
-         ]
-        }
-    ],
-    amount: 50
+    items: items[0].id,
+    amount: amount
   }
+  console.log(order);
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };

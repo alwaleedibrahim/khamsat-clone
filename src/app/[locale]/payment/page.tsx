@@ -12,12 +12,14 @@ import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-red
 import { RootState } from "../_lib/redux/store";
 import { useLocale } from "next-intl";
 import { redirect } from "next/navigation";
+import { useCart } from "react-use-cart";
 
 
 const Payment = () => {
   const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
   const localActive = useLocale();
   const isAuthenticated : boolean = useSelector((state)=> state.auth.isAuthenticated)
+  const {items, cartTotal} = useCart()
 if (!isAuthenticated) {
     redirect(`/${localActive}/login?redirect=payment`)
 }
@@ -26,7 +28,8 @@ if (!isAuthenticated) {
   );
   const token : string = useSelector((state)=> state.auth.token) || ''
   const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
- const amount = 5
+  const fees = cartTotal * 0.05
+ const amount = cartTotal + fees
   return (
     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 min-h-screen pt-20">
       {/* قسم الدفع */}
@@ -74,7 +77,7 @@ if (!isAuthenticated) {
         currency: "usd",
       }}
     >
-      <CheckoutPage amount={amount} token={token} />
+      <CheckoutPage amount={amount} token={token} items={items}/>
     </Elements>
           {/* <div className="p-4 w-full bg-white">
             <div className="mb-4 flex flex-col md:flex-row md:space-x-4">
@@ -127,17 +130,17 @@ if (!isAuthenticated) {
         <div className="mt-2 p-5">
           <div className="flex justify-between">
             <p className="mb-2">الإجمالي</p>
-            <p className="pl-20">00.0$</p>
+            <p className="pl-20">{cartTotal}$</p>
           </div>
           <div className="flex justify-between">
             <p className="mb-2">
               الرسوم <FaInfoCircle className="text-green-500 inline-block ml-1" />
             </p>
-            <p className="pl-20">00.0$</p>
+            <p className="pl-20">{fees}$</p>
           </div>
           <div className="flex justify-between font-bold">
             <p>المجموع الكلي</p>
-            <p className="pl-20">00.0$</p>
+            <p className="pl-20">{amount}$</p>
           </div>
         </div>
       </div>

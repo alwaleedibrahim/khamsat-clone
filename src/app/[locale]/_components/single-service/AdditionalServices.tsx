@@ -9,8 +9,7 @@ import {
   useSelector as useReduxSelector,
 } from "react-redux";
 import { AppDispatch, RootState } from "@/app/[locale]/_lib/redux/store";
-import { fetchUpgradesById, toggleService } from '@/app/[locale]/_lib/redux/slice/upgrades';
-import { useCart } from 'react-use-cart';
+import { fetchUpgradesById, addUpgrade, removeUpgrade, AdditionalService } from '@/app/[locale]/_lib/redux/slice/upgrades';
 interface AdditionalServicesProps {
   serviceId: string;
 }
@@ -20,59 +19,27 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({ serviceId }) =>
   const dispatch = useDispatch<AppDispatch>();
   const { upgrades, checkedItems, loading, error } = useSelector((state: RootState) => state.additionalServices);
   const localActive = useLocale();
-  const {updateItem, getItem} = useCart()
   useEffect(() => {
     dispatch(fetchUpgradesById(serviceId));
   }, [dispatch, serviceId]);
 
-  const updateItemTotal = (selectedService) => {
-    let total = 0
-    total += selectedService.itemTotal
-    selectedService.upgrades?.forEach(u => total+= u.price
-    )
-    console.log(total);
-    
-    updateItem(serviceId, {
-      price: total
-    })
-  }
-  const handleCheckboxChange = (id: string, serviceId: string) => {
-    const checked = !!checkedItems[id]
-    if (!checked) {handleUpgradeChecked(id, serviceId)}
-    else {handleUpgradeUnChecked(id, serviceId)}
-    dispatch(toggleService(id));
-  };
+  useEffect(()=> {
 
-  const handleUpgradeChecked = (id: string, serviceId: string) => {
-    
-    const selectedService = getItem(serviceId)
-    const selectedUpgrade = upgrades.find(u => u._id == id)
-    if (!selectedService) return
-    if (selectedService.upgrades) {
-      updateItem(serviceId, {
-        upgrades: [...selectedService.upgrades,selectedUpgrade]
-      })
+  })
+
+  const handleCheckboxChange  = (upgrade: AdditionalService, isChecked: boolean) => {
+    if(isChecked) {
+      dispatch(addUpgrade(upgrade))
     } else {
-      updateItem(serviceId, {
-        upgrades: [selectedUpgrade]
-      })
+      dispatch(removeUpgrade(upgrade))
     }
-    updateItemTotal(selectedService) 
   }
-  const handleUpgradeUnChecked = (id: string, serviceId: string) => {
-    const selectedService = getItem(serviceId)
-    if(!selectedService) return
-    if (selectedService.upgrades) {
-      const isInUpgrades = selectedService.upgrades.find(u => u._id == id)
-      if (isInUpgrades) {
-        updateItem(serviceId, {
-          upgrades: [...selectedService.upgrades.filter(u => u._id != id)]
-        })
-      }
-    }
-    updateItemTotal(selectedService) 
+
+  const isInCheckedItems = (upgrade: AdditionalService) : boolean => {
+    console.log(checkedItems);
+    
+    return !!checkedItems?.find(i=> i._id == upgrade._id)
   }
-  
   return (
     <div className="bg-white">
       <h5 className='py-[14px] px-[20px] font-kufi border-b-[1px] border-[#F1F1F1]'>
@@ -100,19 +67,19 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({ serviceId }) =>
                           id={upgrade._id}
                           name="service_upgrade_check"
                           value={upgrade._id}
-                          checked={!!checkedItems[upgrade._id]}  // Use Redux checked state
-                          onChange={() => handleCheckboxChange(upgrade._id, serviceId)} // Dispatch Redux action
+                          checked={isInCheckedItems(upgrade)}  // Use Redux checked state
+                          onChange={(e) => handleCheckboxChange(upgrade, e.target.checked)} // Dispatch Redux action
                         />
                         <FontAwesomeIcon
-                          icon={checkedItems[upgrade._id] ? faCheckSquare : faSquare}
+                          icon={isInCheckedItems(upgrade) ? faCheckSquare : faSquare}
                           className="text-lg transition-opacity duration-200"
                           style={{
                             marginTop: 9,
                             padding: 0,
-                            height: checkedItems[upgrade._id] ? '17px' : '14px',
+                            height: isInCheckedItems(upgrade) ? '17px' : '14px',
                             borderRadius: '3px',
-                            color: checkedItems[upgrade._id] ? '#52b035' : '#fff',
-                            border: checkedItems[upgrade._id] ? 'none' : '1.5px solid #777',
+                            color: isInCheckedItems(upgrade) ? '#52b035' : '#fff',
+                            border: isInCheckedItems(upgrade) ? 'none' : '1.5px solid #777',
                           }}
                         />
                       </label>

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from "react";
-import { useCart } from "react-use-cart";
+import { Item, useCart } from "react-use-cart";
 import ButtonA from "../_components/reusable/buttons/ButtonA";
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
@@ -9,6 +9,8 @@ import { RootState } from "@/app/[locale]/_lib/redux/store";
 import 'alertifyjs/build/css/alertify.rtl.css';
 import '../alertify.css';
 import CartItem from "./CartItem"; 
+import Link from "next/link";
+import { CartItemType } from "../_models/CartItems";
 const Cart: React.FC = () => {
   const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
   const { checkedItems } = useSelector((state: RootState) => state.additionalServices);
@@ -16,9 +18,8 @@ const Cart: React.FC = () => {
   const {
     isEmpty,
     items,
-  } = useCart();
+  } : {isEmpty: boolean, items: Item[]} = useCart();
   
-  const [additionalServiceTotal, setAdditionalServiceTotal] = useState(0); // حالة جديدة لإدارة السعر الإضافي
   const localActive = useLocale();
   const router = useRouter();
   const path = `/${localActive}/`;
@@ -32,7 +33,7 @@ const Cart: React.FC = () => {
 
   const cartTotalAmount = calculateCartTotal();
   const fees = cartTotalAmount * 0.05;
-  const totalWithFees = cartTotalAmount + fees + additionalServiceTotal; // إضافة السعر الإضافي
+  const totalWithFees = cartTotalAmount + fees; // إضافة السعر الإضافي
 
   return (
     <div className="flex flex-row">
@@ -57,7 +58,6 @@ const Cart: React.FC = () => {
                   key={item.id} 
                   item={item} 
                   checkedItems={checkedItems} 
-                  setAdditionalServiceTotal={setAdditionalServiceTotal} // تمرير الدالة لتحديث السعر
                 />
               ))}
               <div className="cart-footer">
@@ -90,7 +90,7 @@ const Cart: React.FC = () => {
                     </h4>
                   </div>
                   <div className="col-span-12 mt-4">
-                    <ButtonA text="إتمام الشراء" extraStyle="text-sm font-kufi p-auto w-[88%]" />
+                    <Link href={`payment`}><ButtonA text="إتمام الشراء" extraStyle="text-sm font-kufi p-auto w-[88%]" /></Link>
                   </div>
                 </div>
               </div>

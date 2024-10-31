@@ -8,6 +8,8 @@ import * as alertify from 'alertifyjs';
 import '../../alertify.css';
 import 'alertifyjs/build/css/alertify.rtl.css';
 import { useLocale } from 'next-intl';
+import { TypedUseSelectorHook, useDispatch, useSelector as useReduxSelector } from 'react-redux';
+import { RootState } from '../../_lib/redux/store';
 
 
 const GetService = ({ serviceData }: Readonly<{ serviceData: any }>) => {
@@ -15,10 +17,19 @@ const GetService = ({ serviceData }: Readonly<{ serviceData: any }>) => {
     const [quantity, setQuantity] = useState(1);
     const localActive = useLocale();
     const router = useRouter();
-
+    const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+    const { checkedItems } = useSelector((state: RootState) => state.additionalServices);
     const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setQuantity(Number(e.target.value));
     };
+
+    const calculatePrice = () : number =>  {
+        let totalPrice = serviceData.price
+        checkedItems.forEach(i=> {
+            totalPrice += i.price
+        })
+        return totalPrice
+    }
 
     const handleAddToCart = () => {
         const showAlert = () => {
@@ -38,11 +49,13 @@ const GetService = ({ serviceData }: Readonly<{ serviceData: any }>) => {
         showAlert()
         addItem({
             id: serviceData._id,
-            price: serviceData.price,
+            basePrice: serviceData.price,
+            price: calculatePrice(),
             name: serviceData.title.ar,
             image: serviceData.images[0],
             category: serviceData.category.name.ar,
-            quantity: quantity
+            quantity: quantity,
+            upgrades: checkedItems
         }, quantity);
     };
 
@@ -77,7 +90,7 @@ const GetService = ({ serviceData }: Readonly<{ serviceData: any }>) => {
                 </div>
                 <h3 className="mb-4 text-lg">
                     <span className='me-3'>المبلغ</span>
-                    <span>{serviceData.price * quantity}</span>
+                    <span>{calculatePrice() * quantity}</span>
                     <span>$</span>
                 </h3>
             </div>

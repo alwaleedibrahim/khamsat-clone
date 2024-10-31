@@ -4,45 +4,26 @@ import ButtonB from "../_components/reusable/buttons/ButtonB";
 import { Upgrade } from "./types"; 
 import * as alertify from 'alertifyjs';
 import AdditionalServices from "../_components/single-service/AdditionalServices";
-
-interface CartItemType {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  seller: string;
-  quantity: number;
-  selectedUpgrades?: Upgrade[];
-}
+import { AdditionalService } from "../_lib/redux/slice/upgrades";
+import { CartItemType } from "../_models/CartItems";
 
 const CartItem: React.FC<{ 
   item: CartItemType; 
-  checkedItems: Record<string, boolean>; 
+  checkedItems: AdditionalService[]; 
   setAdditionalServiceTotal: React.Dispatch<React.SetStateAction<number>>; // تمرير دالة تحديث السعر
 }> = ({ item, checkedItems, setAdditionalServiceTotal }) => {
   const { updateItemQuantity, removeItem } = useCart();
 
-  const calculateItemTotal = (item: CartItemType) => {
-    let upgradesTotal = 0;
-    const upgrades = item.selectedUpgrades || [];
-    
-    upgrades.forEach(upgrade => {
-      if (checkedItems[upgrade._id]) {
-        upgradesTotal += upgrade.price;
-      }
-    });
-    
-    return (item.price + upgradesTotal) * item.quantity;
-  };
-
-  const itemTotal = calculateItemTotal(item);
+  const calculatePrice = () : number =>  {
+    let totalPrice = item.price
+    checkedItems.forEach(i=> {
+        totalPrice += i.price
+    })
+    return totalPrice
+  }
 
   useEffect(() => {
-    const upgrades = item.selectedUpgrades || [];
-    const total = upgrades.reduce((sum, upgrade) => {
-      return sum + (checkedItems[upgrade._id] ? upgrade.price : 0);
-    }, 0);
-    
+    const total =  calculatePrice() 
     setAdditionalServiceTotal(total); // تحديث السعر الإضافي
   }, [checkedItems, item.selectedUpgrades, setAdditionalServiceTotal]);
 
@@ -71,7 +52,7 @@ const CartItem: React.FC<{
             </select>
           </div>
           <div className="w-2/12 ms-2">
-            <h4>${itemTotal.toFixed(2)}</h4>
+            <h4>${item.price.toFixed(2)}</h4>
           </div>
           <div>
             <ButtonB
