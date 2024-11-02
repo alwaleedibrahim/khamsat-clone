@@ -1,10 +1,14 @@
+"use client"
 import React from "react";
-// import ServicesCollection from "../_components/home/ServicesCollection";
-// import ServiceCard from "../_components/reusable/service-card/ServiceCard";
 import OrdersSidebar from "../_components/filter-sidebar/OrdersSidebar";
 
-export default function page() {
-  const purchases = undefined // !!! fill this data dynamically
+import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
+import { RootState } from "../_lib/redux/store";
+import OrderList from "../_components/orders/OrderList";
+
+export default function Page() {
+  const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+  const token : string = useSelector((state)=> state.auth.token) || ''
   return (
     <div className="pt-20 container">
       <div className="flex flex-wrap p-section">
@@ -12,13 +16,7 @@ export default function page() {
           <OrdersSidebar />
         </div>
         <div className="w-full lg:w-4/6">
-        {!purchases && <>
-        <div className="bg-white w-full p-5">
-          <p className='font-naskh text-lg text-center'>لا يوجد مشتريات</p>
-        </div>
-        </>}
-          {/* <ServicesCollection>
-          </ServicesCollection> */}
+         <OrderList token={token}/>
         </div>
       </div>
     </div>
