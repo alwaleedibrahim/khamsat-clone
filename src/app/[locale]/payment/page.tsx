@@ -3,6 +3,7 @@
 import { useState } from "react";
 // import ButtonA from "../_components/reusable/buttons/ButtonA";
 import { FaPaypal, FaRegCreditCard, FaInfoCircle } from "react-icons/fa";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -23,6 +24,15 @@ const Payment = () => {
   );
   const token : string = useSelector((state)=> state.auth.token) || ''
   const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
+  const paypalClientID:string = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || ``
+  const initialPaypalOptions = {
+    clientId: paypalClientID,
+    "buyer-country": "US",
+    currency: "USD",
+    components: "buttons",
+  };
+
+  const [message, setMessage] = useState("");
  const amount = cartTotal + cartTotal * 0.05
   return (
     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 min-h-screen pt-20">
@@ -107,11 +117,106 @@ const Payment = () => {
 
         {/* محتوى PayPal */}
         {selectedMethod === "paypal" && (
-          <div className="p-4 pb-8 pt-8 bg-white w-full flex justify-center min-h-[100px]">
-            <button className="font-kufi border border-primary text-primary hover:bg-primary hover:text-white transition-all bg-blue-600 text-white w-auto text-center text-sm py-1">
-                <FaPaypal className="inline-block mr-2" /> 
-                ادفع عن طريق PayPal
-            </button>
+          <div className="p-4 pb-8 pt-8 bg-white w-full flex flex-col items-center min-h-[100px]">
+              <Message content={message} />
+              <PayPalScriptProvider options={initialPaypalOptions}>
+                <PayPalButtons
+                  style={{
+                    shape: "rect",
+                    layout: "vertical",
+                    color: "gold",
+                    label: "paypal",
+                  }}
+                  createOrder={async () => {
+                    try {
+                      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/create-paypal-order`, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                          "Authorization": token
+                        },
+                        // use the "body" param to optionally pass additional order information
+                        // like product ids and quantities
+                        body: JSON.stringify({
+                          cart: [
+                            {
+                              id: "YOUR_PRODUCT_ID",
+                              quantity: "YOUR_PRODUCT_QUANTITY",
+                            },
+                          ],
+                        }),
+                      });
+
+                      const orderData = await response.json();
+                      if (orderData.id) {
+                        return orderData.id;
+                      } else {
+                        const errorDetail = orderData?.details?.[0];
+                        const errorMessage = errorDetail
+                          ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                          : JSON.stringify(orderData);
+
+                        throw new Error(errorMessage);
+                      }
+                    } catch (error) {
+                      console.error(error);
+                      setMessage(`Could not initiate PayPal Checkout...${error}`);
+                    }
+                  }}
+                  onApprove={async (data, actions) => {
+                    console.log(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/order/${data.orderID}/capture`)
+                    try {
+                      const response = await fetch(
+                        `${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/order/${data.orderID}/capture`,
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": token
+                          },
+                        }
+                      );
+
+                      const orderData = await response.json();
+                      // Three cases to handle:
+                      //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                      //   (2) Other non-recoverable errors -> Show a failure message
+                      //   (3) Successful transaction -> Show confirmation or thank you message
+
+                      const errorDetail = orderData?.details?.[0];
+
+                      if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+                        // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                        // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+                        return actions.restart();
+                      } else if (errorDetail) {
+                        // (2) Other non-recoverable errors -> Show a failure message
+                        throw new Error(
+                          `${errorDetail.description} (${orderData.debug_id})`
+                        );
+                      } else {
+                        // (3) Successful transaction -> Show confirmation or thank you message
+                        // Or go to another URL:  actions.redirect('thank_you.html');
+                        const transaction =
+                          orderData.purchase_units[0].payments.captures[0];
+                        setMessage(
+                          `Transaction ${transaction.status}. Transaction ID: ${transaction.id}.`
+                        );
+                        console.log(
+                          "Capture result",
+                          orderData,
+                          JSON.stringify(orderData, null, 2)
+                        );
+                      }
+                    } catch (error) {
+                      console.error(error);
+                      setMessage(
+                        `Sorry, your transaction could not be processed...${error}`
+                      );
+                    }
+                  }}
+                />
+              </PayPalScriptProvider>
           </div>
         )}
       </div>
@@ -141,5 +246,10 @@ const Payment = () => {
     </div>
   );
 };
+
+// Renders errors or successfull transactions on the screen.
+function Message({ content }: {content: string}) {
+  return <p>{content}</p>;
+}
 
 export default Payment;
