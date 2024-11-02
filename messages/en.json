@@ -84,7 +84,8 @@
             "common": "Common words"
         },
         "Recommend": {
-            "recommendService": "خدمات نرشحها لك"
+            "recommendService": "Services we recommend for you",
+            "showMore":"ٍShow More"
         }
     },
     "Footer": {

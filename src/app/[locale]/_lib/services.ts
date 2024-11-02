@@ -58,11 +58,11 @@ export interface FormDataProp {
     keywords: Keyword[];
 }
 
-export const createService = async (formData: FormData) => {
+export const createService = async (formData: FormData ,token:string) => {
     try {
         const response = await axios.post(`${base_url}`, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',  Authorization: token  ,
             },
         });        
         return response.data;

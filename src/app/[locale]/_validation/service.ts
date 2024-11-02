@@ -20,5 +20,5 @@ export const serviceFormSchema = z.object({
     price: z.number().min(1, { message: 'السعر يجب أن يكون على الأقل 1' }),
     deliveryTime: z.number().min(1, { message: 'وقت التسليم يجب أن يكون على الأقل 1 يوم' }),
     keywords: z.array(KeywordSchema).min(3, { message: 'يجب اضافة على الاقل 3 كلمات مفتاحية'}),
-    images: z.array(z.instanceof(File)).min(3, { message: 'يجب اضافة على الاقل 3 صور'}),
+    images: z.array(z.instanceof(File)).min(1, { message: 'يجب اضافه صورة علي الاقل'}),
 });

@@ -71,6 +71,7 @@ export default function Navbar() {
   );
   const token: string | null = useSelector((state) => state.auth.token);
   const user: IUserProfile = useSelector((state) => state.profile.user);
+  console.log(user)
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getProfile(token));

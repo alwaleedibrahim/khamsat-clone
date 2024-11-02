@@ -1,3 +1,4 @@
+
 import React from 'react'
 import ImageSwiper from '../img-swiper/ImageSwiper'
 import Stars from '../stars/Stars'
@@ -41,7 +42,7 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
 
     return (
         <div>
-            <Link href={`/${localActive}/${serviceData.category?.name.en}/${serviceData.subcategory?.title.en}/${serviceData._id}`} passHref>
+            <Link href={`/${localActive}/categories/${serviceData.category?.name.en}/${serviceData.subcategory?.title.en}/${serviceData._id}`} passHref>
                 <div className="relative w-full h-auto">
                     <ImageSwiper
                         images={serviceData.images}
@@ -74,13 +75,13 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
                     </a>
                 </div>
                 {serviceData.serviceCard.totalRated > 0 && (
-                    <div className='flex items-center gap-1 my-2'>
-                        <Stars rating={serviceData.serviceCard.totalRated} extraStyle='text-[24px]' />
+                    <div className={`flex items-center gap-1 my-2 `}>
+                        <Stars rating={serviceData.serviceCard.totalRated} extraStyle={`text-[24px] ${localActive=='ar'?"":"scale-x-[-1]"}`} />
                         <span className="text-[#777777] text-[14px]">({serviceData.serviceCard.totalRated})</span>
                     </div>
                 )}
                 <div className="text-style1">
-                    تبدأ من <span className="font-bold">{serviceData.price}$</span>
+                    {localActive=='ar'?'تبدأ من ':'Start From'}<span className="font-bold">{serviceData.price}$</span>
                 </div>
             </div>
         </div>
