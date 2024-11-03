@@ -4,6 +4,7 @@ import { useFormatter, useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { FaClock, FaDollarSign, FaInfoCircle, FaUserAlt } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 export default function OrderHeader({ item }: { item: IOrderListItem }) {
   const localActive = useLocale();
@@ -11,12 +12,14 @@ export default function OrderHeader({ item }: { item: IOrderListItem }) {
   const dateTime = new Date(item.createdAt);
   const now = new Date(Date.now());
   const relativeTime = format.relativeTime(dateTime, { now });
-  const profilePicture = `${item.items[0].service_id.userId.profilePicture}`
+  const pathname = usePathname()
+  const show = pathname.includes('purchases') ? `orders` : `sales`
+  const user = show == `orders`? item.items[0].service_id.userId : item.user_id
   return (
     <div className="bg-white py-7 px-12 mb-10 flex font-kufi items-center">
       <div className="pe-5">
         <Image
-          src={`${profilePicture.startsWith('http')? `${profilePicture}`:`${process.env.NEXT_PUBLIC_API_BASE_URL}/${profilePicture}`}`}
+          src={`${user.profilePicture.startsWith('http')? `${user.profilePicture}`:`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}`}
           height={60}
           width={60}
           alt=""
@@ -37,11 +40,11 @@ export default function OrderHeader({ item }: { item: IOrderListItem }) {
               <FaUserAlt />
             </span>
             {localActive == "ar"
-              ? item.items[0].service_id.userId.first_name.ar
-              : item.items[0].service_id.userId.first_name.en}{" "}
+              ? user.first_name.ar
+              : user.first_name.en}{" "}
             {localActive == "ar"
-              ? item.items[0].service_id.userId.last_name.ar
-              : item.items[0].service_id.userId.last_name.en}
+              ? user.last_name.ar
+              : user.last_name.en}
           </div>
           <div className={`mx-2 flex items-center ${localActive == 'en'? `flex-row-reverse`: ``}`}>
             <span className="me-2">

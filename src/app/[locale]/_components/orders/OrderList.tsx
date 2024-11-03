@@ -22,7 +22,7 @@ const OrderList = ({token}: {token:string})=> {
       setPurchases([])
       setIsLoading(false)
     })
-  },[token, status])
+  },[token, status, endpoint])
 
   useEffect(()=>{
     console.log(purchases);
