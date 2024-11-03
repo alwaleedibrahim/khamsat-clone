@@ -101,7 +101,6 @@ const ServiceForm: React.FC = () => {
     const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
     const user_id: string = useSelector((state) => state.profile.user._id);
     const token: string | null = useSelector((state) => state.auth.token);
-    console.log(user_id)
     const router = useRouter();
     const localActive = useLocale();
 
@@ -234,7 +233,6 @@ const ServiceForm: React.FC = () => {
     // Handle form submission
     const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        console.log(e)
         e.preventDefault();
         const dataToValidate = {
             userId: user_id,
@@ -248,24 +246,16 @@ const ServiceForm: React.FC = () => {
             keywords: formData.keywords,
             images: files.filter(file => file instanceof File) as File[],
         };
-        console.log(dataToValidate)
-        dataToValidate.keywords.forEach((keyword, index) => {
-            console.log(`Keyword ${index + 1}:`, keyword.title.ar, keyword.title.en);
-        });
-
         const validation = serviceFormSchema.safeParse(dataToValidate);
         if (!validation.success) {
-            console.log("not success")
             const fieldErrorsMap: { [key: string]: string } = {};
             validation.error.errors.forEach(err => {
                 const path = err.path.join('.');
                 fieldErrorsMap[path] = err.message;
-                console.log(err.message, "error msg")
             });
             setFieldErrors(fieldErrorsMap);
             return;
         }
-        console.log(2)
         const form = new FormData();
         const validatedData = validation.data;
 
@@ -286,7 +276,6 @@ const ServiceForm: React.FC = () => {
                 form.append(`keywords[${index}][title][en]`, keyword.title.en);
             });
         }
-        console.log(3)
         if (validatedData.images) {
             validatedData.images.forEach((file, index) => {
                 form.append('images', file);

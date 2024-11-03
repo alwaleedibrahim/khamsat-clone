@@ -46,6 +46,8 @@ import Categorydropdown from "./categorydropdown";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useCart } from "react-use-cart";
+import { useNotifications } from "../../NotificationProvider";
+import NotificationList from "../../NotificationList";
 
 export default function Navbar() {
   const router = useRouter();
@@ -54,6 +56,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { totalUniqueItems } = useCart();
+  const { notifications } = useNotifications();
 
   const handleLang = (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
@@ -516,7 +519,7 @@ export default function Navbar() {
                   className="peer hidden"
                 />
                 <div
-                  className="absolute invisible opacity-0 top-16 left-0 peer-checked:visible peer-checked:opacity-100 transition-all duration-300"
+                  className="absolute invisible opacity-0 top-16 end-0 peer-checked:visible peer-checked:opacity-100 transition-all duration-300"
                   id="test"
                 >
                   <DropDownBox>
@@ -530,14 +533,31 @@ export default function Navbar() {
                 <button className="group p-0 m-0 h-full">
                   <NavItem>
                     <div className=" relative">
+                    {notifications.length > 0 && (
+                      <span className="absolute end-[9px] top-[-7px] bg-[#e75737] text-white rounded-full h-[20px] w-[20px] text-xs flex items-center justify-center">
+                        {notifications.length}
+                      </span>
+                    )}
                       <FaBell className="text-lg" />
                       <div
-                        className="absolute invisible opacity-0 top-10 left-0 group-focus-within:visible group-focus-within:opacity-100 transition-all duration-300"
+                        className="absolute invisible opacity-0 top-10 end-0 group-focus-within:visible group-focus-within:opacity-100 transition-all duration-300"
                         id="test"
                       >
                         <DropDownBox>
-                          <DropDownBoxContent>
-                            <span>{t("sidebar.menu.noNew")}</span>
+                          <DropDownBoxContent extraStyle={notifications.length === 0?"h-[200px]":""} >
+                          {notifications.length === 0 ? (
+                              <span>{t("sidebar.menu.noNew")}</span>
+                            ) : (
+                              <div 
+                                style={{
+                                  maxHeight: "300px",
+                                  overflowY: "auto",
+                                  paddingRight: "8px"
+                                }}
+                              >
+                                <NotificationList notifications={notifications} />
+                              </div>
+                            )}
                           </DropDownBoxContent>
                         </DropDownBox>
                       </div>
@@ -567,7 +587,7 @@ export default function Navbar() {
                         className="w-[40] h-[40] rounded-full min-w-fit"
                       />
                       <div
-                        className="absolute invisible opacity-0 top-14 left-0 group-focus-within:visible group-focus-within:opacity-100 transition-all duration-300"
+                        className="absolute invisible opacity-0 top-14 end-0 group-focus-within:visible group-focus-within:opacity-100 transition-all duration-300"
                         id="test"
                       >
                         <UserDropDownBox userName={user.username} />
@@ -679,7 +699,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaUser className="me-3" />
-                  user_name
+                  {user.username}
                 </li>
                 <li
                   className={`${
@@ -694,7 +714,8 @@ export default function Navbar() {
                     isAuthenticated ? `flex` : `hidden`
                   } items-center py-3 border-b-[1px]`}
                 >
-                  <FaBell className="me-3" />
+                  <FaBell  />
+                  <span className="relative end-[19px] mb-[-18px] top-[-16px] bg-[#e75737] text-white rounded-full h-[12px] w-[12px] text-xs flex items-center justify-center"></span>
                   {t('sidebar.menu.notfiction')}
                 </li>
                 <li
@@ -867,7 +888,7 @@ export default function Navbar() {
               htmlFor="toggle-menu-sm"
               className="p-0 m-0 h-full flex flex-col items-center justify-around"
             >
-              <FaBars />
+              <FaBars />            
               <span>{t('sidebar.menu.title')}</span>
             </label>
             <input

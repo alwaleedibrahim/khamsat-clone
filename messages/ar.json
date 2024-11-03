@@ -16,8 +16,8 @@
                 "search": "بحث",
                 "cart": "السلة",
                 "noNew": "لا جديد حتى هذه اللحظة!",
-                "home":"الرئيسية",
-                "myAcount":"حسابي",
+                "home": "الرئيسية",
+                "myAcount": "حسابي",
                 "login": "دخول",
                 "register": "حساب جديد",
                 "searchFor": "ابحث عن ...",
@@ -77,15 +77,28 @@
             }
         }
     },
-    "HomePage":{
-        "HeroSection":{
-            "title":"أكبر سوق عربي للخدمات المصغرة",
-            "pricees":"أنجز أعمالك بسهولة وأمان بأسعار تبدأ من 5$ فقط",
-            "common":"كلمات شائعة"
+    "UserDropDown": {
+        "myCollections": "مجموعاتي",
+        "balance": "الرصيد",
+        "settings": "الإعدادات",
+        "editAccount": "تعديل الحساب",
+        "help": "المساعدة",
+        "logout": "خروج"
+    },
+    "Notifications": {
+        "serviceAccepted": "تم قبول الخدمة",
+        "serviceRejected": "تم رفض الخدمة",
+        "servicePending": "الخدمة قيد الانتظار"
+    },
+    "HomePage": {
+        "HeroSection": {
+            "title": "أكبر سوق عربي للخدمات المصغرة",
+            "pricees": "أنجز أعمالك بسهولة وأمان بأسعار تبدأ من 5$ فقط",
+            "common": "كلمات شائعة"
         },
-        "Recommend":{
-            "recommendService":"خدمات نرشحها لك",
-            "showMore":"عرض المزيد"
+        "Recommend": {
+            "recommendService": "خدمات نرشحها لك",
+            "showMore": "عرض المزيد"
         }
     },
     "Footer": {
@@ -133,9 +146,9 @@
         "password": "كلمة المرور",
         "password_placeholder": "أدخل كلمة المرور الخاصة بك",
         "password_required": "كلمة المرور مطلوبة",
-        "paasswordNotValid":"كلمة المرور يجب أن تحتوي على حروف ورموز وارقام",
+        "paasswordNotValid": "كلمة المرور يجب أن تحتوي على حروف ورموز وارقام",
         "password_min_length": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
-        "invalidEmailOrPassword":"البريد الاكتروني او الرقم السري غير صحيح",
+        "invalidEmailOrPassword": "البريد الاكتروني او الرقم السري غير صحيح",
         "login_success": "تم تسجيل الدخول بنجاح",
         "google_login": "باستخدام جوجل",
         "microsoft_login": "باستخدام مايكروسوفت",
@@ -175,10 +188,10 @@
             "nameRequired": "الاسم مطلوب",
             "familyNameRequired": "اسم العائلة مطلوب",
             "emailRequired": "البريد الالكتروني مطلوب",
-            "email_invalid":"البريد الإلكتروني غير صالح",
+            "email_invalid": "البريد الإلكتروني غير صالح",
             "passwordRequired": "كلمة المرور مطلوبة",
             "notValid": "كلمة المرور يجب أن تحتوي على حروف ورموز وارقام",
-            "password_min_length":"كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+            "password_min_length": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
             "termsRequired": "يجب الموافقة على الشروط والخصوصية"
         },
         "success": {
@@ -209,11 +222,11 @@
     "OrdersSidebar": {
         "title": "حالة الطلب",
         "status": {
-            "Awaiting Instructions":"بانتظار التعليمات",
-            "In Progress":"جاري تنفيذها",
-            "Awaiting Confirmation":"بانتظار الاستلام",
-            "Delivered":"تم تسليمها",
-            "Canceled":"ملغية"
+            "Awaiting Instructions": "بانتظار التعليمات",
+            "In Progress": "جاري تنفيذها",
+            "Awaiting Confirmation": "بانتظار الاستلام",
+            "Delivered": "تم تسليمها",
+            "Canceled": "ملغية"
         }
     }
 }
