@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useCart } from "react-use-cart"; // استيراد useCart من react-use-cart
 import ButtonA from "../reusable/buttons/ButtonA";
 import { useRouter } from "next/navigation";
-import alertify from "alertifyjs";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const alertify = require("alertifyjs");
 // import 'alertifyjs/build/css/alertify.css';
 import "../../alertify.css";
 import "alertifyjs/build/css/alertify.rtl.css";
