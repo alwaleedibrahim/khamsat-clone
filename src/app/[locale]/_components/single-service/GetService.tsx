@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useCart } from "react-use-cart"; // استيراد useCart من react-use-cart
 import ButtonA from "../reusable/buttons/ButtonA";
 import { useRouter } from "next/navigation";
-import alertify from "alertifyjs";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const alertify = require("alertifyjs");
 // import 'alertifyjs/build/css/alertify.css';
 import "../../alertify.css";
 import "alertifyjs/build/css/alertify.rtl.css";
@@ -14,8 +15,14 @@ import {
   useSelector as useReduxSelector,
 } from "react-redux";
 import { RootState } from "../../_lib/redux/store";
-
-const GetService = ({ serviceData }: Readonly<{ serviceData: any }>) => {
+interface IServiceData {
+  _id: string
+  price: number
+  title: {en: string, ar:string}
+  category: {name: {ar: string, en:string}}
+  images: string[]
+}
+const GetService = ({ serviceData }: Readonly<{ serviceData: IServiceData }>) => {
   const { addItem, updateItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
@@ -43,7 +50,7 @@ const GetService = ({ serviceData }: Readonly<{ serviceData: any }>) => {
   }, [checkedItems]);
 
   useEffect(() => {
-    updateItem(serviceData.id, {
+    updateItem(serviceData._id, {
       upgrades: selected,
       price: price,
     });
