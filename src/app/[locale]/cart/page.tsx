@@ -28,7 +28,7 @@ const Cart: React.FC = () => {
 
   const calculateCartTotal = () => {
     return items.reduce((total, item) => {
-      const itemTotal = item.price * item.quantity; // حساب سعر كل عنصر
+      const itemTotal = item.price * Number(item.quantity); // حساب سعر كل عنصر
       return total + itemTotal;
     }, 0);
   };
