@@ -27,7 +27,10 @@ export default interface IOrderListItem {
       _id: string;
     }
   ];
-  status: string;
+  status: {
+    ar: string,
+    en: string,
+  };
   order_number: number;
   createdAt: string;
   total: number;

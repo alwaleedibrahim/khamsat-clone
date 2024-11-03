@@ -13,7 +13,7 @@ export default function OrderHeader({ item }: { item: IOrderListItem }) {
   const relativeTime = format.relativeTime(dateTime, { now });
   const profilePicture = `${item.items[0].service_id.userId.profilePicture}`
   return (
-    <div className="bg-white w-fit py-7 px-12 my-5 flex font-kufi items-center">
+    <div className="bg-white py-7 px-12 mb-10 flex font-kufi items-center">
       <div className="pe-5">
         <Image
           src={`${profilePicture.startsWith('http')? `${profilePicture}`:`${process.env.NEXT_PUBLIC_API_BASE_URL}/${profilePicture}`}`}
@@ -43,7 +43,7 @@ export default function OrderHeader({ item }: { item: IOrderListItem }) {
               ? item.items[0].service_id.userId.last_name.ar
               : item.items[0].service_id.userId.last_name.en}
           </div>
-          <div className="mx-2 flex items-center">
+          <div className={`mx-2 flex items-center ${localActive == 'en'? `flex-row-reverse`: ``}`}>
             <span className="me-2">
               <FaDollarSign />
             </span>
@@ -53,7 +53,7 @@ export default function OrderHeader({ item }: { item: IOrderListItem }) {
             <span className="me-2">
               <FaInfoCircle />
             </span>
-            {item.status}
+            {localActive == "ar"? item.status.ar : item.status.en}
           </div>
           <div className="mx-2 flex items-center">
             <span className="me-2">

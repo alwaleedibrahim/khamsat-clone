@@ -15,7 +15,7 @@ export default function Page() {
         <div className="hidden lg:flex lg:w-2/6">
           <OrdersSidebar />
         </div>
-        <div className="w-full lg:w-4/6">
+        <div className="w-full lg:w-4/6 pe-20">
          <OrderList token={token}/>
         </div>
       </div>

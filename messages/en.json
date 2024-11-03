@@ -204,5 +204,15 @@
         "title": "Page Not Found",
         "description": "Sorry, we couldn't find the page you requested. How about trying to search the site?",
         "button": "Return to Home"
+    },
+    "OrdersSidebar": {
+        "title": "Order Status",
+        "status": {
+            "Awaiting Instructions":"Awaiting Instructions",
+            "In Progress":"In Progress",
+            "Awaiting Confirmation":"Awaiting Confirmation",
+            "Delivered":"Delivered",
+            "Canceled":"Canceled"
+        }
     }
 }

@@ -3,15 +3,23 @@ import IOrderListItem from '../../_models/orderlist'
 import orderListLoader from '../../_lib/axios/orderListLoader'
 import OrderHeader from './OrderHeader'
 import Spinner from '../reusable/spinner'
+import { useSearchParams } from 'next/navigation'
+
 const OrderList = ({token}: {token:string})=> {
   const [purchases, setPurchases] = useState<IOrderListItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const searchParams = useSearchParams()
+ 
+  const status = searchParams.get('status')
   useEffect(()=> {
-    orderListLoader(token).then((value)=> {
+    orderListLoader(token, status).then((value)=> {
       setPurchases(value)
       setIsLoading(false)
+    }).catch(()=>{
+      setPurchases([])
+      setIsLoading(false)
     })
-  },[token])
+  },[token, status])
 
   useEffect(()=>{
     console.log(purchases);
