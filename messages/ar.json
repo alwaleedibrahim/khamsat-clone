@@ -215,5 +215,13 @@
             "Delivered":"تم تسليمها",
             "Canceled":"ملغية"
         }
+    },
+    "OrdersPage": {
+        "orders": {
+            "notfound": "لا يوجد طلبات"
+        },
+        "purchases": {
+            "notfound": "لا يوجد مشتريات"
+        }
     }
 }
