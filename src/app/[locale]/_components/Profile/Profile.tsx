@@ -3,8 +3,7 @@ import UserObjective from './reusable/UserObjective'
 import UserServices from './reusable/UserServices'
 import UserStatistic from './reusable/UserStatistic'
 import UserVerifications from './reusable/UserVerifications'
-import {useSelector as useReduxSelector,
-  } from "react-redux";
+
 const Profile = () => {
     const testData = {
         ratings: {

@@ -1,8 +1,7 @@
 "use client";
 import { useLocale } from "next-intl";
 import React, { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faSquare } from "@fortawesome/free-solid-svg-icons";
+
 import {
   TypedUseSelectorHook,
   useDispatch,

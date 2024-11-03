@@ -15,7 +15,7 @@ import {
 } from "react-redux";
 import { RootState } from "../../_lib/redux/store";
 
-const GetService = ({ serviceData }: Readonly<{ serviceData: any }>) => {
+const GetService = ({ serviceData }: Readonly<{ serviceData }>) => {
   const { addItem, updateItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
