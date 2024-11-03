@@ -10,6 +10,20 @@ import { createService, FormDataProp, Keyword } from '../../_lib/services';
 import { serviceFormSchema } from '../../_validation/service';
 import UpgradeService from './UpgradesService';
 import { Upgrade } from '../../_lib/upgardes';
+import { useRouter } from "next/navigation";
+import alertify from "alertifyjs";
+// import 'alertifyjs/build/css/alertify.css';
+import "../../alertify.css";
+import "alertifyjs/build/css/alertify.rtl.css";
+import { RootState } from '../../_lib/redux/store';
+import {
+    TypedUseSelectorHook,
+
+    useSelector as useReduxSelector,
+} from "react-redux";
+import IUserProfile from '../../_models/userProfile';
+import { useLocale } from 'next-intl';
+
 
 // Import your AuthContext or any other context as needed
 // import { AuthContext } from '../../context/AuthContext';
@@ -83,6 +97,12 @@ const ServiceForm: React.FC = () => {
     const [loadingSubCategories, setLoadingSubCategories] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const [developmentOptions, setDevelopmentOptions] = useState<DevelopmentOptions>(initialDevelopmentOptions);
+    const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+    const user_id: string = useSelector((state) => state.profile.user._id);
+    const token: string | null = useSelector((state) => state.auth.token);
+    console.log(user_id)
+    const router = useRouter();
+    const localActive = useLocale();
 
     // Replace with your actual auth context or method to get user ID
     // const { user } = useContext(AuthContext);
@@ -213,9 +233,10 @@ const ServiceForm: React.FC = () => {
     // Handle form submission
     const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        console.log(e)
         e.preventDefault();
         const dataToValidate = {
-            userId: '66febc9bd66445b2cf6466a1',
+            userId: user_id,
             title: formData.title,
             categoryId: formData.categoryId,
             subcategoryId: formData.subcategoryId,
@@ -226,18 +247,24 @@ const ServiceForm: React.FC = () => {
             keywords: formData.keywords,
             images: files.filter(file => file instanceof File) as File[],
         };
+        console.log(dataToValidate)
+        dataToValidate.keywords.forEach((keyword, index) => {
+            console.log(`Keyword ${index + 1}:`, keyword.title.ar, keyword.title.en);
+        });
 
         const validation = serviceFormSchema.safeParse(dataToValidate);
         if (!validation.success) {
+            console.log("not success")
             const fieldErrorsMap: { [key: string]: string } = {};
             validation.error.errors.forEach(err => {
                 const path = err.path.join('.');
                 fieldErrorsMap[path] = err.message;
+                console.log(err.message, "error msg")
             });
             setFieldErrors(fieldErrorsMap);
             return;
         }
-
+        console.log(2)
         const form = new FormData();
         const validatedData = validation.data;
 
@@ -258,7 +285,7 @@ const ServiceForm: React.FC = () => {
                 form.append(`keywords[${index}][title][en]`, keyword.title.en);
             });
         }
-
+        console.log(3)
         if (validatedData.images) {
             validatedData.images.forEach((file, index) => {
                 form.append('images', file);
@@ -266,20 +293,37 @@ const ServiceForm: React.FC = () => {
         }
 
         try {
-            const response = await createService(form);
-            alert(response.message);
+            const response = await createService(form, token || "");
+            alertify
+                .confirm('إشعار', `تم إضافة الخدمة بنجاح وهي الان تحت المراجعه
+                    سيتم اشعاك عند الموافقه عليها!`,
+                    function () {
+                        const categoryName = categories.find(cat => cat._id === formData.categoryId)?.name.en;
+                        const subcategoryTitle = subCategories.find(sub => sub._id === formData.subcategoryId)?.title.en;
+
+                        // Replace with a dynamically constructed path
+                        if (categoryName && subcategoryTitle) {
+                            const dynamicPath = `/${localActive}/categories/${categoryName}/${subcategoryTitle}`;
+                            router.push(dynamicPath);
+                        }
+                    },
+                    function () {
+                        router.refresh();
+                    }).set('labels', { ok: 'عرض الخدمة', cancel: 'أضف خدمة اخرى' })
+                .set('defaultFocus', 'ok')
+                .set('closable', false);
             // Reset form
             setFormData(initialFormData);
             setIsSubmit(true)
             setSingleFile(null);
             setFiles([]);
             setError("");
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.error('Error creating service:', error);
             setIsSubmit(false)
             setError("Failed to create service. Please try again.");
-            alert('Failed to create service');
+            alertify.error('Failed to create service');
         }
     };
 
@@ -572,7 +616,7 @@ const ServiceForm: React.FC = () => {
                         <div>
                             <h3 className="block mb-3 text-style1">أضف تطويراً لهذه الخدمة</h3>
                             {upgrades.map((upgrade, index) => (
-                                <UpgradeService key={index} index={index} setUpgrades={setUpgrades}/>
+                                <UpgradeService key={index} index={index} setUpgrades={setUpgrades} />
                             ))}
                         </div>
                     ) : null}

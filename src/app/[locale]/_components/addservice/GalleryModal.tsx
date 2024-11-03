@@ -151,7 +151,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFil
                                 <div className="text-center">
                                     <label
                                         htmlFor="file-upload"
-                                        className="btn btn-primary cursor-pointer flex items-center justify-center gap-2"
+                                        className="btn btn-primary cursor-pointer flex items-center justify-center gap-2 bg-primary p-2 text-white"
                                     >
                                         <i className="fa fa-folder"></i>
                                         اختيار الصور
@@ -238,14 +238,14 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ setShowGalleryModal, setFil
                 <div className="modal-footer p-4 border-t">
                     <button
                         type="button"
-                        className="btn btn-secondary mr-2"
+                        className="btn btn-secondary mr-2 bg-red-500 p-2 text-white mx-3"
                         onClick={() => setShowGalleryModal(false)}
                     >
                         إلغاء
                     </button>
                     <button
                         type="button"
-                        className="btn btn-primary"
+                        className="btn btn-primary bg-primary p-2 text-white"
                         onClick={handleSave}
                     >
                         حفظ
