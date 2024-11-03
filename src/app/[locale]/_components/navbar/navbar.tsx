@@ -493,6 +493,7 @@ export default function Navbar() {
                 </NavItem>
               </li>
               <li>
+                  <Link href={`/${localActive}/cart`}>
                 <NavItem>
                   <FaShoppingCart className="text-lg" />
                   {totalUniqueItems > 0 && (
@@ -501,6 +502,7 @@ export default function Navbar() {
                     </span>
                   )}
                 </NavItem>
+                  </Link>
               </li>
               <li className={`${isAuthenticated ? `flex` : `hidden`}`}>
                 <label htmlFor="toggle-messages" className="p-0 m-0 h-full">

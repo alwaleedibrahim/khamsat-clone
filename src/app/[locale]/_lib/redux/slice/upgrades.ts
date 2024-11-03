@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const base_url = "http://localhost:4500/upgrades";
+const base_url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/upgrades`;
 
 export interface AdditionalService {
   _id: string;

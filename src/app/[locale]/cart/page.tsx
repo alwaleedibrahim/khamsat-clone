@@ -20,7 +20,8 @@ const Cart: React.FC = () => {
   );
 
   const { isEmpty, items } = useCart();
-
+  console.log(items);
+  
   const [additionalServiceTotal, setAdditionalServiceTotal] = useState(0); // حالة جديدة لإدارة السعر الإضافي
   const localActive = useLocale();
   const router = useRouter();

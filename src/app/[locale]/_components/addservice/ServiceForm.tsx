@@ -113,7 +113,7 @@ const ServiceForm: React.FC = () => {
         const fetchCategories = async () => {
             setLoadingCategories(true);
             try {
-                const response = await axios.get(`http://localhost:4500/categories`);
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`);
                 setCategories(response.data.categories);
                 setError("");
             } catch (err) {
@@ -132,7 +132,7 @@ const ServiceForm: React.FC = () => {
             if (formData.categoryId) {
                 setLoadingSubCategories(true);
                 try {
-                    const response = await axios.get(`http://localhost:4500/categories/category/${formData.categoryId}`);
+                    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/category/${formData.categoryId}`);
                     setSubCategories(response.data.subcategories);
                     setError("");
                 } catch (err) {
