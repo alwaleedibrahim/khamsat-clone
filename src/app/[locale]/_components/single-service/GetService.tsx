@@ -15,8 +15,14 @@ import {
   useSelector as useReduxSelector,
 } from "react-redux";
 import { RootState } from "../../_lib/redux/store";
-
-const GetService = ({ serviceData }: Readonly<{ serviceData }>) => {
+interface IServiceData {
+  _id: string
+  price: number
+  title: {en: string, ar:string}
+  category: {name: {ar: string, en:string}}
+  images: string[]
+}
+const GetService = ({ serviceData }: Readonly<{ serviceData: IServiceData }>) => {
   const { addItem, updateItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
@@ -44,7 +50,7 @@ const GetService = ({ serviceData }: Readonly<{ serviceData }>) => {
   }, [checkedItems]);
 
   useEffect(() => {
-    updateItem(serviceData.id, {
+    updateItem(serviceData._id, {
       upgrades: selected,
       price: price,
     });
