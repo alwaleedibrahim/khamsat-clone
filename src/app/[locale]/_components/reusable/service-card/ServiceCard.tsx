@@ -65,7 +65,8 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
             </Link>
             <div className="text-start">
                 <h4 className="font-kufi text-md my-2">
-                    <a href="/training/learn-engineering">{localActive === "ar" ? serviceData.title.ar : serviceData.title.en}</a>
+                <Link href={`/${localActive}/categories/${serviceData.category?.name.en}/${serviceData.subcategory?.title.en}/${serviceData._id}`} passHref>
+                {localActive === "ar" ? serviceData.title.ar : serviceData.title.en}</Link>
                 </h4>
                 <div className="text-sm text-[#5c5e61]">
                     <Link href={`/${localActive}/categories/${serviceData.category?.name.en}/`} className="text-[#5c5e61]">

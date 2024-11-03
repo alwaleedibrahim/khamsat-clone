@@ -1,39 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FilterCard from "./FilterCard";
 import CardHeader from "./CardHeader";
 import ListItem from "./ListItem";
 import List from "./List";
 import CardBody from "./CardBody";
-import CheckboxInput from "./form-control/CheckBoxInput";
-import Badge from "./Badge";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function OrdersSidebar() {
+  const t = useTranslations();
+  const router = useRouter();
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const statuses = [
+    "Awaiting Instructions",
+    "In Progress",
+    "Awaiting Confirmation",
+    "Delivered",
+    "Canceled",
+  ];
+  const handleCheckboxChange = (status: string) => {
+    setSelectedStatuses((prevStatuses) => {
+      if (prevStatuses.includes(status)) {
+        return prevStatuses.filter((s) => s != status);
+      } else {
+        return [...prevStatuses, status];
+      }
+    });
+  };
+  useEffect(() => {    
+    const queryString =
+      selectedStatuses.length > 0
+        ? `?status=${selectedStatuses.join(",")}`
+        : "?status=";
+    router.push(`${queryString}`);
+  }, [selectedStatuses,router]);
+  
   return (
     <div className="mx-20 w-full">
       <FilterCard>
-        <CardHeader>حالة الطلب</CardHeader>
+        <CardHeader>{t("OrdersSidebar.title")}</CardHeader>
         <CardBody>
           <List>
-            <ListItem>
-              <CheckboxInput name="status">بانتظار التعليمات</CheckboxInput>
-              <Badge>5</Badge>
-            </ListItem>
-            <ListItem>
-              <CheckboxInput name="status">جاري تنفيذها</CheckboxInput>
-              <Badge>31</Badge>
-            </ListItem>
-            <ListItem>
-              <CheckboxInput name="status">بانتظار الاستلام</CheckboxInput>
-              <Badge>15</Badge>
-            </ListItem>
-            <ListItem>
-              <CheckboxInput name="status">تم تسليمها</CheckboxInput>
-              <Badge>4</Badge>
-            </ListItem>
-            <ListItem>
-              <CheckboxInput name="status">ملغية</CheckboxInput>
-              <Badge>0</Badge>
-            </ListItem>
+            {statuses.map((s, index) => (
+              <ListItem key={index}>
+                <label htmlFor={`status-${index}`} className="flex">
+                  <input
+                    type="checkbox"
+                    name="status"
+                    id={`status-${index}`}
+                    className="checked:bg-primary me-3"
+                    checked={selectedStatuses.includes(s)}
+                    onChange={() =>
+                      handleCheckboxChange(s)
+                    }
+                  />
+                  {t(`OrdersSidebar.status.${s}`)}
+                </label>
+              </ListItem>
+            ))}
           </List>
         </CardBody>
       </FilterCard>
