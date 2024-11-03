@@ -68,11 +68,11 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
                     <a href="/training/learn-engineering">{localActive === "ar" ? serviceData.title.ar : serviceData.title.en}</a>
                 </h4>
                 <div className="text-sm text-[#5c5e61]">
-                    <a href="/training" className="text-[#5c5e61]">
+                    <Link href={`/${localActive}/categories/${serviceData.category?.name.en}/`} className="text-[#5c5e61]">
                         {localActive == "ar" ? serviceData.category?.name.ar : serviceData.category?.name.en}
-                    </a> / <a href="/training/learn-engineering" className="text-[#5c5e61]">
+                    </Link> / <Link href={`/${localActive}/categories/${serviceData.category?.name.en}/${serviceData.subcategory?.title.en}`} className="text-[#5c5e61]">
                         {localActive == "ar" ? serviceData.subcategory?.title.ar : serviceData.subcategory?.title.en}
-                    </a>
+                    </Link>
                 </div>
                 {serviceData.serviceCard.totalRated > 0 && (
                     <div className={`flex items-center gap-1 my-2 `}>

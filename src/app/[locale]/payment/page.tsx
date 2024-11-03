@@ -11,14 +11,14 @@ import convertToSubcurrency from "@/app/[locale]/_lib/payment/convert";
 import CheckoutPage from "@/app/[locale]/_components/payment/CheckoutForm";
 import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
 import { RootState } from "../_lib/redux/store";
-import { useLocale } from "next-intl";
 import { useCart } from "react-use-cart";
+import IOrder from "../_models/order";
+import { parseCart } from "../_lib/cart/parseCart";
 
 
 const Payment = () => {
-  const {cartTotal} = useCart()
+  const {cartTotal, items} = useCart()
   const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
-  const localActive = useLocale();
   const [selectedMethod, setSelectedMethod] = useState<"creditCard" | "paypal">(
     "creditCard"
   );
@@ -34,6 +34,10 @@ const Payment = () => {
 
   const [message, setMessage] = useState("");
  const amount = cartTotal + cartTotal * 0.05
+ const order : IOrder = {
+    amount: amount,
+    items: parseCart(items)
+ }
   return (
     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 min-h-screen pt-20">
       {/* قسم الدفع */}
@@ -81,7 +85,7 @@ const Payment = () => {
         currency: "usd",
       }}
     >
-      <CheckoutPage amount={amount} token={token} />
+      <CheckoutPage amount={amount} token={token} items={items} />
     </Elements>
           {/* <div className="p-4 w-full bg-white">
             <div className="mb-4 flex flex-col md:flex-row md:space-x-4">
@@ -138,12 +142,7 @@ const Payment = () => {
                         // use the "body" param to optionally pass additional order information
                         // like product ids and quantities
                         body: JSON.stringify({
-                          cart: [
-                            {
-                              id: "YOUR_PRODUCT_ID",
-                              quantity: "YOUR_PRODUCT_QUANTITY",
-                            },
-                          ],
+                          order: order
                         }),
                       });
 
@@ -174,6 +173,9 @@ const Payment = () => {
                             "Content-Type": "application/json",
                             "Authorization": token
                           },
+                          body: JSON.stringify({
+                            order: order
+                          })
                         }
                       );
 
