@@ -4,7 +4,7 @@ interface IButtonBProps{
     href?: string; 
     text: string; 
     icon? : React.ReactNode
-    onClick?: () => void; 
+    onClick?: (event: React.MouseEvent) => void; 
     extraStyle?: string; 
 }
 const ButtonB: React.FC<IButtonBProps> = ({

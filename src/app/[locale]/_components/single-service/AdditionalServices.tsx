@@ -1,8 +1,7 @@
 "use client";
 import { useLocale } from "next-intl";
 import React, { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckSquare, faSquare } from "@fortawesome/free-solid-svg-icons";
+
 import {
   TypedUseSelectorHook,
   useDispatch,
@@ -79,10 +78,10 @@ const AdditionalServices: React.FC<AdditionalServicesProps> = ({
     const selectedService = getItem(serviceId);
     if (!selectedService) return;
     if (selectedService.upgrades) {
-      const isInUpgrades = selectedService.upgrades.find((u) => u._id == id);
+      const isInUpgrades = selectedService.upgrades.find((u: {_id:string}) => u._id == id);
       if (isInUpgrades) {
         updateItem(serviceId, {
-          upgrades: [...selectedService.upgrades.filter((u) => u._id != id)],
+          upgrades: [...selectedService.upgrades.filter((u : {_id:string}) => u._id != id)],
         });
       }
     }

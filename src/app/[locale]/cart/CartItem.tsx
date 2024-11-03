@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useCart } from "react-use-cart";
 import ButtonB from "../_components/reusable/buttons/ButtonB";
 import { Upgrade } from "./types"; 
-import * as alertify from 'alertifyjs';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const alertify = require("alertifyjs");
 import AdditionalServices from "../_components/single-service/AdditionalServices";
 
 interface CartItemType {

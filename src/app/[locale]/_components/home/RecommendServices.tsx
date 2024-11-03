@@ -20,7 +20,7 @@ const RecommendServices = () => {
 
                 // Generate an array of unique random indices
                 const randomIndices: number[] = [];
-                while (randomIndices.length < 4) {
+                while (randomIndices.length < Math.min(4, services.length )) {
                     const randomIndex = Math.floor(Math.random() * services.length);
                     if (!randomIndices.includes(randomIndex)) {
                         randomIndices.push(randomIndex);

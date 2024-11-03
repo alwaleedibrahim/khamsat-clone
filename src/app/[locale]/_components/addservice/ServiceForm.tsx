@@ -11,7 +11,8 @@ import { serviceFormSchema } from '../../_validation/service';
 import UpgradeService from './UpgradesService';
 import { Upgrade } from '../../_lib/upgardes';
 import { useRouter } from "next/navigation";
-import alertify from "alertifyjs";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const alertify = require("alertifyjs");
 // import 'alertifyjs/build/css/alertify.css';
 import "../../alertify.css";
 import "alertifyjs/build/css/alertify.rtl.css";

@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "../_lib/redux/slice/authSlice";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useLocale, useTranslations } from "next-intl";
 
 import "react-toastify/dist/ReactToastify.css";
