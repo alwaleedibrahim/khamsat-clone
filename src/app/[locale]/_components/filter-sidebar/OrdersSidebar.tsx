@@ -49,7 +49,7 @@ export default function OrdersSidebar() {
                     type="checkbox"
                     name="status"
                     id={`status-${index}`}
-                    className="checked:bg-primary me-3"
+                    className="checked:bg-primary checked:border-primary me-3"
                     checked={selectedStatuses.includes(s)}
                     onChange={() =>
                       handleCheckboxChange(s)

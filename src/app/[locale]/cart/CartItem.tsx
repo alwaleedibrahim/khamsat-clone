@@ -1,24 +1,18 @@
 import React, { useEffect } from "react";
 import { useCart } from "react-use-cart";
 import ButtonB from "../_components/reusable/buttons/ButtonB";
-import { Upgrade } from "./types"; 
+import { CartItemType } from "./types"; 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const alertify = require("alertifyjs");
 import AdditionalServices from "../_components/single-service/AdditionalServices";
 
-interface CartItemType {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  seller: string;
-  quantity: number;
-  selectedUpgrades?: Upgrade[];
-}
+
 
 const CartItem: React.FC<{ 
-  item: CartItemType; 
-  checkedItems: Record<string, boolean>; 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  item: any; 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  checkedItems: any; 
   setAdditionalServiceTotal: React.Dispatch<React.SetStateAction<number>>; // تمرير دالة تحديث السعر
 }> = ({ item, checkedItems, setAdditionalServiceTotal }) => {
   const { updateItemQuantity, removeItem } = useCart();
@@ -40,7 +34,7 @@ const CartItem: React.FC<{
 
   useEffect(() => {
     const upgrades = item.selectedUpgrades || [];
-    const total = upgrades.reduce((sum, upgrade) => {
+    const total = upgrades.reduce((sum : number, upgrade: {_id: string, price:number}) => {
       return sum + (checkedItems[upgrade._id] ? upgrade.price : 0);
     }, 0);
     

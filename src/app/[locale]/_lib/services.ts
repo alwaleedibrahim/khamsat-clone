@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const base_url = 'http://localhost:4500/services' ; 
+const base_url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/services` ; 
 
 export const fetchServices = async (query: string) => {
     try {
         const queryString = new URLSearchParams(query).toString();
-        const response = await axios.get(`${base_url}/filter?${queryString}`);
-        return response.data;
+        const response = await axios.get(`${base_url}?${queryString}`);                
+        return response.data.services;
     } catch (error) {
         console.error('Fetch Services Error:', error);
         throw error;

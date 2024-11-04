@@ -215,5 +215,13 @@
             "Delivered":"Delivered",
             "Canceled":"Canceled"
         }
+    },
+    "OrdersPage": {
+        "orders": {
+            "notfound": "No orders found"
+        },
+        "purchases": {
+            "notfound": "No purchases found"
+        }
     }
 }
