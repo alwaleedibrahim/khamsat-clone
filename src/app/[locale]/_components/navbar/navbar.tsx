@@ -88,6 +88,7 @@ export default function Navbar() {
 
       if (response.ok) {
         dispatch(logout());
+        router.refresh()
       }
     } catch (error) {
       console.error("Logout failed:", error);

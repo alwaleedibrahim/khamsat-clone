@@ -10,11 +10,13 @@ import { FaBookBookmark, FaSliders } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { logout } from "../../_lib/redux/slice/authSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function UserDropDownBox({
   userName,
 }: Readonly<{ userName: string }>) {
   const dispatch = useDispatch();
+  const router = useRouter()
   const handleLogout = async () => {
     try {
       const response = await fetch(
@@ -27,6 +29,7 @@ export default function UserDropDownBox({
 
       if (response.ok) {
         dispatch(logout());
+        router.refresh()
       }
     } catch (error) {
       console.error("Logout failed:", error);

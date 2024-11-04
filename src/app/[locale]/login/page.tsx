@@ -6,13 +6,13 @@ import { faGoogle, faWindows } from "@fortawesome/free-brands-svg-icons";
 import React, { useState } from "react";
 import styles from "./login.module.css";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "../_lib/redux/slice/authSlice";
 import { ToastContainer } from "react-toastify";
 import { useLocale, useTranslations } from "next-intl";
 
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 interface LoginFormData {
   email: string;
@@ -28,12 +28,9 @@ const Login: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
-  const router = useRouter();
   const t = useTranslations("LoginPage");
   const localActive = useLocale();
-  const searchParams = useSearchParams();
-
-  const redirectToPage = searchParams.get("redirect");
+  const router = useRouter()
 
   const onSubmit = async (data: LoginFormData) => {
     setIsSubmitting(true);
@@ -63,13 +60,7 @@ const Login: React.FC = () => {
       const result = await response.json();
       dispatch(login(result.data.token));
       // toast.success(t("login_success"));
-      setTimeout(() => {
-        if (redirectToPage) {          
-          router.push(`/${localActive}/${redirectToPage}/`);
-        } else {
-          router.push("/");
-        }
-      }, 1000);
+      router.refresh()
     } catch (error) {
       console.log("Login failed", error);
     } finally {
@@ -198,6 +189,9 @@ const Login: React.FC = () => {
           rtl={localActive == "ar"}
           position={`top-${localActive == "ar" ? "left" : "right"}`}
         />
+      </div>
+      <div className="text-center text-[14px] text-naskh py-[30px]">
+          <p>&copy; 2024 حسوب. جميع الحقوق محفوظة.</p>
       </div>
     </div>
   );
