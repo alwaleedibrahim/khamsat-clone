@@ -77,6 +77,19 @@
             }
         }
     },
+    "UserDropDown": {
+        "myCollections": "My Collections",
+        "balance": "Balance",
+        "settings": "Settings",
+        "editAccount": "Edit Account",
+        "help": "Help",
+        "logout": "Logout"
+    },
+    "Notifications": {
+        "serviceAccepted": "Service has been accepted",
+        "serviceRejected": "Service has been rejected",
+        "servicePending": "Service is pending"
+    },
     "HomePage": {
         "HeroSection": {
             "title": "The largest Arab marketplace for microservices",
@@ -85,7 +98,7 @@
         },
         "Recommend": {
             "recommendService": "Services we recommend for you",
-            "showMore":"ٍShow More"
+            "showMore": "ٍShow More"
         }
     },
     "Footer": {
@@ -209,11 +222,11 @@
     "OrdersSidebar": {
         "title": "Order Status",
         "status": {
-            "Awaiting Instructions":"Awaiting Instructions",
-            "In Progress":"In Progress",
-            "Awaiting Confirmation":"Awaiting Confirmation",
-            "Delivered":"Delivered",
-            "Canceled":"Canceled"
+            "Awaiting Instructions": "Awaiting Instructions",
+            "In Progress": "In Progress",
+            "Awaiting Confirmation": "Awaiting Confirmation",
+            "Delivered": "Delivered",
+            "Canceled": "Canceled"
         }
     },
     "OrdersPage": {

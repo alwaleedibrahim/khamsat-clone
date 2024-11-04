@@ -1,8 +1,17 @@
+<<<<<<< HEAD
+=======
+// app/profile/page.tsx
+import Link from 'next/link';
+>>>>>>> notfications
 import { FaBell, FaUser } from 'react-icons/fa';
 
 export default function ProfilePage() {
     return (
+<<<<<<< HEAD
         <div className="min-h-screen pt-48 bg-gray-50 md:p-8">
+=======
+        <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+>>>>>>> notfications
             {/* Main Content */}
             <div className="rounded-lg p-6 shadow-sm">
                 {/* Right Sidebar */}
@@ -71,8 +80,14 @@ export default function ProfilePage() {
                                     <h3>المسمى الوظيفي</h3>
                                     <span className="text-red-500">*</span>
                                 </div>
+<<<<<<< HEAD
                                 <input className="w-full rounded-md border border-gray-300 p-2" placeholder='أدخل مسمى وظيفي مثل: مهندس معماري'/>
                                     
+=======
+                                <select className="w-full rounded-md border border-gray-300 p-2">
+                                    <option>أدخل مسمى وظيفي مثل: مهندس معماري</option>
+                                </select>
+>>>>>>> notfications
                             </div>
 
                             <div className="space-y-4">

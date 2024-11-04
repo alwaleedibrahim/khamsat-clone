@@ -6,16 +6,17 @@ export default function DropDownBox({
   return (
     <div className="bg-white text-[#444] w-[360px] shadow-2xl border-2 border-gray-200">
       {children}
-      <div className="font-bold border-t-2 border-gray-400 py-2">عرض الكل</div>
+      <div className="font-bold border-t-2 border-gray-400 py-2">Show All</div>
     </div>
   );
 }
 
 export function DropDownBoxContent({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  extraStyle
+}: Readonly<{ children: React.ReactNode,extraStyle:string }>) {
   return (
-    <div className="h-[200px] flex items-center justify-center">
+    <div className={`flex items-center justify-center ${extraStyle}`}>
       <ul>{children}</ul>
     </div>
   );
