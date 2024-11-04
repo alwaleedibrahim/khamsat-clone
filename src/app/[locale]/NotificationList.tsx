@@ -23,7 +23,7 @@ export default function NotificationList({
   const locale = useLocale();
   const dateLocale = locale === 'ar' ? ar : enUS;
 
-  const getStatusMessage = (status: string, serviceTitle: string) => {
+  const getStatusMessage = (status: string) => {
     switch(status) {
       case 'rejected':
         return t('serviceRejected');
@@ -53,7 +53,7 @@ export default function NotificationList({
         >
           <div className="flex flex-col gap-2">
             <div className="text-gray-800">
-              {getStatusMessage(notification.status, notification.serviceTitle)}
+              {getStatusMessage(notification.status)}
               <Link href={notification.serviceLink}>
                 <span className="text-blue-600 hover:text-blue-800 mx-1">
                   {notification.serviceTitle}

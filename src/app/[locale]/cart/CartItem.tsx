@@ -5,6 +5,7 @@ import { Upgrade } from "./types";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const alertify = require("alertifyjs");
 import AdditionalServices from "../_components/single-service/AdditionalServices";
+import Image from "next/image";
 
 interface CartItemType {
   id: string;
@@ -52,7 +53,7 @@ const CartItem: React.FC<{
       <div className="flex flex-col">
         <div className="flex align-middle items-center">
           <div className="w-2/12 pe-3">
-            <img src={item.image} alt={item.name} loading="lazy" width={"270px"} height={"158px"} />
+            <Image src={item.image} alt={item.name} loading="lazy" width={270} height={158} />
           </div>
           <div className="w-6/12 p-3">
             <h4>{item.name}</h4>

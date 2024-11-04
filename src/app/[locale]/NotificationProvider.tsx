@@ -36,8 +36,8 @@ const NotificationContext = createContext<NotificationContextType>({
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [socketConnected, setSocketConnected] = useState(false);
-  const username = useSelector((state: any) => state.profile.user?.username);
+  const username = useSelector((state: any) => state.profile.user?._id);
+  console.log(username)
   const flibCardAudio = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -52,7 +52,6 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         });
 
         newSocket.on('connect', () => {
-          setSocketConnected(true);
           newSocket.emit('register', username);
         });
 
@@ -86,7 +85,6 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
     return () => {
       if (socket) {
         socket.disconnect();
-        setSocketConnected(false);
       }
     };
   }, [username]);
