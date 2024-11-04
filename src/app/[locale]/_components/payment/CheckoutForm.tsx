@@ -11,10 +11,12 @@ import createPaymentIntent from "../../_lib/axios/payment";
 import IOrder from "../../_models/order";
 import { Item } from "react-use-cart";
 import { parseCart } from "../../_lib/cart/parseCart";
+import { useLocale } from "next-intl";
 
 const CheckoutPage = ({ amount, token, items }: { amount: number, token: string, items: Item[] }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const localActive = useLocale()
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,7 +54,7 @@ const CheckoutPage = ({ amount, token, items }: { amount: number, token: string,
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://www.localhost:3000/ar/orders?payment-success=true&amount=${amount}`,
+        return_url: `${process.env.NEXT_PUBLIC_URL}/${localActive}/purchases?payment-success=true&amount=${amount}`,
       },
     });
 
