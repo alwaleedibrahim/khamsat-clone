@@ -75,7 +75,7 @@ export default function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getProfile(token));
-  }, [token]);
+  }, [token, isAuthenticated, dispatch]);
   const handleLogout = async () => {
     try {
       const response = await fetch(
@@ -566,7 +566,7 @@ export default function Navbar() {
                         width={40}
                         height={40}
                         alt="logo"
-                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}
+                        src={user.profilePicture?.startsWith('http')? user.profilePicture : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}
                         className="w-[40] h-[40] rounded-full min-w-fit"
                       />
                       <div
