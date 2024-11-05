@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 export default function UserDropDownBox({
   userName,
-}: Readonly<{ userName: string }>) {
+}: Readonly<{ userName: string  | undefined }>) {
   const dispatch = useDispatch();
   const router = useRouter()
   const handleLogout = async () => {

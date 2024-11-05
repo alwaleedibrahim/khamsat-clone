@@ -1,5 +1,5 @@
 export default interface IUserProfile {
-  username: string;
+  username?: string;
   account_type?: string;
   email: string;
   isEmailVerified?: boolean;
