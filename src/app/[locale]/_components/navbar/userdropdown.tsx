@@ -94,7 +94,7 @@ export default function UserDropDownBox({
               onClick={item.onClick}
               className="flex items-center my-1 cursor-pointer"
             >
-              <IconComponent className={isRTL ? "ml-3" : "mr-3"} />
+              {IconComponent && <IconComponent className={isRTL ? "ml-3" : "mr-3"} />}
               {item.label}
             </li>
           );
