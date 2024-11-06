@@ -100,8 +100,7 @@ export default function Navbar() {
   useEffect(() => {
     if (searchParams.get("payment-success")) {
       const paymentAmount = searchParams.get("amount");
-      toast.success(`You payed ${paymentAmount}$ successfully`);
-      console.log("SUCCESS!!");
+      toast.success(`تم دفع مبلغ ${paymentAmount}$ بنجاح`);
     }
   }, [searchParams]);
 

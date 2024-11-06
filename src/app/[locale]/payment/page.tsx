@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import ButtonA from "../_components/reusable/buttons/ButtonA";
 import { FaPaypal, FaRegCreditCard, FaInfoCircle } from "react-icons/fa";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
@@ -14,9 +14,11 @@ import { RootState } from "../_lib/redux/store";
 import { useCart } from "react-use-cart";
 import IOrder from "../_models/order";
 import { parseCart } from "../_lib/cart/parseCart";
+import { useRouter } from "next/navigation";
 
 
 const Payment = () => {
+  const router = useRouter()
   const {cartTotal, items} = useCart()
   const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
   const [selectedMethod, setSelectedMethod] = useState<"creditCard" | "paypal">(
@@ -32,12 +34,19 @@ const Payment = () => {
     components: "buttons",
   };
 
-  const [message, setMessage] = useState("");
+const [message, setMessage] = useState("");
  const amount = cartTotal + cartTotal * 0.05
  const order : IOrder = {
     amount: amount,
     items: parseCart(items)
  }
+ useEffect(()=> {
+  if (message.includes("COMPLETED")) {
+    setTimeout(()=> {
+      router.push(`/purchases?payment-success=true&amount=${amount}`)
+    }, 1000)
+  }
+ }, [message, router])
   return (
     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 min-h-screen pt-20">
       {/* قسم الدفع */}
