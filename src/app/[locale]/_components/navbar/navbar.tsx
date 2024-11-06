@@ -526,7 +526,7 @@ export default function Navbar() {
                   id="test"
                 >
                   <DropDownBox>
-                    <DropDownBoxContent>
+                    <DropDownBoxContent extraStyle="">
                       <span>{t("sidebar.menu.noNew")}</span>
                     </DropDownBoxContent>
                   </DropDownBox>

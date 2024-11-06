@@ -6,13 +6,14 @@ import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 
 interface NotificationItem {
-  type: string;
-  id: string;
+  id?: string;
+  type?:string;
   message: string;
-  status: 'rejected' | 'accepted' | 'pending' | 'beyService';
-  serviceLink: string;
-  serviceTitle: string;
+  status?: 'rejected' | 'accepted' | 'pending' | 'beyService';
+  serviceLink?: string;
+  serviceTitle?: string;
   timestamp: string;
+  read?: boolean;
 }
 
 export default function NotificationList({
@@ -76,8 +77,8 @@ export default function NotificationList({
             >
               <div className="flex flex-col gap-2">
                 <div className="text-gray-800">
-                  {getStatusMessage(notification.status)}
-                  <Link href={notification.serviceLink}>
+                  {getStatusMessage(notification.status || ``)}
+                  <Link href={notification.serviceLink || ``}>
                     <span className="text-blue-600 hover:text-blue-800 mx-1">
                       {notification.serviceTitle}
                     </span>
