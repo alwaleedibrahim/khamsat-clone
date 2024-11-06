@@ -16,7 +16,7 @@ import { useLocale } from "next-intl";
 
 export default function UserDropDownBox({
   userName,
-}: Readonly<{ userName: string }>) {
+}: Readonly<{ userName: string  | undefined }>) {
   const t = useTranslations("UserDropDown");
   const locale = useLocale();
   const isRTL = locale === "ar";
