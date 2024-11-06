@@ -28,7 +28,7 @@ export default function OrderHeader({ item }: { item: IOrderListItem }) {
       </div>
       <div>
         <div>
-          <Link href={``} className="hover:text-primary text-[#444] font-bold">
+          <Link href={`/orders/${item._id}`} className="hover:text-primary text-[#444] font-bold">
             {localActive == "ar"
               ? item.items[0].service_id.title.ar
               : item.items[0].service_id.title.en}

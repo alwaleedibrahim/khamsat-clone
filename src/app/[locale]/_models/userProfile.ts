@@ -1,4 +1,5 @@
 export default interface IUserProfile {
+  _id: string
   username?: string;
   account_type?: string;
   email: string;
