@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useContext } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const alertify = require("alertifyjs");
 import "alertifyjs/build/css/alertify.rtl.css";
 import "../../../alertify.css";
@@ -11,7 +12,7 @@ const MessageForm = ({ params }: { params: { userID: string } }) => {
     const [acceptTerms, setAcceptTerms] = useState(false);
     const [noExternalLinks, setNoExternalLinks] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { socket, setNotifications } = useContext(NotificationContext);
 
     const handleSubmit = async (e: React.FormEvent) => {

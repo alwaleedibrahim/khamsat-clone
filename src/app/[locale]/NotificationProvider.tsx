@@ -1,7 +1,8 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useSelector as useReduxSelector } from 'react-redux';
+import { RootState } from './_lib/redux/store';
 
 interface Notification {
   id?: string;
@@ -37,7 +38,8 @@ export const NotificationContext = createContext<NotificationContextType>({
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [socket, setSocket] = useState<Socket | null>(null);
-  const username = useSelector((state: any) => state.profile.user?._id);
+  const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+  const username = useSelector((state) => state.profile.user?._id);
 
   useEffect(() => {
     if (!username) return;

@@ -1,5 +1,5 @@
 // app/profile/page.tsx
-import Link from 'next/link';
+// import Link from 'next/link';
 import { FaBell, FaUser } from 'react-icons/fa';
 
 export default function ProfilePage() {
