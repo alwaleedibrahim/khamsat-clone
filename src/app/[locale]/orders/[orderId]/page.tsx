@@ -1,5 +1,8 @@
 "use client";
-import React, { useEffect } from "react";
+import React, {
+  ChangeEvent,
+  useEffect,
+} from "react";
 import { useState } from "react";
 import IOrderListItem from "../../_models/orderlist";
 import { orderLoader } from "../../_lib/axios/orderListLoader";
@@ -14,6 +17,12 @@ import { useFormatter } from "next-intl";
 import axiosInstance from "../../_lib/axios/axiosInstance";
 import IUserProfile from "../../_models/userProfile";
 import { notFound } from "next/navigation";
+import {
+  createMessage,
+  getMessagesByOrder,
+  IMessageList,
+} from "../../_lib/axios/messages";
+import { FaClock } from "react-icons/fa";
 export default function Page({
   params: { orderId },
 }: {
@@ -27,6 +36,9 @@ export default function Page({
   const [relativeTime, setRelativeTime] = useState(``);
   const [role, setRole] = useState(``);
   const [price, setPrice] = useState(``);
+  const [message, setMessage] = useState(``);
+  const [messageList, setMessageList] = useState<IMessageList>();
+  const [refreshMessages, setRefreshMessages] = useState(false)
   const format = useFormatter();
   useEffect(() => {
     orderLoader(token, orderId)
@@ -82,10 +94,35 @@ export default function Page({
       return "none";
     }
   };
+  const calculateRelativeTime = (value: string) : string => {
+        const dateTime = new Date(value);
+        const now = new Date(Date.now());
+        return format.relativeTime(dateTime, { now })
+  }
+  const sendMessage = () => {
+    const sender_id = user._id;
+    const receiver_id: string =
+      [order?.user_id._id, order?.items[0].service_id.userId._id].find(
+        (id: string | undefined) => id != sender_id
+      ) || ``;
+    const order_id = order?._id;
+    console.log({ sender_id, receiver_id, order_id, content: message });
 
-  useEffect(()=> {
-    if (role == "none") notFound()
-  }, [role])
+    createMessage({ sender_id, receiver_id, order_id, content: message }, token)
+      .then(() => {console.log("message sent"); setRefreshMessages(!refreshMessages); setMessage(``)})
+      .catch((e) => console.log(e));
+  };
+  useEffect(() => {
+    if (role == "none") notFound();
+  }, [role]);
+  useEffect(() => {
+    getMessagesByOrder(orderId, token)
+      .then((value) => {
+        setMessageList(value);
+        console.log(value);
+      })
+      .catch((e) => console.log(e));
+  }, [orderId, refreshMessages]);
   return (
     <div className="flex flex-col  py-[100px]">
       <div className="flex lg:flex-row flex-col w-full justify-center">
@@ -98,6 +135,59 @@ export default function Page({
                 <h1 className="text-xl">
                   {order?.items[0].service_id.title.ar}
                 </h1>
+              </div>
+              <div className="bg-white font-kufi w-full mb-4 py-6 px-5">
+                <h5 className="p-container-space font-kufi border-b-[1px] border-[#F1F1F1]">
+                  الرسائل
+                </h5>
+                {messageList && (
+                  <div>
+                    {messageList?.messages?.map((m) => (
+                      <div key={m._id}>
+                        <div className="flex w-100 my-3 items-center">
+                          <Image
+                            src={`${
+                              m.sender_id.profilePicture.startsWith(
+                                "http"
+                              )
+                                ? `${m.sender_id.profilePicture}`
+                                : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${m.sender_id.profilePicture}`
+                            }`}
+                            height={60}
+                            width={60}
+                            alt=""
+                            className="w-[60] h-[60] rounded-full min-w-fit px-4"
+                          />
+                          <div>
+                            <h5>{`${m.sender_id.first_name.ar} ${m.sender_id.last_name.ar}`}</h5>
+                            <span className="flex items-center text-sm text-[#444] font-naskh py-1"><FaClock  className="me-3"/>{calculateRelativeTime(m.createdAt)}</span>
+                          </div>
+                        </div>
+                        <div className="flex w-100 my-5 items-center px-4">{m.content}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div>
+                  <form>
+                    <textarea
+                      className="w-full h-32 p-2 border resize-none my-4"
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                        setMessage(e.target.value);
+                      }}
+                      value={message}
+                    ></textarea>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sendMessage();
+                      }}
+                      className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border bg-primary text-white hover:hover:bg-[#3a7d25] transition-all"
+                    >
+                      <span>ارسال</span>
+                    </button>
+                  </form>
+                </div>
               </div>
               <div className=" bg-white font-kufi w-full">
                 <h5 className="p-container-space font-kufi border-b-[1px] border-[#F1F1F1]">
@@ -121,7 +211,7 @@ export default function Page({
                           onClick={() =>
                             handleChangeStatus({ en: "Canceled", ar: "ملغية" })
                           }
-                          className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border border-red-400 bg-red-500 text-white hover:bg-red-600 transition-all rounded"
+                          className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border border-red-400 bg-red-500 text-white hover:bg-red-600 transition-all "
                         >
                           <span>الغي الطلب</span>
                         </button>
@@ -135,7 +225,7 @@ export default function Page({
                               ar: "تم تسليمها",
                             })
                           }
-                          className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border bg-primary text-white hover:hover:bg-[#3a7d25] transition-all rounded"
+                          className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border bg-primary text-white hover:hover:bg-[#3a7d25] transition-all "
                         >
                           <span>استلام الطلب</span>
                         </button>
@@ -153,7 +243,7 @@ export default function Page({
                               ar: "جاري تنفيذها",
                             })
                           }
-                          className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border bg-primary text-white hover:hover:bg-[#3a7d25] transition-all rounded"
+                          className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border bg-primary text-white hover:hover:bg-[#3a7d25] transition-all "
                         >
                           <span>بدأ العمل</span>
                         </button>
@@ -167,7 +257,7 @@ export default function Page({
                               ar: "بانتظار الاستلام",
                             })
                           }
-                          className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border bg-primary text-white hover:hover:bg-[#3a7d25] transition-all rounded"
+                          className="flex items-center text-[14px] mx-4 px-8 py-2 w-fit font-kufi border bg-primary text-white hover:hover:bg-[#3a7d25] transition-all "
                         >
                           <span>طلب الاستلام</span>
                         </button>
@@ -205,44 +295,45 @@ export default function Page({
                   <span className="w-1/2">{relativeTime}</span>
                 </div>
               </div>
-              {role == 'buyer' ? <div className="p-container-space font-kufi border-b-[1px] border-[#F1F1F1] bg-white">
-                <h6 className="text-[16px]">البائع</h6>
-                <div className="flex w-100 my-3 items-center">
-                  <Image
-                    src={`${
-                      order?.items[0].service_id.userId.profilePicture.startsWith(
-                        "http"
-                      )
-                        ? `${order?.items[0].service_id.userId.profilePicture}`
-                        : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${order?.items[0].service_id.userId.profilePicture}`
-                    }`}
-                    height={60}
-                    width={60}
-                    alt=""
-                    className="w-[60] h-[60] rounded-full min-w-fit px-4"
-                  />
-                  <h5>{`${order?.items[0].service_id.userId.first_name.ar} ${order?.items[0].service_id.userId.last_name.ar}`}</h5>
+              {role == "buyer" ? (
+                <div className="p-container-space font-kufi border-b-[1px] border-[#F1F1F1] bg-white">
+                  <h6 className="text-[16px]">البائع</h6>
+                  <div className="flex w-100 my-3 items-center">
+                    <Image
+                      src={`${
+                        order?.items[0].service_id.userId.profilePicture.startsWith(
+                          "http"
+                        )
+                          ? `${order?.items[0].service_id.userId.profilePicture}`
+                          : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${order?.items[0].service_id.userId.profilePicture}`
+                      }`}
+                      height={60}
+                      width={60}
+                      alt=""
+                      className="w-[60] h-[60] rounded-full min-w-fit px-4"
+                    />
+                    <h5>{`${order?.items[0].service_id.userId.first_name.ar} ${order?.items[0].service_id.userId.last_name.ar}`}</h5>
+                  </div>
                 </div>
-              </div> :
-              <div className="p-container-space font-kufi border-b-[1px] border-[#F1F1F1] bg-white">
-                <h6 className="text-[16px]">المشتري</h6>
-                <div className="flex w-100 my-3 items-center">
-                  <Image
-                    src={`${
-                      order?.user_id.profilePicture.startsWith(
-                        "http"
-                      )
-                        ? `${order?.user_id.profilePicture}`
-                        : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${order?.user_id.profilePicture}`
-                    }`}
-                    height={60}
-                    width={60}
-                    alt=""
-                    className="w-[60] h-[60] rounded-full min-w-fit px-4"
-                  />
-                  <h5>{`${order?.user_id.first_name.ar} ${order?.user_id.last_name.ar}`}</h5>
+              ) : (
+                <div className="p-container-space font-kufi border-b-[1px] border-[#F1F1F1] bg-white">
+                  <h6 className="text-[16px]">المشتري</h6>
+                  <div className="flex w-100 my-3 items-center">
+                    <Image
+                      src={`${
+                        order?.user_id.profilePicture.startsWith("http")
+                          ? `${order?.user_id.profilePicture}`
+                          : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${order?.user_id.profilePicture}`
+                      }`}
+                      height={60}
+                      width={60}
+                      alt=""
+                      className="w-[60] h-[60] rounded-full min-w-fit px-4"
+                    />
+                    <h5>{`${order?.user_id.first_name.ar} ${order?.user_id.last_name.ar}`}</h5>
+                  </div>
                 </div>
-              </div>}
+              )}
             </>
           )}
         </div>
