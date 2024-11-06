@@ -32,7 +32,7 @@ const MessageForm = ({ params }: { params: { userID: string } }) => {
             setIsLoading(true);
 
             // إرسال الرسالة إلى الخادم
-            const response = await fetch('/api/messages', {
+            const response = await fetch(`/api/messages`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -80,13 +80,13 @@ const MessageForm = ({ params }: { params: { userID: string } }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} dir='rtl' className="max-w-2xl mx-auto p-4 space-y-4 text-right pt-[100px]">
+        <form onSubmit={handleSubmit} dir='rtl' className="max-w-2xl mx-auto p-4 space-y-4 text-right pt-[100px] font-kufi">
             <div className="space-y-2">
                 <h2 className="text-xl font-semibold">محتوى الرسالة</h2>
                 <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full h-32 p-2 border rounded-md resize-none"
+                    className="w-full h-32 p-2 border resize-none"
                     dir="rtl"
                     disabled={isLoading}
                 />
@@ -130,7 +130,7 @@ const MessageForm = ({ params }: { params: { userID: string } }) => {
             <div className="flex justify-start">
                 <ButtonA
                     text={isLoading ? 'جاري الإرسال...' : 'أرسل الرسالة'}
-                    extraStyle='bg-primary text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed'
+                    extraStyle='bg-primary text-white px-6 py-2 hover:bg-green-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed'
                 >
                     
                 </ButtonA>
