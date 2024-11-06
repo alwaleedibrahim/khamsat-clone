@@ -1,14 +1,15 @@
 "use client"
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 
 interface Notification {
-  id: string;
+  id?: string;
+  type?:string;
   message: string;
-  status: 'rejected' | 'accepted' | 'pending';
-  serviceLink: string;
-  serviceTitle: string;
+  status?: 'rejected' | 'accepted' | 'pending';
+  serviceLink?: string;
+  serviceTitle?: string;
   timestamp: string;
   read?: boolean;
 }
@@ -23,7 +24,7 @@ interface NotificationContextType {
   markAllAsRead: () => void;
 }
 
-const NotificationContext = createContext<NotificationContextType>({
+export const NotificationContext = createContext<NotificationContextType>({
   notifications: [],
   clearNotifications: () => { },
   setNotifications: () => { },
@@ -37,8 +38,6 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [socket, setSocket] = useState<Socket | null>(null);
   const username = useSelector((state: any) => state.profile.user?._id);
-  console.log(username)
-  const flibCardAudio = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (!username) return;
@@ -52,26 +51,58 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         });
 
         newSocket.on('connect', () => {
+          console.log('Socket connected');
           newSocket.emit('register', username);
         });
 
         newSocket.on('notification', (data) => {
-          try {
-            const newNotification = {
-              id: data.notification.id,
-              message: data.notification.message,
-              timestamp: new Date().toISOString(),
-              status: data.notification.status,
-              serviceLink: data.notification.serviceLink,
-              serviceTitle: data.notification.serviceTitle,
-              read: false,
-            };
-            flibCardAudio.current?.play();
-            setNotifications(prev => [newNotification, ...prev]);
-          } catch (error) {
-            console.error('Error processing notification:', error);
+          console.log(data)
+          if (data.notification.type) {
+            console.log("moooooooooooooo", data.notification.type)
+            console.log("mooo", data)
+            try {
+              const newNotification = {
+                id: data.notification.id || '',
+                message: data.notification.message,
+                timestamp: new Date().toISOString(),
+                status: data.notification.status,
+                serviceLink: data.notification.serviceLink,
+                serviceTitle: data.notification.serviceTitle,
+                read: false,
+              };
+
+              setNotifications(prev => [newNotification, ...prev]);
+            } catch (error) {
+              console.error('Error processing notification:', error);
+            }
+          } else {
+            try {
+              const newNotification = {
+                id: data.notification.id || '',
+                message: data.notification.message,
+                timestamp: new Date().toISOString(),
+                status: data.notification.status,
+                serviceLink: data.notification.serviceLink,
+                serviceTitle: data.notification.serviceTitle,
+                read: false,
+              };
+
+              setNotifications(prev => [newNotification, ...prev]);
+            } catch (error) {
+              console.error('Error processing notification:', error);
+            }
           }
+
         });
+
+        newSocket.on('disconnect', () => {
+          console.log('Socket disconnected');
+        });
+
+        newSocket.on('error', (error) => {
+          console.error('Socket error:', error);
+        });
+
         setSocket(newSocket);
         return newSocket;
       } catch (error) {
@@ -89,17 +120,25 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
     };
   }, [username]);
 
+  // Load saved notifications from localStorage
   useEffect(() => {
-    const savedNotifications = localStorage.getItem('notifications');
-    console.log(localStorage.getItem('notifications'))
-    flibCardAudio.current = new Audio('/audio/notify.mp3');
-    if (savedNotifications) {
-      setNotifications(JSON.parse(savedNotifications));
+    try {
+      const savedNotifications = localStorage.getItem('notifications');
+      if (savedNotifications) {
+        setNotifications(JSON.parse(savedNotifications));
+      }
+    } catch (error) {
+      console.error('Error loading saved notifications:', error);
     }
   }, []);
 
+  // Save notifications to localStorage when they change
   useEffect(() => {
-    localStorage.setItem('notifications', JSON.stringify(notifications));
+    try {
+      localStorage.setItem('notifications', JSON.stringify(notifications));
+    } catch (error) {
+      console.error('Error saving notifications:', error);
+    }
   }, [notifications]);
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -138,7 +177,6 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
     </NotificationContext.Provider>
   );
 };
-
 
 export const useNotifications = () => {
   const context = useContext(NotificationContext);

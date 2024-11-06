@@ -10,12 +10,9 @@ import { FaBookBookmark, FaSliders } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { logout } from "../../_lib/redux/slice/authSlice";
 import Link from "next/link";
-<<<<<<< HEAD
 import { useRouter } from "next/navigation";
-=======
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
->>>>>>> notfications
 
 export default function UserDropDownBox({
   userName,
@@ -24,11 +21,8 @@ export default function UserDropDownBox({
   const locale = useLocale();
   const isRTL = locale === "ar";
   const dispatch = useDispatch();
-<<<<<<< HEAD
   const router = useRouter()
-=======
 
->>>>>>> notfications
   const handleLogout = async () => {
     try {
       const response = await fetch(

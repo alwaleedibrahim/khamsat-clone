@@ -17,7 +17,7 @@ export default function Home() {
             <Services />
             <DoWork />
             <WhyUs />
-            {/* <RecommendServices /> */}
+            <RecommendServices />
             <SnippetSection />
             <QuestionSection />
             <CallToActionSection />
