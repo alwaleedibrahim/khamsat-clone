@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 import { useLocale, useTranslations } from "next-intl";
 import 'react-toastify/dist/ReactToastify.css';
-import { getProfile } from "../_lib/redux/slice/profileSlice";
 import { AppDispatch } from "../_lib/redux/store";
 
 interface RegisterFormData {
