@@ -23,6 +23,7 @@ import {
   IMessageList,
 } from "../../_lib/axios/messages";
 import { FaClock } from "react-icons/fa";
+import { useNotifications } from "../../NotificationProvider";
 export default function Page({
   params: { orderId },
 }: {
@@ -38,7 +39,8 @@ export default function Page({
   const [price, setPrice] = useState(``);
   const [message, setMessage] = useState(``);
   const [messageList, setMessageList] = useState<IMessageList>();
-  const [refreshMessages, setRefreshMessages] = useState(false)
+  const [refreshMessages, setRefreshMessages] = useState(false);
+  const {notifications} = useNotifications() 
   const format = useFormatter();
   useEffect(() => {
     orderLoader(token, orderId)
@@ -122,7 +124,7 @@ export default function Page({
         console.log(value);
       })
       .catch((e) => console.log(e));
-  }, [orderId, refreshMessages]);
+  }, [orderId, refreshMessages,notifications]);
   return (
     <div className="flex flex-col  py-[100px]">
       <div className="flex lg:flex-row flex-col w-full justify-center">
