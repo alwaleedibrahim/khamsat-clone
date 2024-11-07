@@ -6,9 +6,9 @@ import { RootState } from './_lib/redux/store';
 
 interface Notification {
   id?: string;
-  type?:string;
+  type?: string;
   message: string;
-  status?: 'rejected' | 'accepted' | 'pending';
+  status?: 'rejected' | 'accepted' | 'pending' | 'beyService' | 'orderMessage';
   serviceLink?: string;
   serviceTitle?: string;
   timestamp: string;
@@ -96,7 +96,23 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
           }
 
         });
-
+        newSocket.on('orderMeassage', (data) => {
+          console.log("orderMeassage",data)
+          try {
+            const newNotification = {
+              id: data.notification.id || '',
+              message: data.notification.message,
+              timestamp: new Date().toISOString(),
+              status: data.notification.status,
+              serviceLink: data.notification.serviceLink,
+              serviceTitle: data.notification.serviceTitle,
+              read: false,
+            };
+            setNotifications(prev => [newNotification, ...prev]);
+          } catch (error) {
+            console.error('Error processing notification:', error);
+          }
+        })
         newSocket.on('disconnect', () => {
           console.log('Socket disconnected');
         });

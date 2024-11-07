@@ -293,7 +293,7 @@ const ServiceForm: React.FC = () => {
 
                         // Replace with a dynamically constructed path
                         if (categoryName && subcategoryTitle) {
-                            const dynamicPath = `/${localActive}/categories/${categoryName}/${subcategoryTitle}`;
+                            const dynamicPath = `/${localActive}/categories/${categoryName}/${subcategoryTitle}/${response.savedService._id}`;
                             router.push(dynamicPath);
                         }
                     },

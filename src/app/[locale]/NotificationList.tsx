@@ -7,9 +7,9 @@ import { useLocale } from 'next-intl';
 
 interface NotificationItem {
   id?: string;
-  type?:string;
+  type?: string;
   message: string;
-  status?: 'rejected' | 'accepted' | 'pending' | 'beyService';
+  status?: 'rejected' | 'accepted' | 'pending' | 'beyService' | 'orderMessage';
   serviceLink?: string;
   serviceTitle?: string;
   timestamp: string;
@@ -70,30 +70,51 @@ export default function NotificationList({
               </div>
             </div>
           )
-          return ((
-            <div
-              key={index}
-              className="p-4 bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg"
-            >
-              <div className="flex flex-col gap-2">
-                <div className="text-gray-800">
-                  {getStatusMessage(notification.status || ``)}
-                  <Link href={notification.serviceLink || ``}>
-                    <span className="text-blue-600 hover:text-blue-800 mx-1">
-                      {notification.serviceTitle}
-                    </span>
-                  </Link>
-                </div>
+        else if (notification.status == "orderMessage") {
+          <div
+            key={index}
+            className="p-4 bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg"
+          >
+            <div className="flex flex-col gap-2">
+              <div className="text-gray-800">
+                <Link href={notification.serviceLink || ``}>
+                  {notification.message}
+                </Link>
+              </div>
 
-                <div className="flex items-center text-gray-500 text-sm">
-                  <i className="far fa-clock mr-2" />
-                  <time dateTime={notification.timestamp}>
-                    {formatTimeAgo(notification.timestamp)}
-                  </time>
-                </div>
+              <div className="flex items-center text-gray-500 text-sm">
+                <i className="far fa-clock mr-2" />
+                <time dateTime={notification.timestamp}>
+                  {formatTimeAgo(notification.timestamp)}
+                </time>
               </div>
             </div>
-          ))
+          </div>
+        }
+        return ((
+          <div
+            key={index}
+            className="p-4 bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg"
+          >
+            <div className="flex flex-col gap-2">
+              <div className="text-gray-800">
+                {getStatusMessage(notification.status || ``)}
+                <Link href={notification.serviceLink || ``}>
+                  <span className="text-blue-600 hover:text-blue-800 mx-1">
+                    {notification.message}
+                  </span>
+                </Link>
+              </div>
+
+              <div className="flex items-center text-gray-500 text-sm">
+                <i className="far fa-clock mr-2" />
+                <time dateTime={notification.timestamp}>
+                  {formatTimeAgo(notification.timestamp)}
+                </time>
+              </div>
+            </div>
+          </div>
+        ))
       })}
     </div>
   );
