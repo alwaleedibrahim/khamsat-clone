@@ -7,9 +7,9 @@ import SearchInput from "./form-control/SearchInput";
 import List from "./List";
 import ListItem from "./ListItem";
 import SubList from "./SubList";
-import RatingInput from "./form-control/RatingInput";
-import { FaTimes } from "react-icons/fa";
-import CheckboxInput from "./form-control/CheckBoxInput";
+// import RatingInput from "./form-control/RatingInput";
+// import { FaTimes } from "react-icons/fa";
+// import CheckboxInput from "./form-control/CheckBoxInput";
 import ICategory from "../../_models/category";
 import ISubCategory from "../../_models/subcategory";
 import { TypedUseSelectorHook, useDispatch, useSelector   as useReduxSelector} from "react-redux";
@@ -70,15 +70,17 @@ export default function Sidebar({
                       <Link
                         href={`/${localActive}/categories/${cat.name.en}/${cat.name.en}`}
                         className="text-primary hover:text-primary"
+                        key={cat._id}
                       >
                         <ListItem key={cat._id}>{cat.name.ar}</ListItem>
                       </Link>
-                      <ListItem>
+                      <ListItem key={cat._id}>
                         <SubList>
                           {subcategories?.map((subcat: ISubCategory) => {
                             return (
                               <>
                                 <Link
+                                  key={subcat._id}
                                   href={`/${localActive}/categories/${cat.name.en}/${subcat.title.en}`}
                                   className={`${
                                     subcat.title.en == selectedSubCategory
@@ -104,7 +106,7 @@ export default function Sidebar({
                                                 : ``
                                             } hover:text-primary`}
                                           >
-                                            <ListItem>
+                                            <ListItem key={nestedSubcategory._id}>
                                               {nestedSubcategory.title.ar}
                                             </ListItem>
                                           </Link>
@@ -120,7 +122,7 @@ export default function Sidebar({
                       </ListItem>{" "}
                     </>
                   ) : (
-                    <Link href={`/${localActive}/categories/${cat.name.en}/${cat.name.en}`} className="hover:text-primary">
+                    <Link key={cat._id} href={`/${localActive}/categories/${cat.name.en}/${cat.name.en}`} className="hover:text-primary">
                       <ListItem key={cat._id}>{cat.name.ar}</ListItem>
                     </Link>
                   )}
@@ -130,7 +132,7 @@ export default function Sidebar({
           </List>
         </CardBody>
       </FilterCard>
-      <FilterCard>
+      {/* <FilterCard>
         <CardHeader>
           تقييم الخدمة <FaTimes />
         </CardHeader>
@@ -150,8 +152,8 @@ export default function Sidebar({
             </ListItem>
           </List>
         </CardBody>
-      </FilterCard>
-      <FilterCard>
+      </FilterCard> */}
+      {/* <FilterCard>
         <CardHeader>
           {" "}
           مستوى البائع
@@ -187,7 +189,7 @@ export default function Sidebar({
             </ListItem>
           </List>
         </CardBody>
-      </FilterCard>
+      </FilterCard> */}
     </div>
   );
 }

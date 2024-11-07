@@ -1,0 +1,102 @@
+.hr_text {
+    border: 0;
+    color: #000;
+    height: 1.5em;
+    line-height: 1em;
+    opacity: .8;
+    outline: 0;
+    position: relative;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.hr_text:before {
+    background: linear-gradient(90deg, transparent, #000, transparent);
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+
+.hr_text:after {
+    background-color: #fff;
+    color: #000;
+    content: attr(data-content);
+    display: inline-block;
+    line-height: 1.5em;
+    padding: 0 .5em;
+    position: relative;
+}
+
+.form-control {
+    background-image: none;
+    box-shadow: none;
+    padding: 9px 10px;
+    border-radius: none;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    background-color: #fcfdfd;
+}
+
+.copy_right {
+    padding: 30px 0;
+}
+
+.custom_container {
+    margin-right: 18px;
+    margin-left: 18px;
+}
+
+@media (min-width: 1024px) {
+    .custom_container {
+        max-width: 768px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+.profile-pic-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-pic-wrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  .profile-pic-wrapper:hover .profile-pic {
+    opacity: 0.7;
+  }
+
+  .profile-pic-wrapper::after {
+    content: "📷";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .profile-pic-wrapper:hover::after {
+    opacity: 1;
+  }

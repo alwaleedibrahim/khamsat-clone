@@ -55,7 +55,7 @@ export default function Navbar() {
   const t = useTranslations("Header");
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { totalUniqueItems } = useCart();
+  const { totalUniqueItems, emptyCart } = useCart();
   const { notifications } = useNotifications();
 
   const handleLang = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -74,7 +74,6 @@ export default function Navbar() {
   );
   const token: string | null = useSelector((state) => state.auth.token);
   const user: IUserProfile = useSelector((state) => state.profile.user);
-  console.log(user)
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getProfile(token));
@@ -101,8 +100,9 @@ export default function Navbar() {
     if (searchParams.get("payment-success")) {
       const paymentAmount = searchParams.get("amount");
       toast.success(`تم دفع مبلغ ${paymentAmount}$ بنجاح`);
+      emptyCart()
     }
-  }, [searchParams]);
+  }, [searchParams])
 
   const [categoryOpen, setCategoryOpen] = useState(false);
   return (
@@ -585,14 +585,14 @@ export default function Navbar() {
                         width={40}
                         height={40}
                         alt="logo"
-                        src={user.profilePicture?.startsWith('http')? user.profilePicture : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}
+                        src={user?.profilePicture?.startsWith('http')? user?.profilePicture : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${user?.profilePicture}`}
                         className="w-[40] h-[40] rounded-full min-w-fit"
                       />
                       <div
                         className="absolute invisible opacity-0 top-14 end-0 group-focus-within:visible group-focus-within:opacity-100 transition-all duration-300"
                         id="test"
                       >
-                        <UserDropDownBox userName={user.username} />
+                        <UserDropDownBox userName={user?.username} />
                       </div>
                     </div>
                   </NavItem>
@@ -639,7 +639,8 @@ export default function Navbar() {
               id="toggle-home-sm"
               className="peer hidden"
               name="menu-radio"
-            />
+              onClick={()=> {router.push("/")}}
+              />
           </li>
           <li className="flex flex-col items-center justify-around">
             <label
@@ -701,7 +702,7 @@ export default function Navbar() {
                   } items-center py-3 border-b-[1px]`}
                 >
                   <FaUser className="me-3" />
-                  {user.username}
+                  {user?.username}
                 </li>
                 <li
                   className={`${

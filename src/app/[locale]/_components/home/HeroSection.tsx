@@ -22,18 +22,22 @@ export default function HeroSection() {
           <div className="flex items-center gap-1 w-[70%] mx-2 flex-wrap">
             <TagButton
               text={`${words[0]} `}
+              href={`/search?q=${words[0]}`}
               extraStyle="text-xs hover:bg-primary hover:text-white"
             />
             <TagButton
               text={`${words[1]} `}
+              href={`/search?q=${words[1]}`}
               extraStyle="text-xs hover:bg-primary hover:text-white"
             />
             <TagButton
               text={`${words[2]} `}
+              href={`/search?q=${words[2]}`}
               extraStyle="text-xs hover:bg-primary hover:text-white"
             />
             <TagButton
               text={`${words[3]} `}
+              href={`/search?q=${words[3]}`}
               extraStyle="text-xs hover:bg-primary hover:text-white hidden sm:block"
             />
           </div>

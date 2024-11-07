@@ -8,8 +8,8 @@ import styles from "./login.module.css";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { login } from "../_lib/redux/slice/authSlice";
-import { ToastContainer } from "react-toastify";
-import { useLocale, useTranslations } from "next-intl";
+import { toast } from "react-toastify";
+import { useTranslations } from "next-intl";
 
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
@@ -29,7 +29,6 @@ const Login: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const t = useTranslations("LoginPage");
-  const localActive = useLocale();
   const router = useRouter()
 
   const onSubmit = async (data: LoginFormData) => {
@@ -58,8 +57,10 @@ const Login: React.FC = () => {
       }
 
       const result = await response.json();
+      console.log(result);
+      
       dispatch(login(result.data.token));
-      // toast.success(t("login_success"));
+      toast.success(t("login_success"));
       router.refresh()
     } catch (error) {
       console.log("Login failed", error);
@@ -185,10 +186,6 @@ const Login: React.FC = () => {
             </button>
           </div>
         </form>
-        <ToastContainer
-          rtl={localActive == "ar"}
-          position={`top-${localActive == "ar" ? "left" : "right"}`}
-        />
       </div>
       <div className="text-center text-[14px] text-naskh py-[30px]">
           <p>&copy; 2024 حسوب. جميع الحقوق محفوظة.</p>

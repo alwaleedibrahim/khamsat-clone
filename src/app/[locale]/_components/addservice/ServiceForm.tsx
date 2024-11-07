@@ -99,7 +99,7 @@ const ServiceForm: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [developmentOptions, setDevelopmentOptions] = useState<DevelopmentOptions>(initialDevelopmentOptions);
     const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
-    const user_id: string = useSelector((state) => state.profile.user._id);
+    const user_id: string = useSelector((state) => state.profile.user?._id);
     const token: string | null = useSelector((state) => state.auth.token);
     const router = useRouter();
     const localActive = useLocale();
