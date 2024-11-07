@@ -16,7 +16,7 @@ export default async function page({params: {locale, category, subcategory}, sea
           <Sidebar filters={{category, subcategory}} />
         </div>
         <div className="w-full lg:w-[76%]">
-        {!services && <>
+        {!services[0] && <>
         <div className="bg-white w-full p-5">
           <p className='font-naskh text-lg text-center'>للأسف لم يتم العثور على نتائج تطابق بحثك.</p>
         </div>

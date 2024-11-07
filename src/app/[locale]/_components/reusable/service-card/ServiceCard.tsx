@@ -50,15 +50,13 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
                     />
 
                     <div className="absolute bottom-[10px] left-[15px] w-[36px] h-[36px] z-[100]">
-                        <a href="">
                             <Image
-                                src={serviceData.authorImg}
+                                src={serviceData.authorImg || ``}
                                 alt="Author's profile picture"
                                 width={36}
                                 height={36}
                                 className="h-[100%] object-cover rounded-full border border-white"
                             />
-                        </a>
                     </div>
 
                 </div>

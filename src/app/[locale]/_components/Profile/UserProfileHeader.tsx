@@ -25,7 +25,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({ handleActiveTab, 
                     <div className="relative inline-block">
                         <Image
                             className="rounded-full shadow-md"
-                            src={user.profilePicture?.includes("https://")?user.profilePicture:`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}
+                            src={user?.profilePicture?.includes("https://")?user?.profilePicture:`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user?.profilePicture}`}
                             width={128}
                             height={128}
                             alt="User Avatar"
@@ -35,7 +35,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({ handleActiveTab, 
                     {/* Username and Status */}
                     <div className='flex justify-center'>
                         <h1 className="text-[26px]">
-                            {`${user.first_name?.ar} ${user.last_name?.ar}`}
+                            {`${user?.first_name?.ar} ${user?.last_name?.ar}`}
                         </h1>
                         <span className="m-2.5">
                             <FontAwesomeIcon

@@ -19,7 +19,7 @@ export default function OrderHeader({ item }: { item: IOrderListItem }) {
     <div className="bg-white py-7 px-12 mb-10 flex font-kufi items-center">
       <div className="pe-5">
         <Image
-          src={`${user.profilePicture.startsWith('http')? `${user.profilePicture}`:`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.profilePicture}`}`}
+          src={`${user?.profilePicture.startsWith('http')? `${user?.profilePicture}`:`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user?.profilePicture}`}`}
           height={60}
           width={60}
           alt=""
@@ -40,11 +40,11 @@ export default function OrderHeader({ item }: { item: IOrderListItem }) {
               <FaUserAlt />
             </span>
             {localActive == "ar"
-              ? user.first_name.ar
-              : user.first_name.en}{" "}
+              ? user?.first_name.ar
+              : user?.first_name.en}{" "}
             {localActive == "ar"
-              ? user.last_name.ar
-              : user.last_name.en}
+              ? user?.last_name.ar
+              : user?.last_name.en}
           </div>
           <div className={`mx-2 flex items-center ${localActive == 'en'? `flex-row-reverse`: ``}`}>
             <span className="me-2">

@@ -48,7 +48,7 @@ export default function Page({
         setOrder(value);
         setIsLoading(false);
         const rel = userRelationToOrder(
-          user._id,
+          user?._id,
           value.user_id._id,
           value.items[0].service_id.userId._id
         );
@@ -102,7 +102,7 @@ export default function Page({
         return format.relativeTime(dateTime, { now })
   }
   const sendMessage = () => {
-    const sender_id = user._id;
+    const sender_id = user?._id;
     const receiver_id: string =
       [order?.user_id._id, order?.items[0].service_id.userId._id].find(
         (id: string | undefined) => id != sender_id

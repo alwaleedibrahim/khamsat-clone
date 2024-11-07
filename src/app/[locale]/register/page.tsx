@@ -9,9 +9,10 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { login } from "../_lib/redux/slice/authSlice";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useLocale, useTranslations } from "next-intl";
 import 'react-toastify/dist/ReactToastify.css';
+import { AppDispatch } from "../_lib/redux/store";
 
 interface RegisterFormData {
   email: string;
@@ -105,7 +106,7 @@ const Register: React.FC = () => {
   } = useForm<RegisterFormData>();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
   const onSubmit = async (data: RegisterFormData) => {
@@ -138,7 +139,7 @@ const Register: React.FC = () => {
       }
 
       const result = await response.json();
-      dispatch(login(result.token)); // Use the token received backend
+      dispatch(login(result.data.token)); // Use the token received backend
       toast.success(t("success.accountCreated"));
       setTimeout(() => router.push("/"), 2000); //make user redirected to home page
     } catch (error) {
@@ -395,7 +396,6 @@ const Register: React.FC = () => {
 
 
       </div>
-      <ToastContainer rtl={localActive == "ar"} position={`top-${localActive == "ar" ? 'left' : 'right'}`} />
       <div className="text-center text-[14px] text-naskh py-[30px]">
         <p>&copy; 2024 حسوب. جميع الحقوق محفوظة.</p>
       </div>

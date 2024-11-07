@@ -51,7 +51,7 @@ const categories: ICategory[] = [
   },
   {
     nameAr: "تعليم عن بعد",
-    nameEn: "Remote Learning",
+    nameEn: "Online Teaching",
     img: "remote.jpg",
   },
   {
@@ -80,7 +80,7 @@ export default function AllCategoriesSection() {
         <div className="flex flex-wrap lg:gap-6 justify-center">
           {categories.map((category, index) => (
             <div key={index} className="w-1/2 p-2 lg:p-0 lg:w-1/5">
-              <CategoryCard img={`/images/categories/${category.img}`}>
+              <CategoryCard img={`/images/categories/${category.img}`} url={`/categories/${category.nameEn}`}>
                 {localActive==='ar'?category.nameAr:category.nameEn}
               </CategoryCard>
             </div>

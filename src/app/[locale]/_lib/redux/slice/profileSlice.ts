@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice, Slice } from "@reduxjs/toolkit";
 import { logout } from "./authSlice";
 
 export interface IProfileState {
-    user: IUserProfile
+    user?: IUserProfile
 }
 
 const initialState: IProfileState = {
@@ -19,6 +19,7 @@ export const getProfile = createAsyncThunk<
     if(!token) return rejectWithValue("User is not logged in");
   try {
     const userProfile = await profileLoader(token);
+    console.log("userProfile", userProfile);
     
     return userProfile;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,8 +42,7 @@ export const profileSlice: Slice = createSlice({
     });
     builder.addCase(logout, (state) => {
       // This will automatically call clearProfile when logout is dispatched
-      state.user.profilePicture = undefined;
-      state.user.username = undefined;
+      state.user = undefined
     });
   },
 });

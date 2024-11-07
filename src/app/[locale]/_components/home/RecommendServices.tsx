@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import ServiceCard, { ServicesCard } from '../reusable/service-card/ServiceCard';
 import { fetchAllServices } from '../../_lib/services';
+import Link from 'next/link';
 
 
 
@@ -44,9 +45,9 @@ const RecommendServices = () => {
             <div className='xl:container mx-auto'>
                 <div className="flex justify-between items-center px-4 mb-[30px]">
                     <div className="text-2xl text-style1 font-kufi">
-                        <a href="/recommendations">{t('Recommend.recommendService')}</a>
+                        <Link href="/search">{t('Recommend.recommendService')}</Link>
                     </div>
-                    <ButtonB text={t("Recommend.showMore")} extraStyle='text-[14px] px-[8px] py-[4px]' />
+                    <ButtonB href='/search' text={t("Recommend.showMore")} extraStyle='text-[14px] px-[8px] py-[4px]' />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
                     {randomFourServices.map((service, index) => (
