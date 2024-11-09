@@ -51,7 +51,7 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
 
                     <div className="absolute bottom-[10px] left-[15px] w-[36px] h-[36px] z-[100]">
                             <Image
-                                src={serviceData.authorImg || ``}
+                                src={serviceData.authorImg || ` /images/services/defaultuser.jfif`}
                                 alt="Author's profile picture"
                                 width={36}
                                 height={36}
