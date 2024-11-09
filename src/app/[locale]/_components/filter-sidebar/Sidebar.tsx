@@ -21,7 +21,6 @@ import {
 } from "../../_lib/redux/slice/categorySlice";
 import Link from "next/link";
 import { AppDispatch, RootState } from "../../_lib/redux/store";
-import { notFound } from "next/navigation";
 import { useLocale } from "next-intl";
 
 export default function Sidebar({
@@ -44,7 +43,6 @@ export default function Sidebar({
   const selectedSubCategory = useSelector(
     (state) => state.category.selectedSubCategory
   );
-  if(!selectedCategory && category !== '') notFound()
 
   return (
     <div className="mx-20">
