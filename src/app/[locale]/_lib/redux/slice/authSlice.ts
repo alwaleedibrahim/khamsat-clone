@@ -27,7 +27,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isAuthenticated = false;
       state.token = null;
-      nookies.destroy(null, "authToken")
+      nookies.destroy(null, 'authToken')
     },
   },
 });
