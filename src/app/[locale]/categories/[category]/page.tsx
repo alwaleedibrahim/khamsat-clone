@@ -18,7 +18,6 @@ import { useLocale, useTranslations } from "next-intl";
 import ISubCategory from "@/app/[locale]/_models/subcategory";
 import Link from "next/link";
 import { FaPlayCircle } from "react-icons/fa";
-import { notFound } from "next/navigation";
 
 export default function Page({
   params: { category },
@@ -40,7 +39,6 @@ export default function Page({
   const subcategories: ISubCategory[] = useSelector(
     (state) => state.category.subcategories
   );
-  if (!selectedCategory) notFound()
   return (
     <div className="pt-20 mx-auto w-full xl:container">
       <div className="p-section bg-white w-full flex flex-col items-center">
