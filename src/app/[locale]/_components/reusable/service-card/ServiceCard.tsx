@@ -39,7 +39,8 @@ export interface ServicesCardProps {
 
 const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
     const localActive = useLocale()
-
+    console.log("!!!!!!!!!!!!",serviceData);
+    
     return (
         <div>
             <Link href={`/${localActive}/categories/${serviceData.category?.name.en}/${serviceData.subcategory?.title.en}/${serviceData._id}`} passHref>
@@ -51,7 +52,7 @@ const ServiceCard: React.FC<ServicesCardProps> = ({ serviceData }) => {
 
                     <div className="absolute bottom-[10px] left-[15px] w-[36px] h-[36px] z-[100]">
                             <Image
-                                src={serviceData.authorImg || ` /images/services/defaultuser.jfif`}
+                                src={serviceData.authorImg || `/images/services/defaultuser.jfif`}
                                 alt="Author's profile picture"
                                 width={36}
                                 height={36}

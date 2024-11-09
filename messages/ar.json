@@ -146,7 +146,7 @@
         "password": "كلمة المرور",
         "password_placeholder": "أدخل كلمة المرور الخاصة بك",
         "password_required": "كلمة المرور مطلوبة",
-        "paasswordNotValid": "كلمة المرور يجب أن تحتوي على حروف ورموز وارقام",
+        "passwordNotValid": "كلمة المرور يجب أن تحتوي على حروف ورموز وارقام",
         "password_min_length": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
         "invalidEmailOrPassword": "البريد الاكتروني او الرقم السري غير صحيح",
         "login_success": "تم تسجيل الدخول بنجاح",
